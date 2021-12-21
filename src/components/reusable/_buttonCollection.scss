@@ -4,3 +4,20 @@
   padding: 0.8rem 1.2rem;
   line-height: 1.6rem;
 }
+
+.login-button-brown {
+  background: $primary-dark;
+  border-radius: 1rem;
+  padding: 0.8rem 1.2rem;
+  line-height: 1.6rem;
+  color: white;
+}
+
+.title-button {
+  background: $primary-dark;
+  border-radius: 1rem;
+  padding: 1rem 1.6rem;
+  line-height: 2.2rem;
+  color: white;
+  font-weight: 500;
+}

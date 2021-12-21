@@ -7,6 +7,9 @@ import {
   faCaretRight,
   faCaretLeft,
   faHeart,
+  faTimesCircle,
+  faEye,
+  faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
@@ -36,7 +39,7 @@ export const IconSelector = ({ name }) => {
           className="hero-process-down"
           icon={faCaretDown}
           size="4x"
-          color="#C7B198"
+          color="#c7b198"
         />
       );
     case "search-icon":
@@ -54,7 +57,7 @@ export const IconSelector = ({ name }) => {
           className="page-next"
           icon={faCaretRight}
           size="3x"
-          color="#C7B198"
+          color="#c7b198"
         />
       );
     case "page-back":
@@ -63,7 +66,7 @@ export const IconSelector = ({ name }) => {
           className="page-back"
           icon={faCaretLeft}
           size="3x"
-          color="#C7B198"
+          color="#c7b198"
         />
       );
     case "favorite-undone":
@@ -91,6 +94,33 @@ export const IconSelector = ({ name }) => {
           icon={faEnvelope}
           size="3x"
           color="white"
+        />
+      );
+    case "close":
+      return (
+        <FontAwesomeIcon
+          className="close"
+          icon={faTimesCircle}
+          size="2x"
+          color="black"
+        />
+      );
+    case "viewable":
+      return (
+        <FontAwesomeIcon
+          className="viewable"
+          icon={faEye}
+          size="1x"
+          color="#37383C"
+        />
+      );
+    case "unviewable":
+      return (
+        <FontAwesomeIcon
+          className="unviewable"
+          icon={faEyeSlash}
+          size="1x"
+          color="#37383C"
         />
       );
     default:

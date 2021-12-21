@@ -1,0 +1,61 @@
+.login-content {
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  form {
+    width: 23vw;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 0;
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .id {
+      display: flex;
+      align-self: flex-start;
+      align-items: center;
+      padding-bottom: 1rem;
+      gap: 1rem;
+      border-bottom: solid 0.6rem $light-bg;
+      input {
+        border: none;
+        padding: 0.5rem 0;
+        font-size: 1.8rem;
+        color: $font-color;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    .pw {
+      display: flex;
+      align-self: flex-start;
+      align-items: center;
+      padding-bottom: 1rem;
+      gap: 1rem;
+      border-bottom: solid 0.6rem $light-bg;
+      input {
+        border: none;
+        padding: 0.5rem 0;
+        font-size: 1.8rem;
+        color: $font-color;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    .form-button {
+      align-self: flex-end;
+      padding-top: 2.5rem;
+    }
+  }
+}
+
+.login-remark {
+  width: 23vw;
+  color: $special-color;
+}
