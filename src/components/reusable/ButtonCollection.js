@@ -1,9 +1,9 @@
-export const LoginButton = ({ text }) => {
-  return <div className="login-button s-text">{text}</div>;
+export const WhiteButton = ({ text }) => {
+  return <div className="white-button s-text">{text}</div>;
 };
 
-export const LoginButtonBrown = ({ text }) => {
-  return <div className="login-button-brown s-text">{text}</div>;
+export const BrownButton = ({ text }) => {
+  return <div className="brown-button s-text">{text}</div>;
 };
 
 export const TitleButton = ({ text }) => {

@@ -1,5 +1,5 @@
 import { IconSelector } from "../reusable/IconSelector";
-import { TitleButton, LoginButtonBrown } from "../reusable/ButtonCollection";
+import { TitleButton, BrownButton } from "../reusable/ButtonCollection";
 import { loginData } from "../../data";
 import Backdrop from "../reusable/Backdrop";
 
@@ -30,7 +30,7 @@ export const Login = () => {
               </div>
             </div>
             <div className="form-button">
-              <LoginButtonBrown text="登入" />
+              <BrownButton text="登入" />
             </div>
           </form>
           <div className="login-remark s-text">{loginData.remark}</div>

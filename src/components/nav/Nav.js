@@ -1,4 +1,4 @@
-import { LoginButton, NumberButton } from "../reusable/ButtonCollection";
+import { WhiteButton, NumberButton } from "../reusable/ButtonCollection";
 import logoBird from "../../img/logo-bird.png";
 import { Login } from "../loginOut/LoginOut";
 
@@ -15,7 +15,7 @@ const Nav = () => {
             <div className="m-text">Machu Days商品捐贈平台</div>
           </div>
           <div>
-            {/* <LoginButton text="登入" /> */}
+            {/* <WhiteButton text="登入" /> */}
             <div className="islogin">
               <div className="menu">
                 <div className="s-text">商品</div>
@@ -32,7 +32,7 @@ const Nav = () => {
                 <div className="s-text">收藏</div>
               </div>
               <div>
-                <LoginButton text="登出" />
+                <WhiteButton text="登出" />
               </div>
             </div>
           </div>
