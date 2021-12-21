@@ -9,3 +9,7 @@ export const LoginButtonBrown = ({ text }) => {
 export const TitleButton = ({ text }) => {
   return <div className="title-button l-text">{text}</div>;
 };
+
+export const NumberButton = ({ text }) => {
+  return <div className="number-button">{text}</div>;
+};
