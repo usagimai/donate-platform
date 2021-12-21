@@ -1,0 +1,8 @@
+.main-item-list {
+  display: grid;
+  //grid-template-columns: repeat(4, 22rem);
+  grid-template-columns: repeat(auto-fit, min(22rem));
+  flex-wrap: wrap;
+  justify-content: space-between;
+  grid-row-gap: 4rem;
+}

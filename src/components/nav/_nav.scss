@@ -1,0 +1,24 @@
+.nav {
+  background: #c7b198;
+  .nav-content {
+    max-width: 1224px;
+    height: 8vh;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.logo-title-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  img {
+    height: 32px;
+  }
+  .m-text {
+    font-weight: 500;
+    color: white;
+  }
+}

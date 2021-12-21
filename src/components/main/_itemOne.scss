@@ -1,0 +1,23 @@
+.item-list-container {
+  width: 22rem;
+  height: 33rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
+  img {
+    width: 22rem;
+  }
+  .item-list-title {
+    padding: 0.6rem;
+    line-height: 140%;
+  }
+  .item-list-favorite {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 1rem 0.8rem 0;
+  }
+  &:hover {
+    transform: translateY(-1%);
+  }
+}

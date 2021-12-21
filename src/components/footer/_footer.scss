@@ -1,0 +1,15 @@
+.footer {
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  background: #c7b198;
+  color: white;
+  .footer-message {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+}

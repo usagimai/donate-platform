@@ -1,0 +1,15 @@
+.decoration-title {
+  height: 150%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 100%;
+  .decoration {
+    padding: 0.3rem 1rem;
+    position: relative;
+    transform: translateY(-40%);
+    background: #f0ece2;
+    color: transparent;
+    z-index: -1;
+  }
+}
