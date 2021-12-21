@@ -31,7 +31,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  color: #596e79;
+  color: $special-color;
   .hero-text-upper {
     width: 75%;
     display: flex;
@@ -75,7 +75,7 @@
         width: 100%;
         padding: 1rem 2rem;
         border-radius: 1rem;
-        background: #596e79;
+        background: $special-color;
         color: white;
         text-align: center;
       }
@@ -117,7 +117,7 @@
   position: absolute;
   top: 10rem;
   right: 0;
-  background: #f0ece2;
+  background: $light-bg;
   z-index: -1;
 }
 .bg-box-dark {
@@ -126,6 +126,6 @@
   position: absolute;
   bottom: 0;
   left: 11rem;
-  background: #dfd3c3;
+  background: $primary-light;
   z-index: -1;
 }

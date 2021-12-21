@@ -1,3 +1,10 @@
+//顏色
+$primary-dark: #c7b198;
+$primary-light: #dfd3c3;
+$light-bg: #f0ece2;
+$font-color: #37383c;
+$special-color: #596e79;
+
 * {
   margin: 0;
   padding: 0;
@@ -25,7 +32,7 @@ html {
 
 body {
   background: #ffffff;
-  color: #37383c;
+  color: $font-color;
   font-family: "Roboto", "Noto Sans TC", sans-serif;
   overflow-x: hidden;
 }
@@ -86,11 +93,41 @@ a {
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
-  background: #dfd3c3;
+  background: $primary-light;
+}
+
+.white-container {
+  //width: fit-content;
+  position: relative;
+  background: white;
+  border-radius: 1rem;
+  padding: 7rem 8rem;
+  .close-bg {
+    position: absolute;
+    top: -0.7rem;
+    left: -0.7rem;
+    height: 1.8rem;
+    width: 1.8rem;
+    background: white;
+    border-radius: 50%;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .close {
+    position: relative;
+    top: -0.1rem;
+    left: -0.1rem;
+  }
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 @import "./components/reusable/buttonCollection";
 @import "./components/reusable/decorationTitle";
+@import "./components/reusable/backdrop";
 @import "./components/nav/nav";
 @import "./components/hero/hero";
 @import "./components/main/main";
@@ -100,3 +137,4 @@ a {
 @import "./components/main/itemList";
 @import "./components/main/itemOne";
 @import "./components/footer/footer";
+@import "./components/loginOut/loginOut";
