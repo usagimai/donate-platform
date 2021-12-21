@@ -1,0 +1,11 @@
+.item-detail-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .item-detail-info-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 2rem;
+  }
+}

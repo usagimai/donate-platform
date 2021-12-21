@@ -1,0 +1,27 @@
+.item-detail-order {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  .item-number {
+    align-self: flex-end;
+    color: $special-color;
+  }
+  form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding: 6rem 0;
+    gap: 4rem;
+  }
+  .order-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    grid-row-gap: 1rem;
+  }
+  .order-button {
+    justify-self: center;
+  }
+}

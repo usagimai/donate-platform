@@ -128,6 +128,8 @@ a {
 @import "./components/reusable/buttonCollection";
 @import "./components/reusable/decorationTitle";
 @import "./components/reusable/backdrop";
+@import "./components/reusable/location";
+@import "./pages/itemPage";
 @import "./components/nav/nav";
 @import "./components/hero/hero";
 @import "./components/main/main";
@@ -138,3 +140,7 @@ a {
 @import "./components/main/itemOne";
 @import "./components/footer/footer";
 @import "./components/loginOut/loginOut";
+@import "./components/itemDetail/itemDetail";
+@import "./components/itemDetail/itemDetailImg";
+@import "./components/itemDetail/itemDetailOrder";
+@import "./components/itemDetail/itemDetailInfo";

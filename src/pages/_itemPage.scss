@@ -1,0 +1,10 @@
+.item-page {
+  max-width: 1224px;
+  margin: auto;
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  .item-page-location {
+    padding: 3rem 0;
+  }
+}
