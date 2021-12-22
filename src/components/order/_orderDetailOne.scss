@@ -1,0 +1,9 @@
+.order-list-box {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 1.5rem;
+  border: solid 0.1rem $light-bg;
+  padding: 3.5rem 5rem;
+}

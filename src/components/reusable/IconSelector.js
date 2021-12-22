@@ -12,6 +12,7 @@ import {
   faEyeSlash,
   faCaretUp,
   faTrashAlt,
+  faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
@@ -188,6 +189,15 @@ export const IconSelector = ({ name }) => {
             fill="white"
           />
         </svg>
+      );
+    case "order-detail-icon":
+      return (
+        <FontAwesomeIcon
+          className="order-detail-icon"
+          icon={faClipboardList}
+          size="2x"
+          color="#37383C"
+        />
       );
     default:
       return null;

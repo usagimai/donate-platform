@@ -129,6 +129,13 @@ a {
   border-bottom: solid 0.1rem $light-bg;
 }
 
+.vertical-line {
+  height: 50%;
+  border-right: solid 0.1rem $light-bg;
+  transform: translateX(-50%);
+  align-self: center;
+}
+
 .carousel {
   display: flex;
   flex-direction: column;
@@ -169,6 +176,7 @@ a {
 @import "./components/reusable/emptyMessage";
 @import "./pages/itemPage";
 @import "./pages/cartPage";
+@import "./pages/orderPage";
 @import "./components/nav/nav";
 @import "./components/hero/hero";
 @import "./components/main/main";
@@ -188,3 +196,6 @@ a {
 @import "./components/cart/note";
 @import "./components/cart/delivery";
 @import "./components/cart/orderDelivered";
+@import "./components/order/orderDetailOne";
+@import "./components/order/orderDetailOpen";
+@import "./components/order/orderDetailOpenOne";
