@@ -1,9 +1,11 @@
 .decoration-title {
   height: 150%;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   line-height: 100%;
+  z-index: 1;
   .decoration {
     padding: 0.3rem 1rem;
     position: relative;
