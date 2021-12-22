@@ -59,3 +59,18 @@
   width: 23vw;
   color: $special-color;
 }
+
+.logout-content {
+  width: 18vw;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  .m-text {
+    justify-content: flex-start;
+  }
+  .logout-button {
+    display: flex;
+    gap: 2rem;
+    justify-content: flex-end;
+  }
+}

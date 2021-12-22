@@ -1,11 +1,13 @@
 import { WhiteButton, NumberButton } from "../reusable/ButtonCollection";
 import logoBird from "../../img/logo-bird.png";
 import { Login } from "../loginOut/LoginOut";
+import { Logout } from "../loginOut/LoginOut";
 
 const Nav = () => {
   return (
     <>
       {/* <Login /> */}
+      {/* <Logout /> */}
       <div className="nav">
         <div className="nav-content">
           <div className="logo-title-box">

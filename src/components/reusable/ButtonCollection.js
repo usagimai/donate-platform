@@ -6,6 +6,10 @@ export const BrownButton = ({ text }) => {
   return <div className="brown-button s-text">{text}</div>;
 };
 
+export const BrownButtonReverse = ({ text }) => {
+  return <div className="brown-button-reverse s-text">{text}</div>;
+};
+
 export const TitleButton = ({ text }) => {
   return <div className="title-button l-text">{text}</div>;
 };
