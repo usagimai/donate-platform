@@ -2,22 +2,31 @@
   background: white;
   border-radius: 1rem;
   padding: 0.8rem 1.2rem;
-  line-height: 1.6rem;
+  line-height: 100%;
 }
 
 .brown-button {
   background: $primary-dark;
   border-radius: 1rem;
   padding: 0.8rem 1.2rem;
-  line-height: 1.6rem;
+  line-height: 100%;
   color: white;
+}
+
+.brown-button-reverse {
+  background: white;
+  border: solid 0.1rem $primary-dark;
+  border-radius: 1rem;
+  padding: 0.8rem 1.2rem;
+  line-height: 100%;
+  color: $primary-dark;
 }
 
 .title-button {
   background: $primary-dark;
   border-radius: 1rem;
   padding: 1.2rem 2.2rem;
-  line-height: 2.2rem;
+  line-height: 100%;
   color: white;
   font-weight: 500;
 }
@@ -27,5 +36,5 @@
   border-radius: 1rem;
   padding: 0.3rem 1rem;
   font-size: 1.4rem;
-  line-height: 1.4rem;
+  line-height: 100%;
 }
