@@ -1,0 +1,11 @@
+.cart-detail-all {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  align-items: center;
+  grid-column-gap: 1rem;
+  padding-bottom: 2.5rem;
+  .cart-title-item {
+    width: 32vw;
+  }
+}

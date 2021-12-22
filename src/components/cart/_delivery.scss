@@ -1,0 +1,33 @@
+.delivery {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  .delivery-title {
+    align-self: flex-start;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    .delivery-input {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-row-gap: 2.5rem;
+      > div {
+        justify-self: center;
+      }
+    }
+    label {
+      padding: 0 2rem;
+    }
+    input {
+      padding: 0.5rem 1rem;
+      font-size: 1.6rem;
+      color: $font-color;
+      border: solid 0.1rem $primary-light;
+    }
+  }
+  .delivery-button {
+    align-self: flex-end;
+  }
+}

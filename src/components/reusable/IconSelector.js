@@ -11,6 +11,7 @@ import {
   faEye,
   faEyeSlash,
   faCaretUp,
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
@@ -130,6 +131,15 @@ export const IconSelector = ({ name }) => {
           className="top"
           icon={faCaretUp}
           size="2x"
+          color="#37383C"
+        />
+      );
+    case "delete":
+      return (
+        <FontAwesomeIcon
+          className="delete"
+          icon={faTrashAlt}
+          size="1x"
           color="#37383C"
         />
       );

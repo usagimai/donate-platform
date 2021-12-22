@@ -102,6 +102,7 @@ a {
   background: white;
   border-radius: 1rem;
   padding: 7rem 8rem;
+  z-index: 1;
   .close-bg {
     position: absolute;
     top: -0.7rem;
@@ -125,11 +126,16 @@ a {
   visibility: hidden;
 }
 
+.line {
+  border-bottom: solid 0.1rem $light-bg;
+}
+
 @import "./components/reusable/buttonCollection";
 @import "./components/reusable/decorationTitle";
 @import "./components/reusable/backdrop";
 @import "./components/reusable/location";
 @import "./pages/itemPage";
+@import "./pages/cartPage";
 @import "./components/nav/nav";
 @import "./components/hero/hero";
 @import "./components/main/main";
@@ -144,3 +150,8 @@ a {
 @import "./components/itemDetail/itemDetailImg";
 @import "./components/itemDetail/itemDetailOrder";
 @import "./components/itemDetail/itemDetailInfo";
+@import "./components/cart/cartDetailAll";
+@import "./components/cart/cartDetailOne";
+@import "./components/cart/note";
+@import "./components/cart/delivery";
+@import "./components/cart/orderDelivered";

@@ -4,6 +4,7 @@ import "./app.scss";
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
 import ItemPage from "./pages/ItemPage";
+import CartPage from "./pages/CartPage";
 import Footer from "./components/footer/Footer";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/item" element={<ItemPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
       <Footer />
     </>

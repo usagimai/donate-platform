@@ -1,0 +1,20 @@
+.order-delivered-content {
+  width: 25vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .order-delivered-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    color: $special-color;
+    padding-top: 5rem;
+  }
+  .order-delivered-button {
+    width: 100%;
+    padding-top: 5rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
