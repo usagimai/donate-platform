@@ -30,7 +30,7 @@ const CartPage = () => {
         {/* 購物車有商品顯示內容(結束) */}
         {/* 購物車無商品顯示內容(開始) */}
         {/* <div>
-          <EmptyMessage />
+          <EmptyMessage message="目前購物車是空的" />
         </div>
         <div>
           <Recommend />
