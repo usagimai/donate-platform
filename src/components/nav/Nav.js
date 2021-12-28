@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { WhiteButton, NumberButton } from "../reusable/ButtonCollection";
 import logoBird from "../../img/logo-bird.png";
 import { Login } from "../loginOut/LoginOut";
@@ -12,15 +14,21 @@ const Nav = () => {
         <div className="nav-content">
           <div className="logo-title-box">
             <div>
-              <img src={logoBird} alt="logo" />
+              <Link to="/">
+                <img src={logoBird} alt="logo" />
+              </Link>
             </div>
-            <div className="m-text">Machu Days商品捐贈平台</div>
+            <Link to="/">
+              <div className="m-text">Machu Days商品捐贈平台</div>
+            </Link>
           </div>
           <div>
             {/* <WhiteButton text="登入" /> */}
             <div className="islogin">
               <div className="menu">
-                <div className="s-text">商品</div>
+                <div className="s-text">
+                  <Link to="/">商品</Link>
+                </div>
                 <div className="menu-decoration s-text">|</div>
                 <div className="s-text">
                   <span>購物車</span>

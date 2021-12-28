@@ -1,25 +1,32 @@
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { IconSelector } from "../reusable/IconSelector";
 
-const ItemDetailInfo = () => {
+const ItemDetailInfo = ({ detailImg1, detailImg2, infoImg }) => {
+  const handleTop = () => {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="item-detail-info">
       <div>
         <DecorationTitle title="商品介紹" fontSize="m-text" />
       </div>
       <div>
-        <img
-          src="https://firebasestorage.googleapis.com/v0/b/donate-platform.appspot.com/o/items%2F0101-0001-0101-F-3.jpg?alt=media&token=7104727e-d71e-44ee-b261-d4c973c9c36d"
-          alt="商品資訊圖-1"
-        />
+        <img src={detailImg1} alt="商品詳情-1" />
       </div>
+      {detailImg2 && (
+        <div>
+          <img src={detailImg2} alt="商品詳情-2" />
+        </div>
+      )}
+
       <div>
-        <img
-          src="https://firebasestorage.googleapis.com/v0/b/donate-platform.appspot.com/o/items%2F0101-0001-0101-F-2.jpg?alt=media&token=e84d1906-e23a-4976-9cb0-46408c710664"
-          alt="商品資訊圖-2"
-        />
+        <img src={infoImg} alt="商品資訊圖" />
       </div>
-      <div className="item-detail-info-top s-text">
+      <div className="item-detail-info-top s-text" onClick={handleTop}>
         <div>
           <IconSelector name="top" />
         </div>

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 
 import "./app.scss";
 import Nav from "./components/nav/Nav";
@@ -15,7 +15,9 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/item" element={<ItemPage />} />
+        <Route path="/:category" element={<Home />} />
+        <Route path="/search/:searchtext" element={<Home />} />
+        <Route path="/items/:id" element={<ItemPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/order" element={<OrderPage />} />
         <Route path="/favorite" element={<FavoritePage />} />

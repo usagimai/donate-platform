@@ -1,13 +1,16 @@
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { BrownButton } from "../reusable/ButtonCollection";
 
-const ItemDetailOrder = () => {
+const ItemDetailOrder = ({ name, id, size1, stock1 }) => {
+  const orderNum1 = [];
+  for (let i = 0; i <= stock1; i++) {
+    orderNum1.push(i);
+  }
+
   return (
     <div className="item-detail-order">
-      <div className="l-text">
-        【Machu】點點咖啡色圓領 澎袖 白色純棉短袖襯衫_麻雀
-      </div>
-      <div className="item-number s-text">商品編號：0101-0001-0101-F</div>
+      <div className="l-text">{name}</div>
+      <div className="item-number s-text">商品編號：{id}</div>
       <form>
         <div className="order-container s-text">
           <div>
@@ -19,13 +22,13 @@ const ItemDetailOrder = () => {
           <div>
             <DecorationTitle title="所需數量" fontSize="s-text" />
           </div>
-          <div>F</div>
-          <div>8</div>
+          <div>{size1}</div>
+          <div>{stock1}</div>
           <div>
             <select name="order-number">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              {orderNum1.map((num) => (
+                <option value={num}>{num}</option>
+              ))}
             </select>
           </div>
         </div>

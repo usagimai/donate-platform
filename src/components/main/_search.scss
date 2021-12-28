@@ -9,4 +9,9 @@ form {
       color: $font-color;
     }
   }
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
 }

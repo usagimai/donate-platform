@@ -14,7 +14,10 @@ import {
   faTrashAlt,
   faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import {
+  faEnvelope,
+  faEnvelopeOpen,
+} from "@fortawesome/free-regular-svg-icons";
 
 export const IconSelector = ({ name }) => {
   switch (name) {
@@ -50,7 +53,7 @@ export const IconSelector = ({ name }) => {
         <FontAwesomeIcon
           className="search-icon"
           icon={faSearch}
-          size="3x"
+          size="2x"
           color="#596E79"
         />
       );
@@ -197,6 +200,15 @@ export const IconSelector = ({ name }) => {
           icon={faClipboardList}
           size="2x"
           color="#37383C"
+        />
+      );
+    case "mail-open":
+      return (
+        <FontAwesomeIcon
+          className="mail-open"
+          icon={faEnvelopeOpen}
+          size="3x"
+          color="white"
         />
       );
     default:

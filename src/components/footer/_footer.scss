@@ -8,8 +8,14 @@
   background: $primary-dark;
   color: white;
   .footer-message {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 2rem;
+  }
+  .copied {
+    position: absolute;
+    top: -45%;
+    left: -25%;
   }
 }

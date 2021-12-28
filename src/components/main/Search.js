@@ -1,14 +1,33 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { IconSelector } from "../reusable/IconSelector";
 
-const Search = () => {
+const Search = ({ setSearchText }) => {
+  const [searchInput, setSearchInput] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchText(searchInput);
+    navigate(`/search/${searchInput}`, { push: true });
+    setSearchInput("");
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSearch}>
       <div className="search-input">
-        <input type="text" placeholder="搜尋商品" size="21" />
+        <input
+          type="search"
+          placeholder="搜尋商品"
+          size="21"
+          onChange={(e) => setSearchInput(e.target.value)}
+          value={searchInput}
+        />
       </div>
-      <div>
+      <button type="submit">
         <IconSelector name="search-icon" />
-      </div>
+      </button>
     </form>
   );
 };

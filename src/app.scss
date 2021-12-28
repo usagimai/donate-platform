@@ -38,7 +38,7 @@ body {
 }
 
 a {
-  //color: #37383C;
+  color: $font-color;
   text-decoration: none;
   cursor: pointer;
 }
@@ -136,6 +136,10 @@ a {
   align-self: center;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .carousel {
   display: flex;
   flex-direction: column;
@@ -183,7 +187,6 @@ a {
 @import "./components/main/main";
 @import "./components/main/search";
 @import "./components/main/category";
-@import "./components/main/pageNumber";
 @import "./components/main/itemList";
 @import "./components/main/itemOne";
 @import "./components/footer/footer";

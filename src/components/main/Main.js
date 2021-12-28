@@ -1,25 +1,23 @@
-import Location from "../reusable/Location";
+import { useState } from "react";
+
+import { ListLocation } from "../reusable/Location";
 import Search from "./Search";
 import Category from "./Category";
 import ItemList from "./ItemList";
-import { PgNumSimple, PgNumDetail } from "./PageNumber";
 
 const Main = () => {
+  const [searchText, setSearchText] = useState("");
+
   return (
     <div className="main">
       <div className="main-left">
-        <Search />
+        <Search setSearchText={setSearchText} />
         <Category />
       </div>
       <div className="main-right">
-        <div className="main-right-upper">
-          <Location />
-          <PgNumSimple />
-        </div>
-        <ItemList />
-        <div className="main-page-lower">
-          <PgNumDetail />
-        </div>
+        <ListLocation searchText={searchText} setSearchText={setSearchText} />
+
+        <ItemList searchText={searchText} setSearchText={setSearchText} />
       </div>
     </div>
   );
