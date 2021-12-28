@@ -10,6 +10,7 @@
     flex-direction: column;
     padding: 3rem 0;
     > div {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -26,6 +27,7 @@
         padding: 0.5rem 0;
         font-size: 1.8rem;
         color: $font-color;
+        // background: none;
         &:focus {
           outline: none;
         }
@@ -47,6 +49,11 @@
           outline: none;
         }
       }
+    }
+    .error-message {
+      position: absolute;
+      top: 115%;
+      color: crimson;
     }
     .form-button {
       align-self: flex-end;

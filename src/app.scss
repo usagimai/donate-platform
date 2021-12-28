@@ -140,6 +140,10 @@ a {
   cursor: pointer;
 }
 
+input:-internal-autofill-selected {
+  box-shadow: 0 0 0 50px white inset;
+}
+
 .carousel {
   display: flex;
   flex-direction: column;

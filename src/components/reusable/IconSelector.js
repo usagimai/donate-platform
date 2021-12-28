@@ -111,19 +111,19 @@ export const IconSelector = ({ name }) => {
           color="black"
         />
       );
-    case "viewable":
+    case "visible":
       return (
         <FontAwesomeIcon
-          className="viewable"
+          className="visible"
           icon={faEye}
           size="1x"
           color="#37383C"
         />
       );
-    case "unviewable":
+    case "unvisible":
       return (
         <FontAwesomeIcon
-          className="unviewable"
+          className="unvisible"
           icon={faEyeSlash}
           size="1x"
           color="#37383C"
