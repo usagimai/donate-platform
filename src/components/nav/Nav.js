@@ -1,17 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 
 import { WhiteButton, NumberButton } from "../reusable/ButtonCollection";
 import logoBird from "../../img/logo-bird.png";
 import { Login } from "../loginOut/LoginOut";
 import { Logout } from "../loginOut/LoginOut";
-import { app, auth } from "../../firebase-config";
 
-const Nav = () => {
-  const [loginBoxOpen, setLoginBoxOpen] = useState(false);
+const Nav = ({ user, loginBoxOpen, setLoginBoxOpen }) => {
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
-  const [user, setUser] = useState("");
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
@@ -22,15 +18,6 @@ const Nav = () => {
     setLogoutBoxOpen(true);
     document.body.style.overflow = "hidden";
   };
-
-  //判斷使用者是否登入(若為登入，user會是firebase提供的有關該使用者的資訊，包含email、UID等)
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  }, []);
-
-  console.log(user);
 
   return (
     <>

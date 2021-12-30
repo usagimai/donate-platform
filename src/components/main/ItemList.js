@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { loadItems } from "../../actions/itemsAction";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import ItemOne from "./ItemOne";
 
-const ItemList = ({ searchText, setSearchText }) => {
+const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
   const { pathname } = useLocation();
   const categoryPath = pathname.split("/")[1];
   const searchPath = decodeURI(pathname.split("/")[2]);
@@ -18,11 +17,6 @@ const ItemList = ({ searchText, setSearchText }) => {
 
   const [itemList, setItemList] = useState("");
   const [searchList, setSearchList] = useState("");
-
-  //讀取所有商品
-  useEffect(() => {
-    dispatch(loadItems());
-  }, [dispatch]);
 
   //顯示分類
   useEffect(() => {
@@ -55,7 +49,7 @@ const ItemList = ({ searchText, setSearchText }) => {
       default:
         return setItemList([]);
     }
-  }, [category, categoryPath]);
+  }, [category, categoryPath, all]);
 
   //顯示搜尋結果
   useEffect(() => {
@@ -64,7 +58,7 @@ const ItemList = ({ searchText, setSearchText }) => {
         return doc.data().name.match(new RegExp(searchText, "gi"));
       })
     );
-  }, [searchText]);
+  }, [searchText, all]);
   //讓目前path與搜尋結果一致
   useEffect(() => {
     if (searchPath === "undefined") {
@@ -89,6 +83,8 @@ const ItemList = ({ searchText, setSearchText }) => {
                 name={doc.data().name}
                 id={doc.id}
                 key={doc.id}
+                user={user}
+                setLoginBoxOpen={setLoginBoxOpen}
               />
             ))}
           {itemList &&
@@ -98,6 +94,8 @@ const ItemList = ({ searchText, setSearchText }) => {
                 name={doc.data().name}
                 id={doc.id}
                 key={doc.id}
+                user={user}
+                setLoginBoxOpen={setLoginBoxOpen}
               />
             ))}
           {itemList && itemList.length === 0 && (
@@ -113,6 +111,8 @@ const ItemList = ({ searchText, setSearchText }) => {
               name={doc.data().name}
               id={doc.id}
               key={doc.id}
+              user={user}
+              setLoginBoxOpen={setLoginBoxOpen}
             />
           ))}
           {searchList.length === 0 && (

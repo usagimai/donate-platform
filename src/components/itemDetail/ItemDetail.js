@@ -11,12 +11,19 @@ const ItemDetail = ({
   detailImg1,
   detailImg2,
   infoImg,
+  user,
+  setLoginBoxOpen,
 }) => {
   return (
     <div className="item-detail">
       <div className="item-detail-upper">
         <div>
-          <ItemDetailImg mainImg={mainImg} />
+          <ItemDetailImg
+            mainImg={mainImg}
+            user={user}
+            id={id}
+            setLoginBoxOpen={setLoginBoxOpen}
+          />
         </div>
         <div className="item-detail-upper-right">
           <ItemDetailOrder name={name} id={id} size1={size1} stock1={stock1} />
