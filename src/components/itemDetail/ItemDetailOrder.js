@@ -1,3 +1,5 @@
+import { Children } from "react";
+
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { BrownButton } from "../reusable/ButtonCollection";
 
@@ -26,9 +28,9 @@ const ItemDetailOrder = ({ name, id, size1, stock1 }) => {
           <div>{stock1}</div>
           <div>
             <select name="order-number">
-              {orderNum1.map((num) => (
-                <option value={num}>{num}</option>
-              ))}
+              {Children.toArray(
+                orderNum1.map((num) => <option value={num}>{num}</option>)
+              )}
             </select>
           </div>
         </div>
