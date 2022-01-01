@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { WhiteButton, NumberButton } from "../reusable/ButtonCollection";
@@ -6,7 +6,7 @@ import logoBird from "../../img/logo-bird.png";
 import { Login } from "../loginOut/LoginOut";
 import { Logout } from "../loginOut/LoginOut";
 
-const Nav = ({ user, loginBoxOpen, setLoginBoxOpen }) => {
+const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartNum, setCartNum }) => {
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
 
   const handleLoginBoxOpen = () => {
@@ -18,6 +18,12 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen }) => {
     setLogoutBoxOpen(true);
     document.body.style.overflow = "hidden";
   };
+
+  useEffect(() => {
+    setCartNum(
+      Object.keys(JSON.parse(localStorage.getItem("machudaysCart"))).length
+    );
+  }, []);
 
   return (
     <>
@@ -54,7 +60,7 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen }) => {
                     <span>購物車</span>
                   </div>
                   <div>
-                    <NumberButton text="3" />
+                    <NumberButton text={cartNum} />
                   </div>
                   <div className="menu-decoration s-text">|</div>
                   <div className="s-text">訂單</div>

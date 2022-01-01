@@ -19,7 +19,13 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     text-align: center;
-    grid-row-gap: 1rem;
+    grid-row-gap: 2rem;
+    span {
+      color: crimson;
+    }
+    .add-to-cart {
+      color: $special-color;
+    }
   }
   .order-button {
     justify-self: center;

@@ -17,6 +17,7 @@ import { loadItems } from "./actions/itemsAction";
 function App() {
   const [user, setUser] = useState("");
   const [loginBoxOpen, setLoginBoxOpen] = useState(false);
+  const [cartNum, setCartNum] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -38,6 +39,8 @@ function App() {
         user={user}
         loginBoxOpen={loginBoxOpen}
         setLoginBoxOpen={setLoginBoxOpen}
+        cartNum={cartNum}
+        setCartNum={setCartNum}
       />
       <Routes>
         <Route
@@ -54,7 +57,13 @@ function App() {
         />
         <Route
           path="/items/:id"
-          element={<ItemPage user={user} setLoginBoxOpen={setLoginBoxOpen} />}
+          element={
+            <ItemPage
+              user={user}
+              setLoginBoxOpen={setLoginBoxOpen}
+              setCartNum={setCartNum}
+            />
+          }
         />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/order" element={<OrderPage />} />
