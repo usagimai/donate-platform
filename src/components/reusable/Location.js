@@ -55,7 +55,13 @@ export const ListLocation = ({ searchText }) => {
   );
 };
 
-export const ItemLocation = ({ category1 }) => {
+export const ItemLocation = ({ id }) => {
+  const all = useSelector((state) => state.items.all);
+  const selectedItem = all.find((doc) => {
+    return doc.id === id;
+  });
+  const category1 = selectedItem.data().category1;
+
   const [itemLocation, setItemLocation] = useState([]);
 
   useEffect(() => {

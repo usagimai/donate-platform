@@ -7,7 +7,13 @@ import {
   handleRemoveFavorite,
 } from "../../utils/favoritesUtils";
 
-const ItemDetailImg = ({ mainImg, user, id, setLoginBoxOpen }) => {
+const ItemDetailImg = ({ user, id, setLoginBoxOpen }) => {
+  const all = useSelector((state) => state.items.all);
+  const selectedItem = all.find((doc) => {
+    return doc.id === id;
+  });
+  const mainImg = selectedItem.data().mainImg;
+
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.favorites);
   const [isFavorite, setIsFavorite] = useState(false);

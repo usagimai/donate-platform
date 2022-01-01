@@ -2,39 +2,28 @@ import ItemDetailImg from "./ItemDetailImg";
 import ItemDetailOrder from "./ItemDetailOrder";
 import ItemDetailInfo from "./ItemDetailInfo";
 
-const ItemDetail = ({
-  mainImg,
-  name,
-  id,
-  size1,
-  stock1,
-  detailImg1,
-  detailImg2,
-  infoImg,
-  user,
-  setLoginBoxOpen,
-}) => {
+const ItemDetail = ({ id, user, setLoginBoxOpen, setCartNum }) => {
   return (
     <div className="item-detail">
       <div className="item-detail-upper">
         <div>
           <ItemDetailImg
-            mainImg={mainImg}
             user={user}
             id={id}
             setLoginBoxOpen={setLoginBoxOpen}
           />
         </div>
         <div className="item-detail-upper-right">
-          <ItemDetailOrder name={name} id={id} size1={size1} stock1={stock1} />
+          <ItemDetailOrder
+            id={id}
+            user={user}
+            setLoginBoxOpen={setLoginBoxOpen}
+            setCartNum={setCartNum}
+          />
         </div>
       </div>
       <div className="item-detail-lower">
-        <ItemDetailInfo
-          detailImg1={detailImg1}
-          detailImg2={detailImg2}
-          infoImg={infoImg}
-        />
+        <ItemDetailInfo id={id} />
       </div>
     </div>
   );

@@ -1,7 +1,17 @@
+import { useSelector } from "react-redux";
+
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { IconSelector } from "../reusable/IconSelector";
 
-const ItemDetailInfo = ({ detailImg1, detailImg2, infoImg }) => {
+const ItemDetailInfo = ({ id }) => {
+  const all = useSelector((state) => state.items.all);
+  const selectedItem = all.find((doc) => {
+    return doc.id === id;
+  });
+  const detailImg1 = selectedItem.data().detailImg1;
+  const detailImg2 = selectedItem.data().detailImg2;
+  const infoImg = selectedItem.data().infoImg;
+
   const handleTop = () => {
     window.scroll({
       top: 0,
