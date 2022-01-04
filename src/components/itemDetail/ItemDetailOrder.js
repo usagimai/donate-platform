@@ -21,13 +21,17 @@ const ItemDetailOrder = ({
   const [itemDetailInfo, setItemDetailInfo] = useState([]);
 
   useEffect(() => {
-    const initialInfo = Array(selectedItem.data().stock.length)
+    const initialInfo = Array(Object.keys(selectedItem.data().stock).length)
       .fill(null)
       .map((item, idx) => ({
-        type: selectedItem.data().stock[idx].type,
-        stockNum: selectedItem.data().stock[idx].number,
+        type: Object.keys(selectedItem.data().stock)[idx],
+        stockNum: Object.values(selectedItem.data().stock)[idx][0],
+        no: Object.values(selectedItem.data().stock)[idx][1],
       }));
 
+    initialInfo.sort((a, b) => {
+      return a.no - b.no;
+    });
     setItemDetailInfo(initialInfo);
   }, []);
 
@@ -51,7 +55,7 @@ const ItemDetailOrder = ({
       }
     }
 
-    if (Object.keys(formItems).length > 0) {
+    if (Object.keys(formItems).length) {
       //若formItems裡有和cartItems相同type的商品，只將所需數量加到該項數量
       for (let type in formItems) {
         if (cartItems[type]) {

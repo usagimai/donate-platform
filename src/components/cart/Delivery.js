@@ -50,53 +50,19 @@ const Delivery = ({ cartItems, setCartItems, user }) => {
   }, [deliveryForm]);
 
   //訂單送出後扣除firestore商品庫存
-  // [{id:123,type:'M',num:1},{id:123,type:'M',num:2},{id:456,type:'M',num:1}]  =>  {id:123,stock:[{type:'M',num:1},{type:'M',num:1}]}
-
-  // [{id:123,stock:[{type:'M',num:1},{type:'M',num:1}]},{id:456,stock:[{type:'M',num:1},{type:'M',num:1}]}]
-
   const adjustStock = () => {
-    //測試區 start==================
     currentCartInfo.forEach((itemC) => {
-      const oneItem = all.find((itemA) => itemC.id === itemA.id);
-      // const prevAllStockInfo = oneItem.data().stock;
-      // const prevOtherStockInfo = prevAllStockInfo.filter(
-      //   (item) => item.type !== itemC.type
-      // );
-      const prevStock = oneItem
-        .data()
-        .stock.find((el) => el.type === itemC.type).number;
       const itemRef = doc(db, "items", `${itemC.id}`);
+      const oneItem = all.find((itemA) => itemC.id === itemA.id);
+      const prevStock = oneItem.data().stock[itemC.type][0];
+      const prevNo = oneItem.data().stock[itemC.type][1];
       updateDoc(itemRef, {
-        stock: [
-          ...prevOtherStockInfo,
-          { ["type"]: itemC.type, ["number"]: Number(prevStock - itemC.num) },
+        [`stock.${itemC.type}`]: [
+          Number(prevStock - itemC.num),
+          Number(prevNo),
         ],
       });
-      console.log(prevAllStockInfo);
-
-      dispatch(loadItems());
     });
-
-    //測試區 end==================
-
-    // currentCartInfo.forEach((itemC) => {
-    //   const oneItem = all.find((itemA) => itemC.id === itemA.id);
-    //   const prevAllStockInfo =oneItem.data().stock;
-    //   const prevOtherStockInfo = prevAllStockInfo.filter(
-    //     (item) => item.type !== itemC.type
-    //   );
-    //   const prevStock = oneItem
-    //     .data()
-    //     .stock.find((el) => el.type === itemC.type).number;
-
-    //   const itemRef = doc(db, "items", `${itemC.id}`);
-    //   updateDoc(itemRef, {
-    //     stock: [
-    //   ...prevOtherStockInfo,
-    //   { ["type"]: itemC.type, ["number"]: Number(prevStock - itemC.num) },
-    // ],
-    //   });
-    // });
   };
 
   const getMonth = () => {
@@ -161,9 +127,7 @@ const Delivery = ({ cartItems, setCartItems, user }) => {
     const notEnough = [];
     currentCartInfo.forEach((itemC) => {
       const oneItem = all.find((itemA) => itemC.id === itemA.id);
-      const prevStock = oneItem
-        .data()
-        .stock.find((el) => el.type === itemC.type).number;
+      const prevStock = oneItem.data().stock[itemC.type][0];
 
       if (Number(prevStock - itemC.num) < 0) {
         notEnough.push(itemC);

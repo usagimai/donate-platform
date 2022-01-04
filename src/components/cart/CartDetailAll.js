@@ -34,12 +34,10 @@ const CartDetailAll = ({ cartItems, setCartItems }) => {
         </div>
       </div>
 
-      {all.length > 1 &&
+      {all.length &&
         currentCartInfo.map((itemC, idx) => {
           const oneCartItem = all.find((itemA) => itemC.id === itemA.id);
-          const stock = oneCartItem
-            .data()
-            .stock.find((el) => el.type === itemC.type);
+          const stock = oneCartItem.data().stock[itemC.type][0];
           return (
             <CartDetailOne
               no={idx + 1}
@@ -51,7 +49,7 @@ const CartDetailAll = ({ cartItems, setCartItems }) => {
               key={idx}
               cartItems={cartItems}
               setCartItems={setCartItems}
-              stockNum={stock.number}
+              stockNum={stock}
             />
           );
         })}
