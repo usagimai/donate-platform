@@ -29,5 +29,10 @@
   }
   .delivery-button {
     align-self: flex-end;
+    display: flex;
+    .center {
+      padding-right: 2rem;
+      color: crimson;
+    }
   }
 }

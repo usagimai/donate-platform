@@ -4,7 +4,13 @@ import { useSelector } from "react-redux";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { BrownButton } from "../reusable/ButtonCollection";
 
-const ItemDetailOrder = ({ id, user, setLoginBoxOpen, setCartNum }) => {
+const ItemDetailOrder = ({
+  id,
+  user,
+  setLoginBoxOpen,
+  cartItems,
+  setCartItems,
+}) => {
   const all = useSelector((state) => state.items.all);
   const selectedItem = all.find((doc) => {
     return doc.id === id;
@@ -46,8 +52,6 @@ const ItemDetailOrder = ({ id, user, setLoginBoxOpen, setCartNum }) => {
     }
 
     if (Object.keys(formItems).length > 0) {
-      const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
-
       //若formItems裡有和cartItems相同type的商品，只將所需數量加到該項數量
       for (let type in formItems) {
         if (cartItems[type]) {
@@ -58,8 +62,10 @@ const ItemDetailOrder = ({ id, user, setLoginBoxOpen, setCartNum }) => {
         }
       }
       localStorage.setItem("machudaysCart", JSON.stringify(cartItems));
+      //直接setCartItems(cartItems)不會造成畫面render(傳進同個object)，需調整成不同object
+      const { ...editedCartItems } = cartItems;
+      setCartItems(editedCartItems);
       setCartMessage("已加入購物車");
-      setCartNum(Object.keys(cartItems).length);
     } else {
       //若所有品項的所需數量皆為0
       if (Object.keys(formItems).length === 0) {

@@ -1,18 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { IconSelector } from "../reusable/IconSelector";
-import {
-  TitleButton,
-  BrownButton,
-  BrownButtonReverse,
-} from "../reusable/ButtonCollection";
+import { TitleButton, BrownButton } from "../reusable/ButtonCollection";
 import { loginData } from "../../data";
 import { app, auth } from "../../firebase-config";
 import Backdrop from "../reusable/Backdrop";
 
-export const Login = ({ setLoginBoxOpen }) => {
+const Login = ({ setLoginBoxOpen }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -89,45 +84,4 @@ export const Login = ({ setLoginBoxOpen }) => {
   );
 };
 
-export const Logout = ({ setLogoutBoxOpen }) => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => handleLogoutNavigate())
-      .catch((error) => {
-        console.log("logout error");
-      });
-  };
-
-  const handleLogoutNavigate = () => {
-    handleLogoutBoxClose();
-    navigate("/", { push: true });
-  };
-
-  const handleLogoutBoxClose = () => {
-    setLogoutBoxOpen(false);
-    document.body.style.overflow = "auto";
-  };
-
-  return (
-    <Backdrop>
-      <div className="white-container">
-        <div className="close-bg" onClick={handleLogoutBoxClose}>
-          <IconSelector name="close" />
-        </div>
-        <div className="logout-content">
-          <div className="m-text">是否確認登出?</div>
-          <div className="logout-button">
-            <div onClick={handleLogout} className="pointer">
-              <BrownButton text="確認" />
-            </div>
-            <div onClick={handleLogoutBoxClose} className="pointer">
-              <BrownButtonReverse text="取消" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </Backdrop>
-  );
-};
+export default Login;

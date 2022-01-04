@@ -182,6 +182,7 @@ input:-internal-autofill-selected {
 @import "./components/reusable/backdrop";
 @import "./components/reusable/location";
 @import "./components/reusable/emptyMessage";
+@import "./components/reusable/confirm";
 @import "./pages/itemPage";
 @import "./pages/cartPage";
 @import "./pages/orderPage";
@@ -194,7 +195,7 @@ input:-internal-autofill-selected {
 @import "./components/main/itemList";
 @import "./components/main/itemOne";
 @import "./components/footer/footer";
-@import "./components/loginOut/loginOut";
+@import "./components/login/login";
 @import "./components/itemDetail/itemDetail";
 @import "./components/itemDetail/itemDetailImg";
 @import "./components/itemDetail/itemDetailOrder";

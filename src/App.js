@@ -17,7 +17,7 @@ import { loadItems } from "./actions/itemsAction";
 function App() {
   const [user, setUser] = useState("");
   const [loginBoxOpen, setLoginBoxOpen] = useState(false);
-  const [cartNum, setCartNum] = useState(0);
+  const [cartItems, setCartItems] = useState({});
 
   const dispatch = useDispatch();
 
@@ -33,14 +33,18 @@ function App() {
     dispatch(loadItems());
   }, [dispatch]);
 
+  //讀取購物車(local storage商品)
+  // useEffect(() => {
+  //   setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
+  // }, []);
+
   return (
     <>
       <Nav
         user={user}
         loginBoxOpen={loginBoxOpen}
         setLoginBoxOpen={setLoginBoxOpen}
-        cartNum={cartNum}
-        setCartNum={setCartNum}
+        cartItems={cartItems}
       />
       <Routes>
         <Route
@@ -61,11 +65,21 @@ function App() {
             <ItemPage
               user={user}
               setLoginBoxOpen={setLoginBoxOpen}
-              setCartNum={setCartNum}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
             />
           }
         />
-        <Route path="/cart" element={<CartPage />} />
+        <Route
+          path="/cart"
+          element={
+            <CartPage
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+              user={user}
+            />
+          }
+        />
         <Route path="/order" element={<OrderPage />} />
         <Route path="/favorite" element={<FavoritePage />} />
       </Routes>

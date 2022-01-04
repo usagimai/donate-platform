@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { WhiteButton, NumberButton } from "../reusable/ButtonCollection";
+import Confirm from "../reusable/Confirm";
 import logoBird from "../../img/logo-bird.png";
-import { Login } from "../loginOut/LoginOut";
-import { Logout } from "../loginOut/LoginOut";
+import Login from "../login/Login";
 
-const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartNum, setCartNum }) => {
+const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
 
   const handleLoginBoxOpen = () => {
@@ -19,16 +19,16 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartNum, setCartNum }) => {
     document.body.style.overflow = "hidden";
   };
 
-  useEffect(() => {
-    setCartNum(
-      Object.keys(JSON.parse(localStorage.getItem("machudaysCart"))).length
-    );
-  }, []);
-
   return (
     <>
       {loginBoxOpen && <Login setLoginBoxOpen={setLoginBoxOpen} />}
-      {logoutBoxOpen && <Logout setLogoutBoxOpen={setLogoutBoxOpen} />}
+      {logoutBoxOpen && (
+        <Confirm
+          setLogoutBoxOpen={setLogoutBoxOpen}
+          message="是否確認登出?"
+          confirmFor="logout"
+        />
+      )}
 
       <div className="nav">
         <div className="nav-content">
@@ -49,7 +49,7 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartNum, setCartNum }) => {
               </div>
             )}
 
-            {user && (
+            {user && cartItems && (
               <div className="islogin">
                 <div className="menu">
                   <div className="s-text">
@@ -57,15 +57,21 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartNum, setCartNum }) => {
                   </div>
                   <div className="menu-decoration s-text">|</div>
                   <div className="s-text">
-                    <span>購物車</span>
+                    <span>
+                      <Link to="/cart">購物車</Link>
+                    </span>
                   </div>
                   <div>
-                    <NumberButton text={cartNum} />
+                    <NumberButton text={Object.keys(cartItems).length} />
                   </div>
                   <div className="menu-decoration s-text">|</div>
-                  <div className="s-text">訂單</div>
+                  <div className="s-text">
+                    <Link to="/order">訂單</Link>
+                  </div>
                   <div className="menu-decoration s-text">|</div>
-                  <div className="s-text">收藏</div>
+                  <div className="s-text">
+                    <Link to="/favorite">收藏</Link>
+                  </div>
                 </div>
                 <div className="pointer" onClick={handleLogoutBoxOpen}>
                   <WhiteButton text="登出" />

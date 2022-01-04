@@ -1,28 +1,61 @@
+import { Children, useRef, useState } from "react";
 import { IconSelector } from "../reusable/IconSelector";
+import Confirm from "../reusable/Confirm";
 
-const CartDetailOne = () => {
+const CartDetailOne = ({
+  no,
+  img,
+  name,
+  id,
+  type,
+  num,
+  stockNum,
+  cartItems,
+  setCartItems,
+}) => {
+  const orderNum = useRef(num);
+  const [deleteBoxOpen, setDeleteBoxOpen] = useState(false);
+
+  const nums = [];
+  for (let i = 1; i <= stockNum; i++) {
+    nums.push(i);
+  }
+
+  const handleDeleteBoxOpen = () => {
+    setDeleteBoxOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
   return (
     <>
+      {deleteBoxOpen && (
+        <Confirm
+          setDeleteBoxOpen={setDeleteBoxOpen}
+          message="是否確認刪除商品?"
+          confirmFor="deleteItem"
+          cartItems={cartItems}
+          setCartItems={setCartItems}
+          id={id}
+          type={type}
+        />
+      )}
       <div className="cart-detail-one s-text">
-        <div>1</div>
+        <div>{no}</div>
         <div className="cart-img-title">
           <div>
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/donate-platform.appspot.com/o/items%2F0101-0001-0101-F-1.jpg?alt=media&token=9c8242c3-f8db-4be5-b888-ae4dd2b40b28"
-              alt="商品圖"
-            />
+            <img src={img} alt="商品圖" />
           </div>
-          <div>【Machu】點點咖啡色圓領 澎袖 白色純棉短袖襯衫_麻雀</div>
+          <div>{name}</div>
         </div>
-        <div>F</div>
+        <div>{type}</div>
         <div>
-          <select name="order-number-cart">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+          <select name="order-number-cart" ref={orderNum} defaultValue={num}>
+            {Children.toArray(
+              nums.map((num) => <option value={num}>{num}</option>)
+            )}
           </select>
         </div>
-        <div className="l-text">
+        <div className="l-text pointer" onClick={handleDeleteBoxOpen}>
           <IconSelector name="delete" />
         </div>
       </div>

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { ItemLocation } from "../components/reusable/Location";
 import ItemDetail from "../components/itemDetail/ItemDetail";
 
-const ItemPage = ({ user, setLoginBoxOpen, setCartNum }) => {
+const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
   const { pathname } = useLocation();
   const itemPath = pathname.split("/")[2];
 
@@ -21,7 +21,8 @@ const ItemPage = ({ user, setLoginBoxOpen, setCartNum }) => {
             id={itemPath}
             user={user}
             setLoginBoxOpen={setLoginBoxOpen}
-            setCartNum={setCartNum}
+            cartItems={cartItems}
+            setCartItems={setCartItems}
           />
         </div>
       )}

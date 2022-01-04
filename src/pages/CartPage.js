@@ -7,7 +7,7 @@ import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Recommend } from "../components/reusable/Recommend";
 import { History } from "../components/reusable/History";
 
-const CartPage = () => {
+const CartPage = ({ cartItems, setCartItems, user }) => {
   return (
     <>
       {/* <OrderDelivered /> */}
@@ -15,30 +15,41 @@ const CartPage = () => {
         <div className="cart-page-title">
           <TitleButton text="購物車" />
         </div>
-        {/* 購物車有商品顯示內容(開始) */}
-        <div>
-          <CartDetailAll />
-        </div>
-        <div className="cart-page-lower">
-          <div>
-            <Note />
-          </div>
-          <div>
-            <Delivery />
-          </div>
-        </div>
-        {/* 購物車有商品顯示內容(結束) */}
-        {/* 購物車無商品顯示內容(開始) */}
-        {/* <div>
-          <EmptyMessage message="目前購物車是空的" />
-        </div>
-        <div>
-          <Recommend />
-        </div>
-        <div>
-          <History />
-        </div> */}
-        {/* 購物車無商品顯示內容(結束) */}
+        {Object.keys(cartItems).length !== 0 && (
+          <>
+            <div>
+              <CartDetailAll
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+              />
+            </div>
+            <div className="cart-page-lower">
+              <div>
+                <Note />
+              </div>
+              <div>
+                <Delivery
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                  user={user}
+                />
+              </div>
+            </div>
+          </>
+        )}
+        {Object.keys(cartItems).length === 0 && (
+          <>
+            <div>
+              <EmptyMessage message="目前購物車是空的" />
+            </div>
+            <div>
+              <Recommend />
+            </div>
+            <div>
+              <History />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import ItemDetailImg from "./ItemDetailImg";
 import ItemDetailOrder from "./ItemDetailOrder";
 import ItemDetailInfo from "./ItemDetailInfo";
 
-const ItemDetail = ({ id, user, setLoginBoxOpen, setCartNum }) => {
+const ItemDetail = ({ id, user, setLoginBoxOpen, cartItems, setCartItems }) => {
   return (
     <div className="item-detail">
       <div className="item-detail-upper">
@@ -18,7 +18,8 @@ const ItemDetail = ({ id, user, setLoginBoxOpen, setCartNum }) => {
             id={id}
             user={user}
             setLoginBoxOpen={setLoginBoxOpen}
-            setCartNum={setCartNum}
+            cartItems={cartItems}
+            setCartItems={setCartItems}
           />
         </div>
       </div>
