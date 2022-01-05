@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { collection, getDocs } from "firebase/firestore";
 
 import { TitleButton } from "../components/reusable/ButtonCollection";
@@ -12,6 +13,8 @@ import { History } from "../components/reusable/History";
 import { app, db } from "../firebase-config";
 
 const CartPage = ({ cartItems, setCartItems, user }) => {
+  const all = useSelector((state) => state.items.all);
+
   const [noStock, setNoStock] = useState([]);
   const [noEnoughStock, setNoEnoughStock] = useState([]);
 
@@ -100,6 +103,24 @@ const CartPage = ({ cartItems, setCartItems, user }) => {
             <div>
               <EmptyMessage message="目前購物車是空的" />
             </div>
+            {noStock.length > 0 && (
+              <div className="stock-message s-text">
+                <div>
+                  抱歉，以下商品已<span>無庫存</span>：
+                </div>
+                {noStock.map((itemN, idx) => {
+                  const oneNoStockItem = all.find(
+                    (itemA) => itemN.id === itemA.id
+                  );
+                  const noStockItemName = oneNoStockItem.data().name;
+                  return (
+                    <div key={idx}>
+                      {noStockItemName} ( 尺寸/顏色：{itemN.type} )
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             <div>
               <Recommend />
             </div>
