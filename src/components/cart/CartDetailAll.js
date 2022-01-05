@@ -1,9 +1,18 @@
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { DecorationTitle } from "../reusable/DecorationTitle";
+import { IconSelector } from "../reusable/IconSelector";
 import CartDetailOne from "./CartDetailOne";
 
-const CartDetailAll = ({ cartItems, setCartItems }) => {
+const CartDetailAll = ({
+  cartItems,
+  setCartItems,
+  noStock,
+  noEnoughStock,
+  orderNum,
+  setOrderNum,
+}) => {
   const all = useSelector((state) => state.items.all);
 
   //將local storage的購物車資料整理成array形式 [{商品id:__, 尺寸/顏色:__, 數量:__}]
@@ -33,7 +42,7 @@ const CartDetailAll = ({ cartItems, setCartItems }) => {
           <DecorationTitle title="移除" fontSize="s-text" />
         </div>
       </div>
-
+      {console.log(currentCartInfo)}
       {all.length &&
         currentCartInfo.map((itemC, idx) => {
           const oneCartItem = all.find((itemA) => itemC.id === itemA.id);
@@ -50,9 +59,54 @@ const CartDetailAll = ({ cartItems, setCartItems }) => {
               cartItems={cartItems}
               setCartItems={setCartItems}
               stockNum={stock}
+              orderNum={orderNum}
+              setOrderNum={setOrderNum}
             />
           );
         })}
+      {noEnoughStock.length > 0 && (
+        <div className="stock-message s-text">
+          <div>
+            抱歉，以下商品<span>庫存不足</span>：
+          </div>
+          {noEnoughStock.map((itemN, idx) => {
+            const oneNoEnoughStockItem = all.find(
+              (itemA) => itemN.id === itemA.id
+            );
+            const noEnoughStockItemName = oneNoEnoughStockItem.data().name;
+            return (
+              <div key={idx}>
+                <Link
+                  to={`/items/${itemN.id}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {noEnoughStockItemName} ( 尺寸/顏色：{itemN.type} ) 數量不足{" "}
+                  {itemN.num}，請重新選擇數量&emsp;
+                  <IconSelector name="external-link" />
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {noStock.length > 0 && (
+        <div className="stock-message s-text">
+          <div>
+            抱歉，以下商品已<span>無庫存</span>：
+          </div>
+          {noStock.map((itemN, idx) => {
+            const oneNoStockItem = all.find((itemA) => itemN.id === itemA.id);
+            const noStockItemName = oneNoStockItem.data().name;
+            return (
+              <div key={idx}>
+                {noStockItemName} ( 尺寸/顏色：{itemN.type} )
+              </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 };

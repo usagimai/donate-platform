@@ -13,6 +13,7 @@ import {
   faCaretUp,
   faTrashAlt,
   faClipboardList,
+  faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faEnvelope,
@@ -209,6 +210,15 @@ export const IconSelector = ({ name }) => {
           icon={faEnvelopeOpen}
           size="3x"
           color="white"
+        />
+      );
+    case "external-link":
+      return (
+        <FontAwesomeIcon
+          className="external-link"
+          icon={faExternalLinkAlt}
+          size="1x"
+          color="#596e79"
         />
       );
     default:

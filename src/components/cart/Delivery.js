@@ -12,7 +12,13 @@ import { TitleButton, BrownButton } from "../reusable/ButtonCollection";
 import { app, db } from "../../firebase-config";
 import { loadItems } from "../../actions/itemsAction";
 
-const Delivery = ({ cartItems, setCartItems, user }) => {
+const Delivery = ({
+  cartItems,
+  setCartItems,
+  user,
+  setNoStock,
+  setNoEnoughStock,
+}) => {
   const dispatch = useDispatch();
   const all = useSelector((state) => state.items.all);
   const [deliveryForm, setDeliveryForm] = useState({
@@ -24,14 +30,7 @@ const Delivery = ({ cartItems, setCartItems, user }) => {
 
   //初次render讀入session storage中的資料
   useEffect(() => {
-    if (
-      deliveryForm.name !== "" ||
-      deliveryForm.tel !== "" ||
-      deliveryForm.add !== "" ||
-      deliveryForm.remark !== ""
-    ) {
-      setDeliveryForm(JSON.parse(sessionStorage.getItem("machudaysDelivery")));
-    }
+    setDeliveryForm(JSON.parse(sessionStorage.getItem("machudaysDelivery")));
   }, []);
 
   const handleDeliveryForm = (e) => {
@@ -49,7 +48,7 @@ const Delivery = ({ cartItems, setCartItems, user }) => {
     sessionStorage.setItem("machudaysDelivery", JSON.stringify(deliveryForm));
   }, [deliveryForm]);
 
-  //訂單送出後扣除firestore商品庫存
+  //3.訂單送出後扣除firestore商品庫存
   const adjustStock = () => {
     currentCartInfo.forEach((itemC) => {
       const itemRef = doc(db, "items", `${itemC.id}`);
@@ -92,7 +91,7 @@ const Delivery = ({ cartItems, setCartItems, user }) => {
     return { ["id"]: id, ["type"]: type, ["num"]: key[1] };
   });
 
-  //訂單資料存至firestore＆清空購物車
+  //2.訂單資料存至firestore＆清空購物車
   const orderSubmit = () => {
     setDoc(doc(db, "orders", `${year}${month}${day}_${time}`), {
       email: user.email,
@@ -105,12 +104,12 @@ const Delivery = ({ cartItems, setCartItems, user }) => {
       deliveryRemark: deliveryForm.remark,
     });
     setCartItems({});
-    setDeliveryForm({
-      name: "",
-      tel: "",
-      add: "",
-      remark: "",
-    });
+    // setDeliveryForm({
+    //   name: "",
+    //   tel: "",
+    //   add: "",
+    //   remark: "",
+    // });
     localStorage.setItem("machudaysCart", {});
     adjustStock();
     dispatch(loadItems());
@@ -118,25 +117,46 @@ const Delivery = ({ cartItems, setCartItems, user }) => {
 
   const [infoIsEmpty, setInfoIsEmpty] = useState(false);
 
-  //點下「送出訂單」後，先判斷庫存是否足夠、收件資料是否有漏填
+  //1.點下「送出訂單」後，先判斷庫存是否足夠、收件資料是否有漏填
   const handleSubmit = async () => {
     const dbRef = collection(db, "items");
     const itemData = await getDocs(dbRef);
     const all = itemData.docs;
 
-    const notEnough = [];
+    const noStockItems = [];
+    const noEnoughStockItems = [];
     currentCartInfo.forEach((itemC) => {
       const oneItem = all.find((itemA) => itemC.id === itemA.id);
       const prevStock = oneItem.data().stock[itemC.type][0];
 
-      if (Number(prevStock - itemC.num) < 0) {
-        notEnough.push(itemC);
+      switch (true) {
+        case Number(prevStock - itemC.num) < 0 && prevStock === 0:
+          noStockItems.push(itemC);
+          itemC.deleteFromCart = true;
+          break;
+        case Number(prevStock - itemC.num) < 0 && prevStock !== 0:
+          noEnoughStockItems.push(itemC);
+          itemC.deleteFromCart = true;
+          break;
+        default:
+          return;
       }
     });
+    setNoStock(noStockItems);
+    setNoEnoughStock(noEnoughStockItems);
+
+    const editedCartInfo = currentCartInfo
+      .filter((item) => item.deleteFromCart !== true)
+      .reduce(
+        (acc, item) => ({ ...acc, [`${item.id}_${item.type}`]: `${item.num}` }),
+        {}
+      );
+    setCartItems(editedCartInfo);
+    localStorage.setItem("machudaysCart", JSON.stringify(editedCartInfo));
 
     switch (true) {
-      case notEnough.length > 0:
-        //待更新
+      case noStockItems.length > 0 || noEnoughStockItems.length > 0:
+        //頁面top
         console.log("庫存不夠");
         break;
       case deliveryForm.name === "" ||

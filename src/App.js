@@ -34,9 +34,9 @@ function App() {
   }, [dispatch]);
 
   //讀取購物車(local storage商品)
-  // useEffect(() => {
-  //   setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
-  // }, []);
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
+  }, []);
 
   return (
     <>

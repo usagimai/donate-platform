@@ -1,4 +1,4 @@
-import { Children, useRef, useState } from "react";
+import { Children, useState, useEffect } from "react";
 import { IconSelector } from "../reusable/IconSelector";
 import Confirm from "../reusable/Confirm";
 
@@ -13,13 +13,29 @@ const CartDetailOne = ({
   cartItems,
   setCartItems,
 }) => {
-  const orderNum = useRef(num);
+  const [orderNum, setOrderNum] = useState(num);
   const [deleteBoxOpen, setDeleteBoxOpen] = useState(false);
+
+  useEffect(() => {
+    setOrderNum(num);
+  }, [num]);
+  console.log(num);
+  console.log(orderNum);
 
   const nums = [];
   for (let i = 1; i <= stockNum; i++) {
     nums.push(i);
   }
+
+  useEffect(() => {
+    setCartItems((prevValue) => {
+      return { ...prevValue, [`${id}_${type}`]: orderNum };
+    });
+  }, [orderNum]);
+
+  useEffect(() => {
+    localStorage.setItem("machudaysCart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const handleDeleteBoxOpen = () => {
     setDeleteBoxOpen(true);
@@ -48,8 +64,14 @@ const CartDetailOne = ({
           <div>{name}</div>
         </div>
         <div>{type}</div>
-        <div>
-          <select name="order-number-cart" ref={orderNum} defaultValue={num}>
+        <div className="order-number">
+          <select
+            name="order-number-cart"
+            value={orderNum}
+            onChange={(e) => {
+              setOrderNum(e.target.value);
+            }}
+          >
             {Children.toArray(
               nums.map((num) => <option value={num}>{num}</option>)
             )}
