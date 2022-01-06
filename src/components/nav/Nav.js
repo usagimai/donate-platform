@@ -49,7 +49,7 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
               </div>
             )}
 
-            {user && cartItems && (
+            {user && (
               <div className="islogin">
                 <div className="menu">
                   <div className="s-text">
@@ -62,7 +62,11 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
                     </span>
                   </div>
                   <div>
-                    <NumberButton text={Object.keys(cartItems).length} />
+                    {cartItems ? (
+                      <NumberButton text={Object.keys(cartItems).length} />
+                    ) : (
+                      <NumberButton text="0" />
+                    )}
                   </div>
                   <div className="menu-decoration s-text">|</div>
                   <div className="s-text">

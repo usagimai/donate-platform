@@ -56,20 +56,27 @@ const ItemDetailOrder = ({
     }
 
     if (Object.keys(formItems).length) {
-      //若formItems裡有和cartItems相同type的商品，只將所需數量加到該項數量
-      for (let type in formItems) {
-        if (cartItems[type]) {
-          cartItems[type] = Number(cartItems[type]) + Number(formItems[type]);
-        } else {
-          //若formItems的商品在cartItems裡沒有，則直接新增這筆資料
-          cartItems[type] = Number(formItems[type]);
+      //若cartItems是空的，直接將商品加進cartItems
+      if (!cartItems) {
+        setCartItems(formItems);
+        localStorage.setItem("machudaysCart", JSON.stringify(formItems));
+        setCartMessage("已加入購物車");
+      } else {
+        //若formItems裡有和cartItems相同type的商品，只將所需數量加到該項數量
+        for (let type in formItems) {
+          if (cartItems[type]) {
+            cartItems[type] = Number(cartItems[type]) + Number(formItems[type]);
+          } else {
+            //若formItems的商品在cartItems裡沒有，則直接新增這筆資料
+            cartItems[type] = Number(formItems[type]);
+          }
         }
+        localStorage.setItem("machudaysCart", JSON.stringify(cartItems));
+        //直接setCartItems(cartItems)不會造成畫面render(傳進同個object)，需調整成不同object
+        const { ...editedCartItems } = cartItems;
+        setCartItems(editedCartItems);
+        setCartMessage("已加入購物車");
       }
-      localStorage.setItem("machudaysCart", JSON.stringify(cartItems));
-      //直接setCartItems(cartItems)不會造成畫面render(傳進同個object)，需調整成不同object
-      const { ...editedCartItems } = cartItems;
-      setCartItems(editedCartItems);
-      setCartMessage("已加入購物車");
     } else {
       //若所有品項的所需數量皆為0
       if (Object.keys(formItems).length === 0) {
