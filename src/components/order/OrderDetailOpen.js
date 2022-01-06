@@ -1,15 +1,30 @@
+import { Children } from "react";
+import { useSelector } from "react-redux";
+
 import { IconSelector } from "../reusable/IconSelector";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { TitleButton, BrownButton } from "../reusable/ButtonCollection";
 import Backdrop from "../reusable/Backdrop";
 import OrderDetailOpenOne from "../order/OrderDetailOpenOne";
 
-const OrderDetailOpen = () => {
+const OrderDetailOpen = ({
+  orderNo,
+  date,
+  delivery,
+  items,
+  deliveryName,
+  deliveryTel,
+  deliveryAdd,
+  deliveryRemark,
+  setDetailOpen,
+}) => {
+  const all = useSelector((state) => state.items.all);
+
   return (
     <div className="order-detail-container">
       <Backdrop>
         <div className="white-container">
-          <div className="close-bg">
+          <div className="close-bg" onClick={() => setDetailOpen(false)}>
             <IconSelector name="close" />
           </div>
           <div className="order-detail-content">
@@ -17,9 +32,9 @@ const OrderDetailOpen = () => {
               <TitleButton text="訂單詳情" />
             </div>
             <div className="order-three-info s-text">
-              <div>訂單編號：________________</div>
-              <div>日期：2021/12/16</div>
-              <div>配送狀況：訂單處理中</div>
+              <div>訂單編號：{orderNo}</div>
+              <div>日期：{date}</div>
+              <div>配送狀況：{delivery}</div>
             </div>
             <div className="order-detail-list">
               <div>
@@ -36,9 +51,21 @@ const OrderDetailOpen = () => {
               </div>
             </div>
           </div>
-          <OrderDetailOpenOne />
-          <OrderDetailOpenOne />
-          <OrderDetailOpenOne />
+          {Children.toArray(
+            items.map((item, idx) => {
+              const oneOrderItem = all.find((itemA) => item.id === itemA.id);
+              return (
+                <OrderDetailOpenOne
+                  no={idx + 1}
+                  img={oneOrderItem.data().mainImg}
+                  name={oneOrderItem.data().name}
+                  type={item.type}
+                  num={item.num}
+                />
+              );
+            })
+          )}
+
           <div className="order-delivery-info-container">
             <div>
               <TitleButton text="收件資訊" />
@@ -46,19 +73,25 @@ const OrderDetailOpen = () => {
             <div className="order-delivery-info s-text">
               <div className="center">收件人姓名</div>
               <div className="vertical-line"></div>
-              <div>林*竹</div>
+              {/* 第二個字用＊表示 */}
+              <div>{deliveryName}</div>
               <div className="center">聯絡電話</div>
               <div className="vertical-line"></div>
-              <div>0932***264</div>
+              {/* 中間三個字用＊表示 */}
+              <div>{deliveryTel}</div>
               <div className="center">收件地址</div>
               <div className="vertical-line"></div>
-              <div>台北市內湖區康寧路三段**巷**弄**號*樓</div>
+              {/* 數字用＊表示 */}
+              <div>{deliveryAdd}</div>
               <div className="center">備註</div>
               <div className="vertical-line"></div>
-              <div></div>
+              <div>{deliveryRemark}</div>
             </div>
           </div>
-          <div className="order-detail-close-buttom">
+          <div
+            className="order-detail-close-buttom pointer"
+            onClick={() => setDetailOpen(false)}
+          >
             <BrownButton text="關閉" />
           </div>
         </div>

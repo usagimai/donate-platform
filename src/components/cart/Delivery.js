@@ -18,6 +18,7 @@ const Delivery = ({
   user,
   setStockStatus,
   setNoStockItem,
+  setSubmittedBoxOpen,
 }) => {
   const dispatch = useDispatch();
   const all = useSelector((state) => state.items.all);
@@ -94,6 +95,7 @@ const Delivery = ({
   //2.訂單資料存至firestore＆清空購物車
   const orderSubmit = () => {
     setDoc(doc(db, "orders", `${year}${month}${day}_${time}`), {
+      docID: `${year}${month}${day}${time}`,
       email: user.email,
       date: `${year}/${month}/${day}`,
       status: "訂單處理中",
@@ -110,7 +112,7 @@ const Delivery = ({
     //   add: "",
     //   remark: "",
     // });
-    localStorage.setItem("machudaysCart", {});
+    localStorage.removeItem("machudaysCart");
     adjustStock();
     dispatch(loadItems());
   };
@@ -171,6 +173,7 @@ const Delivery = ({
         break;
       default:
         orderSubmit();
+        setSubmittedBoxOpen(true);
         break;
     }
   };

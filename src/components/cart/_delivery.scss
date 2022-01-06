@@ -34,5 +34,11 @@
       padding-right: 2rem;
       color: crimson;
     }
+    .brown-button:hover {
+      background: white;
+      border: solid 0.1rem $primary-dark;
+      border-radius: 1rem;
+      color: $primary-dark;
+    }
   }
 }

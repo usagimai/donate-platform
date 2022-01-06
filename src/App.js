@@ -13,6 +13,7 @@ import FavoritePage from "./pages/FavoritePage";
 import Footer from "./components/footer/Footer";
 import { app, auth } from "./firebase-config";
 import { loadItems } from "./actions/itemsAction";
+import { loadOrders } from "./actions/ordersAction";
 
 function App() {
   const [user, setUser] = useState("");
@@ -40,6 +41,13 @@ function App() {
     setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
     setCartLoading(false);
   }, []);
+
+  //讀取訂單資料
+  useEffect(() => {
+    if (user) {
+      dispatch(loadOrders());
+    }
+  }, [user]);
 
   return (
     <>

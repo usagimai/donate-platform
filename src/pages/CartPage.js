@@ -6,7 +6,7 @@ import { TitleButton } from "../components/reusable/ButtonCollection";
 import CartDetailAll from "../components/cart/CartDetailAll";
 import Note from "../components/cart/Note";
 import Delivery from "../components/cart/Delivery";
-import { OrderDelivered } from "../components/cart/OrderDelivered";
+import { OrderSubmitted } from "../components/cart/OrderSubmitted";
 import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Recommend } from "../components/reusable/Recommend";
 import { History } from "../components/reusable/History";
@@ -19,6 +19,7 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
 
   const [stockStatus, setStockStatus] = useState([]);
   const [noStockItem, setNoStockItem] = useState([]);
+  const [submittedBoxOpen, setSubmittedBoxOpen] = useState(false);
 
   const currentCartInfo = Object.entries(cartItems).map((key) => {
     const id = key[0].split("_")[0];
@@ -73,7 +74,9 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
 
   return (
     <>
-      {/* <OrderDelivered /> */}
+      {submittedBoxOpen && (
+        <OrderSubmitted setSubmittedBoxOpen={setSubmittedBoxOpen} />
+      )}
       <div className="cart-page">
         <div className="cart-page-title">
           <TitleButton text="購物車" />
@@ -100,6 +103,7 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
                   setStockStatus={setStockStatus}
                   noStockItem={noStockItem}
                   setNoStockItem={setNoStockItem}
+                  setSubmittedBoxOpen={setSubmittedBoxOpen}
                 />
               </div>
             </div>
