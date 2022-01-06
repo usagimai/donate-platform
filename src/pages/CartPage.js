@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { collection, getDocs } from "firebase/firestore";
 
 import { TitleButton } from "../components/reusable/ButtonCollection";
@@ -11,12 +11,14 @@ import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Recommend } from "../components/reusable/Recommend";
 import { History } from "../components/reusable/History";
 import { app, db } from "../firebase-config";
+import { loadItems } from "../actions/itemsAction";
 
-const CartPage = ({ cartItems, setCartItems, user }) => {
+const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
+  const dispatch = useDispatch();
   const all = useSelector((state) => state.items.all);
 
-  const [noStock, setNoStock] = useState([]);
-  const [noEnoughStock, setNoEnoughStock] = useState([]);
+  const [stockStatus, setStockStatus] = useState([]);
+  const [noStockItem, setNoStockItem] = useState([]);
 
   const currentCartInfo = Object.entries(cartItems).map((key) => {
     const id = key[0].split("_")[0];
@@ -30,38 +32,44 @@ const CartPage = ({ cartItems, setCartItems, user }) => {
     const itemData = await getDocs(dbRef);
     const all = itemData.docs;
 
-    const noStockItems = [];
-    const noEnoughStockItems = [];
+    const currentStockStatus = [];
     currentCartInfo.forEach((itemC) => {
       const oneItem = all.find((itemA) => itemC.id === itemA.id);
       const prevStock = oneItem.data().stock[itemC.type][0];
 
       switch (true) {
+        case Number(prevStock - itemC.num) >= 0:
+          currentStockStatus.push("stockEnough");
+          itemC.num = itemC.num;
+          break;
         case Number(prevStock - itemC.num) < 0 && prevStock === 0:
-          noStockItems.push(itemC);
-          itemC.deleteFromCart = true;
+          itemC.num = 0;
           break;
         case Number(prevStock - itemC.num) < 0 && prevStock !== 0:
-          noEnoughStockItems.push(itemC);
-          itemC.deleteFromCart = true;
+          currentStockStatus.push("noEnoughStock");
+          itemC.num = prevStock;
           break;
         default:
           return;
       }
-      //設定購物車若沒商品，但無庫存及不足有商品的話，購物車無商品下顯示說明
     });
-    setNoStock(noStockItems);
-    setNoEnoughStock(noEnoughStockItems);
+    setStockStatus(currentStockStatus);
+    setNoStockItem(currentCartInfo.filter((item) => item.num === 0));
 
     const editedCartInfo = currentCartInfo
-      .filter((item) => item.deleteFromCart !== true)
+      .filter((item) => item.num !== 0)
       .reduce(
-        (acc, item) => ({ ...acc, [`${item.id}_${item.type}`]: `${item.num}` }),
+        (acc, item) => ({
+          ...acc,
+          [`${item.id}_${item.type}`]: Number(`${item.num}`),
+        }),
         {}
       );
-    setCartItems(editedCartInfo);
     localStorage.setItem("machudaysCart", JSON.stringify(editedCartInfo));
-  }, []);
+    setCartItems(editedCartInfo);
+
+    dispatch(loadItems());
+  }, [cartLoading]);
 
   return (
     <>
@@ -76,8 +84,8 @@ const CartPage = ({ cartItems, setCartItems, user }) => {
               <CartDetailAll
                 cartItems={cartItems}
                 setCartItems={setCartItems}
-                noStock={noStock}
-                noEnoughStock={noEnoughStock}
+                stockStatus={stockStatus}
+                noStockItem={noStockItem}
               />
             </div>
             <div className="cart-page-lower">
@@ -89,10 +97,9 @@ const CartPage = ({ cartItems, setCartItems, user }) => {
                   cartItems={cartItems}
                   setCartItems={setCartItems}
                   user={user}
-                  noStock={noStock}
-                  setNoStock={setNoStock}
-                  noEnoughStock={noEnoughStock}
-                  setNoEnoughStock={setNoEnoughStock}
+                  setStockStatus={setStockStatus}
+                  noStockItem={noStockItem}
+                  setNoStockItem={setNoStockItem}
                 />
               </div>
             </div>
@@ -103,12 +110,12 @@ const CartPage = ({ cartItems, setCartItems, user }) => {
             <div>
               <EmptyMessage message="目前購物車是空的" />
             </div>
-            {noStock.length > 0 && (
+            {noStockItem.length > 0 && (
               <div className="stock-message s-text">
                 <div>
                   抱歉，以下商品已<span>無庫存</span>：
                 </div>
-                {noStock.map((itemN, idx) => {
+                {noStockItem.map((itemN, idx) => {
                   const oneNoStockItem = all.find(
                     (itemA) => itemN.id === itemA.id
                   );

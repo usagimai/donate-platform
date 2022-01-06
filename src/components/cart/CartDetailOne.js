@@ -12,6 +12,7 @@ const CartDetailOne = ({
   stockNum,
   cartItems,
   setCartItems,
+  oneStockStatus,
 }) => {
   const [orderNum, setOrderNum] = useState(num);
   const [deleteBoxOpen, setDeleteBoxOpen] = useState(false);
@@ -19,8 +20,6 @@ const CartDetailOne = ({
   useEffect(() => {
     setOrderNum(num);
   }, [num]);
-  console.log(num);
-  console.log(orderNum);
 
   const nums = [];
   for (let i = 1; i <= stockNum; i++) {
@@ -76,6 +75,11 @@ const CartDetailOne = ({
               nums.map((num) => <option value={num}>{num}</option>)
             )}
           </select>
+          {oneStockStatus && (
+            <div className="s-text">
+              {oneStockStatus === "noEnoughStock" && "庫存少於需求"}
+            </div>
+          )}
         </div>
         <div className="l-text pointer" onClick={handleDeleteBoxOpen}>
           <IconSelector name="delete" />

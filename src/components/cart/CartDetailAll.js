@@ -1,15 +1,13 @@
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { DecorationTitle } from "../reusable/DecorationTitle";
-import { IconSelector } from "../reusable/IconSelector";
 import CartDetailOne from "./CartDetailOne";
 
 const CartDetailAll = ({
   cartItems,
   setCartItems,
-  noStock,
-  noEnoughStock,
+  stockStatus,
+  noStockItem,
   orderNum,
   setOrderNum,
 }) => {
@@ -42,11 +40,11 @@ const CartDetailAll = ({
           <DecorationTitle title="移除" fontSize="s-text" />
         </div>
       </div>
-      {console.log(currentCartInfo)}
       {all.length &&
         currentCartInfo.map((itemC, idx) => {
           const oneCartItem = all.find((itemA) => itemC.id === itemA.id);
           const stock = oneCartItem.data().stock[itemC.type][0];
+          const oneStockStatus = stockStatus[idx];
           return (
             <CartDetailOne
               no={idx + 1}
@@ -61,47 +59,19 @@ const CartDetailAll = ({
               stockNum={stock}
               orderNum={orderNum}
               setOrderNum={setOrderNum}
+              oneStockStatus={oneStockStatus}
             />
           );
         })}
-      {noEnoughStock.length > 0 && (
+      {noStockItem.length > 0 && (
         <div className="stock-message s-text">
-          <div>
-            抱歉，以下商品<span>庫存不足</span>：
-          </div>
-          {noEnoughStock.map((itemN, idx) => {
-            const oneNoEnoughStockItem = all.find(
-              (itemA) => itemN.id === itemA.id
-            );
-            const noEnoughStockItemName = oneNoEnoughStockItem.data().name;
-            return (
-              <div key={idx}>
-                <Link
-                  to={`/items/${itemN.id}`}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  {noEnoughStockItemName} ( 尺寸/顏色：{itemN.type} ) 數量不足{" "}
-                  {itemN.num}，請重新選擇數量&emsp;
-                  <IconSelector name="external-link" />
-                </Link>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {noStock.length > 0 && (
-        <div className="stock-message s-text">
-          <div>
-            抱歉，以下商品已<span>無庫存</span>：
-          </div>
-          {noStock.map((itemN, idx) => {
+          <div>抱歉，以下商品已無庫存：</div>
+          {noStockItem.map((itemN, idx) => {
             const oneNoStockItem = all.find((itemA) => itemN.id === itemA.id);
             const noStockItemName = oneNoStockItem.data().name;
             return (
               <div key={idx}>
-                {noStockItemName} ( 尺寸/顏色：{itemN.type} )
+                {noStockItemName}&emsp;( 尺寸/顏色：{itemN.type} )
               </div>
             );
           })}

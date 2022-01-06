@@ -16,8 +16,8 @@ const Delivery = ({
   cartItems,
   setCartItems,
   user,
-  setNoStock,
-  setNoEnoughStock,
+  setStockStatus,
+  setNoStockItem,
 }) => {
   const dispatch = useDispatch();
   const all = useSelector((state) => state.items.all);
@@ -123,41 +123,46 @@ const Delivery = ({
     const itemData = await getDocs(dbRef);
     const all = itemData.docs;
 
-    const noStockItems = [];
-    const noEnoughStockItems = [];
+    const currentStockStatus = [];
     currentCartInfo.forEach((itemC) => {
       const oneItem = all.find((itemA) => itemC.id === itemA.id);
       const prevStock = oneItem.data().stock[itemC.type][0];
 
       switch (true) {
+        case Number(prevStock - itemC.num) >= 0:
+          currentStockStatus.push("stockEnough");
+          break;
         case Number(prevStock - itemC.num) < 0 && prevStock === 0:
-          noStockItems.push(itemC);
-          itemC.deleteFromCart = true;
+          itemC.num = 0;
           break;
         case Number(prevStock - itemC.num) < 0 && prevStock !== 0:
-          noEnoughStockItems.push(itemC);
-          itemC.deleteFromCart = true;
+          currentStockStatus.push("noEnoughStock");
+          itemC.num = prevStock;
           break;
         default:
           return;
       }
     });
-    setNoStock(noStockItems);
-    setNoEnoughStock(noEnoughStockItems);
+    setStockStatus(currentStockStatus);
+    setNoStockItem(currentCartInfo.filter((item) => item.num === 0));
 
     const editedCartInfo = currentCartInfo
-      .filter((item) => item.deleteFromCart !== true)
+      .filter((item) => item.num !== 0)
       .reduce(
-        (acc, item) => ({ ...acc, [`${item.id}_${item.type}`]: `${item.num}` }),
+        (acc, item) => ({
+          ...acc,
+          [`${item.id}_${item.type}`]: Number(`${item.num}`),
+        }),
         {}
       );
-    setCartItems(editedCartInfo);
     localStorage.setItem("machudaysCart", JSON.stringify(editedCartInfo));
+    setCartItems(editedCartInfo);
 
     switch (true) {
-      case noStockItems.length > 0 || noEnoughStockItems.length > 0:
+      case currentCartInfo.filter((item) => item.num === 0).length > 0 ||
+        currentStockStatus.includes("noEnoughStock"):
         //頁面top
-        console.log("庫存不夠");
+        dispatch(loadItems());
         break;
       case deliveryForm.name === "" ||
         deliveryForm.tel === "" ||

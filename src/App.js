@@ -18,6 +18,7 @@ function App() {
   const [user, setUser] = useState("");
   const [loginBoxOpen, setLoginBoxOpen] = useState(false);
   const [cartItems, setCartItems] = useState({});
+  const [cartLoading, setCartLoading] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -34,8 +35,10 @@ function App() {
   }, [dispatch]);
 
   //讀取購物車(local storage商品)
+  //由於進到CartPage時該頁的useEffect會比App的useEffect先執行，為了確保執行順序，設定CartPage的useEffect等這邊的cartLoading變動時再執行
   useEffect(() => {
     setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
+    setCartLoading(false);
   }, []);
 
   return (
@@ -77,6 +80,7 @@ function App() {
               cartItems={cartItems}
               setCartItems={setCartItems}
               user={user}
+              cartLoading={cartLoading}
             />
           }
         />
