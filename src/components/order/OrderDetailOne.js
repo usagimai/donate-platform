@@ -16,6 +16,11 @@ const OrderDetailOne = ({
 }) => {
   const [detailOpen, setDetailOpen] = useState(false);
 
+  const handleDetailOpen = () => {
+    setDetailOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
   return (
     <>
       {detailOpen && (
@@ -48,7 +53,7 @@ const OrderDetailOne = ({
         <div>{orderNo}</div>
         <div>{date}</div>
         <div>{delivery}</div>
-        <div className="pointer" onClick={() => setDetailOpen(true)}>
+        <div className="pointer" onClick={handleDetailOpen}>
           <IconSelector name="order-detail-icon" />
         </div>
       </div>

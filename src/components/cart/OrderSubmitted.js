@@ -26,10 +26,30 @@ export const OrderSubmitted = ({ setSubmittedBoxOpen }) => {
     setOrderNo(orderNoArr[0]);
   }, [orders]);
 
+  const handleSubmittedBoxClose = (arguement) => {
+    switch (arguement) {
+      case "close":
+        setSubmittedBoxOpen(false);
+        break;
+      case "home":
+        navigate("/", { push: true });
+        break;
+      case "order":
+        navigate("/order", { push: true });
+        break;
+      default:
+        break;
+    }
+    document.body.style.overflow = "auto";
+  };
+
   return (
     <Backdrop>
       <div className="white-container">
-        <div className="close-bg" onClick={() => setSubmittedBoxOpen(false)}>
+        <div
+          className="close-bg"
+          onClick={() => handleSubmittedBoxClose("close")}
+        >
           <IconSelector name="close" />
         </div>
         <div className="order-delivered-content">
@@ -42,13 +62,13 @@ export const OrderSubmitted = ({ setSubmittedBoxOpen }) => {
           </div>
           <div className="order-delivered-button">
             <div
-              onClick={() => navigate("/", { push: true })}
+              onClick={() => handleSubmittedBoxClose("home")}
               className="pointer"
             >
               <BrownButton text="回首頁" />
             </div>
             <div
-              onClick={() => navigate("/order", { push: true })}
+              onClick={() => handleSubmittedBoxClose("order")}
               className="pointer"
             >
               <BrownButton text="查看訂單" />

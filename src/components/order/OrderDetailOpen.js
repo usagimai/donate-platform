@@ -5,6 +5,7 @@ import { IconSelector } from "../reusable/IconSelector";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { TitleButton, BrownButton } from "../reusable/ButtonCollection";
 import Backdrop from "../reusable/Backdrop";
+import ScrollTop from "../reusable/ScrollTop";
 import OrderDetailOpenOne from "../order/OrderDetailOpenOne";
 
 const OrderDetailOpen = ({
@@ -20,11 +21,17 @@ const OrderDetailOpen = ({
 }) => {
   const all = useSelector((state) => state.items.all);
 
+  const handleDetailClose = () => {
+    setDetailOpen(false);
+    document.body.style.overflow = "auto";
+  };
+
   return (
     <div className="order-detail-container">
+      <ScrollTop />
       <Backdrop>
         <div className="white-container">
-          <div className="close-bg" onClick={() => setDetailOpen(false)}>
+          <div className="close-bg" onClick={handleDetailClose}>
             <IconSelector name="close" />
           </div>
           <div className="order-detail-content">
@@ -91,7 +98,7 @@ const OrderDetailOpen = ({
           </div>
           <div
             className="order-detail-close-buttom pointer"
-            onClick={() => setDetailOpen(false)}
+            onClick={handleDetailClose}
           >
             <BrownButton text="關閉" />
           </div>

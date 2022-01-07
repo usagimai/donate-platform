@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { collection, getDocs } from "firebase/firestore";
 
 import { TitleButton } from "../components/reusable/ButtonCollection";
+import ScrollTop from "../components/reusable/ScrollTop";
 import CartDetailAll from "../components/cart/CartDetailAll";
 import Note from "../components/cart/Note";
 import Delivery from "../components/cart/Delivery";
@@ -140,6 +141,7 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
             </div>
           </>
         )}
+        <ScrollTop />
       </div>
     </>
   );

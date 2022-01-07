@@ -4,6 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import { DecorationTitle } from "../components/reusable/DecorationTitle";
+import ScrollTop from "../components/reusable/ScrollTop";
 import FavoriteOne from "../components/favorite/FavoriteOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Recommend } from "../components/reusable/Recommend";
@@ -75,6 +76,7 @@ const FavoritePage = ({ user }) => {
           </div>
         </>
       )}
+      <ScrollTop />
     </div>
   );
 };

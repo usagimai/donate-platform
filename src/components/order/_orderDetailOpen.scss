@@ -55,10 +55,11 @@
   }
 
   .backdrop {
-    position: absolute;
-    height: auto;
+    min-height: fit-content;
+    overflow-y: scroll;
   }
   .white-container {
+    align-self: flex-start;
     margin: 7rem 0;
   }
 }

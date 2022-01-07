@@ -118,6 +118,12 @@ const Delivery = ({
   };
 
   const [infoIsEmpty, setInfoIsEmpty] = useState(false);
+  const scrollTop = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+    });
+  };
 
   //1.點下「送出訂單」後，先判斷庫存是否足夠、收件資料是否有漏填
   const handleSubmit = async () => {
@@ -163,7 +169,7 @@ const Delivery = ({
     switch (true) {
       case currentCartInfo.filter((item) => item.num === 0).length > 0 ||
         currentStockStatus.includes("noEnoughStock"):
-        //頁面top
+        scrollTop();
         dispatch(loadItems());
         break;
       case deliveryForm.name === "" ||
@@ -173,7 +179,9 @@ const Delivery = ({
         break;
       default:
         orderSubmit();
+        scrollTop();
         setSubmittedBoxOpen(true);
+        document.body.style.overflow = "hidden";
         break;
     }
   };
