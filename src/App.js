@@ -93,7 +93,7 @@ function App() {
           }
         />
         <Route path="/order" element={<OrderPage />} />
-        <Route path="/favorite" element={<FavoritePage />} />
+        <Route path="/favorite" element={<FavoritePage user={user} />} />
       </Routes>
       <Footer />
     </>

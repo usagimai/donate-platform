@@ -1,20 +1,45 @@
-import { IconSelector } from "../reusable/IconSelector";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const FavoriteOne = () => {
+import { IconSelector } from "../reusable/IconSelector";
+import Confirm from "../reusable/Confirm";
+
+const FavoriteOne = ({ no, id, img, name, favorites, user }) => {
+  const dispatch = useDispatch();
+  const [deleteFavBoxOpen, setDeleteFavBoxOpen] = useState(false);
+
+  const handleDeleteBoxOpen = () => {
+    setDeleteFavBoxOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
   return (
     <>
+      {deleteFavBoxOpen && (
+        <Confirm
+          setDeleteFavBoxOpen={setDeleteFavBoxOpen}
+          message="是否確認收藏商品?"
+          confirmFor="deleteFavorites"
+          dispatch={dispatch}
+          favorites={favorites}
+          user={user}
+          idFav={id}
+        />
+      )}
       <div className="favorite-one s-text">
-        <div>1</div>
+        <div>{no}</div>
         <div className="favorite-img-title">
           <div>
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/donate-platform.appspot.com/o/items%2F0101-0001-0101-F-1.jpg?alt=media&token=9c8242c3-f8db-4be5-b888-ae4dd2b40b28"
-              alt="商品圖"
-            />
+            <Link to={`/items/${id}`}>
+              <img src={img} alt="商品圖" />
+            </Link>
           </div>
-          <div>【Machu】點點咖啡色圓領 澎袖 白色純棉短袖襯衫_麻雀</div>
+          <div>
+            <Link to={`/items/${id}`}>{name}</Link>
+          </div>
         </div>
-        <div className="l-text">
+        <div className="l-text pointer" onClick={handleDeleteBoxOpen}>
           <IconSelector name="delete" />
         </div>
       </div>

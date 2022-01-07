@@ -22,3 +22,13 @@ export const handleRemoveFavorite = (dispatch, favorites, user, id) => {
   });
   dispatch(loadFavorites());
 };
+
+export const handleRemoveFavorite2 = (dispatch, favorites, user, idFav) => {
+  const prevFavorites = favorites[0].data().itemId;
+
+  setDoc(doc(db, "favorites", user.uid), {
+    email: user.email,
+    itemId: prevFavorites.filter((item) => item !== idFav),
+  });
+  dispatch(loadFavorites());
+};

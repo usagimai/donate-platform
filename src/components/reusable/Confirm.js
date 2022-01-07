@@ -3,18 +3,24 @@ import { signOut } from "firebase/auth";
 
 import { IconSelector } from "../reusable/IconSelector";
 import { BrownButton, BrownButtonReverse } from "../reusable/ButtonCollection";
-import { app, auth } from "../../firebase-config";
 import Backdrop from "../reusable/Backdrop";
+import { handleRemoveFavorite2 } from "../../utils/favoritesUtils";
+import { app, auth } from "../../firebase-config";
 
 const Confirm = ({
   setLogoutBoxOpen,
   setDeleteBoxOpen,
+  setDeleteFavBoxOpen,
   setCartItems,
   cartItems,
   message,
   confirmFor,
   id,
   type,
+  dispatch,
+  favorites,
+  user,
+  idFav,
 }) => {
   const navigate = useNavigate();
 
@@ -35,6 +41,10 @@ const Confirm = ({
         setCartItems(editedCartItems);
         handleConfirmBoxClose();
         break;
+      case "deleteFavorites":
+        handleRemoveFavorite2(dispatch, favorites, user, idFav);
+        handleConfirmBoxClose();
+        break;
       default:
         console.log("confirmFor error");
     }
@@ -47,6 +57,9 @@ const Confirm = ({
         break;
       case "deleteItem":
         setDeleteBoxOpen(false);
+        break;
+      case "deleteFavorites":
+        setDeleteFavBoxOpen(false);
         break;
       default:
         console.log("confirmBoxClose error");
