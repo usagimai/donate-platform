@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { collection, getDocs } from "firebase/firestore";
 
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import { DecorationTitle } from "../components/reusable/DecorationTitle";
@@ -7,15 +8,20 @@ import FavoriteOne from "../components/favorite/FavoriteOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Recommend } from "../components/reusable/Recommend";
 import { History } from "../components/reusable/History";
-import { loadFavorites } from "../actions/favoritesAction";
+import { app, db } from "../firebase-config";
 
 const FavoritePage = ({ user }) => {
-  const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.favorites.favorites);
   const all = useSelector((state) => state.items.all);
 
-  useEffect(() => {
-    dispatch(loadFavorites());
+  const [favorites, setFavorites] = useState([]);
+  const [favoritesIdArr, setFavoritesIdArr] = useState([]);
+
+  useEffect(async () => {
+    const dbRef = collection(db, "favorites");
+    const favoritesData = await getDocs(dbRef);
+    const favoritesArr = favoritesData.docs;
+    setFavorites(favoritesArr);
+    setFavoritesIdArr(favoritesArr[0].data().itemId);
   }, []);
 
   return (
@@ -24,7 +30,7 @@ const FavoritePage = ({ user }) => {
         <TitleButton text="收藏" />
       </div>
 
-      {favorites[0].data().itemId.length > 0 && (
+      {favoritesIdArr.length > 0 && (
         <div>
           <div className="favorite-list-container">
             <div>
@@ -38,24 +44,25 @@ const FavoritePage = ({ user }) => {
             </div>
           </div>
 
-          {favorites[0].data().itemId.map((itemF, idx) => {
-            const oneFavoriteItem = all.find((itemA) => itemF === itemA.id);
-            return (
-              <FavoriteOne
-                no={idx + 1}
-                id={itemF}
-                img={oneFavoriteItem.data().mainImg}
-                name={oneFavoriteItem.data().name}
-                key={itemF}
-                favorites={favorites}
-                user={user}
-              />
-            );
-          })}
+          {all.length > 0 &&
+            favoritesIdArr.map((itemF, idx) => {
+              const oneFavoriteItem = all.find((itemA) => itemF === itemA.id);
+              return (
+                <FavoriteOne
+                  no={idx + 1}
+                  id={itemF}
+                  img={oneFavoriteItem.data().mainImg}
+                  name={oneFavoriteItem.data().name}
+                  key={itemF}
+                  favorites={favorites}
+                  user={user}
+                />
+              );
+            })}
         </div>
       )}
 
-      {favorites[0].data().itemId.length === 0 && (
+      {favoritesIdArr.length === 0 && (
         <>
           <div>
             <EmptyMessage message="無收藏商品" />

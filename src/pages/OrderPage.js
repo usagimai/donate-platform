@@ -1,19 +1,21 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
 
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import OrderDetailOne from "../components/order/OrderDetailOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Recommend } from "../components/reusable/Recommend";
 import { History } from "../components/reusable/History";
-import { loadOrders } from "../actions/ordersAction";
+import { app, db } from "../firebase-config";
 
 const OrderPage = () => {
-  const dispatch = useDispatch();
-  const orders = useSelector((state) => state.orders.orders);
+  const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    dispatch(loadOrders());
+  useEffect(async () => {
+    const dbRef = collection(db, "orders");
+    const ordersData = await getDocs(dbRef);
+    const ordersArr = ordersData.docs;
+    setOrders(ordersArr);
   }, []);
 
   return (
