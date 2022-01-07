@@ -1,4 +1,6 @@
 import { Children, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { IconSelector } from "../reusable/IconSelector";
 import Confirm from "../reusable/Confirm";
 
@@ -58,9 +60,13 @@ const CartDetailOne = ({
         <div>{no}</div>
         <div className="cart-img-title">
           <div>
-            <img src={img} alt="商品圖" />
+            <Link to={`/items/${id}`}>
+              <img src={img} alt="商品圖" />
+            </Link>
           </div>
-          <div>{name}</div>
+          <div>
+            <Link to={`/items/${id}`}>{name}</Link>
+          </div>
         </div>
         <div>{type}</div>
         <div className="order-number">

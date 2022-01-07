@@ -56,6 +56,7 @@ const OrderDetailOpen = ({
               const oneOrderItem = all.find((itemA) => item.id === itemA.id);
               return (
                 <OrderDetailOpenOne
+                  id={item.id}
                   no={idx + 1}
                   img={oneOrderItem.data().mainImg}
                   name={oneOrderItem.data().name}
