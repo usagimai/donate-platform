@@ -26,8 +26,8 @@ export const OrderSubmitted = ({ setSubmittedBoxOpen }) => {
     setOrderNo(orderNoArr[0]);
   }, [orders]);
 
-  const handleSubmittedBoxClose = (arguement) => {
-    switch (arguement) {
+  const handleSubmittedBoxClose = (argument) => {
+    switch (argument) {
       case "close":
         setSubmittedBoxOpen(false);
         break;

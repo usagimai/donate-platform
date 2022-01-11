@@ -23,7 +23,6 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="footer-message">
-        {console.log(isCopied)}
         {isCopied && (
           <div className="copied">
             <img src={copied} alt="信箱已複製" />
