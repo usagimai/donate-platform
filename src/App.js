@@ -49,6 +49,24 @@ function App() {
     }
   }, [user]);
 
+  //重新整理後，頁面從最頂端顯示
+  const [isReload, setIsReload] = useState(false);
+
+  useEffect(() => {
+    const scrollTop = () => {
+      setIsReload(true);
+
+      window.scroll({
+        top: 0,
+        left: 0,
+      });
+    };
+
+    window.addEventListener("beforeunload", scrollTop, { passive: true });
+  }, []);
+
+  if (isReload) return null;
+
   return (
     <>
       <Nav

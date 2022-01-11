@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { ItemLocation } from "../components/reusable/Location";
+import ScrollTop from "../components/reusable/ScrollTop";
 import ItemDetail from "../components/itemDetail/ItemDetail";
 
 const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
@@ -12,7 +13,7 @@ const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
 
   return (
     <>
-      {all.length > 1 && (
+      {all.length && (
         <div className="item-page">
           <div className="item-page-location">
             <ItemLocation id={itemPath} />
@@ -24,6 +25,7 @@ const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
             cartItems={cartItems}
             setCartItems={setCartItems}
           />
+          <ScrollTop />
         </div>
       )}
     </>

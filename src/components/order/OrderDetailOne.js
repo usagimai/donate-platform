@@ -13,12 +13,14 @@ const OrderDetailOne = ({
   deliveryTel,
   deliveryAdd,
   deliveryRemark,
+  setOrderDetailNo,
 }) => {
   const [detailOpen, setDetailOpen] = useState(false);
 
   const handleDetailOpen = () => {
     setDetailOpen(true);
     document.body.style.overflow = "hidden";
+    setOrderDetailNo(orderNo);
   };
 
   return (
@@ -37,7 +39,7 @@ const OrderDetailOne = ({
         />
       )}
 
-      <div className="order-list-box s-text">
+      <div className="order-list-box s-text" id={orderNo}>
         <div>
           <DecorationTitle title="訂單編號" fontSize="s-text" />
         </div>

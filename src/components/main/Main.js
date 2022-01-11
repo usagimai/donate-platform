@@ -9,7 +9,7 @@ const Main = ({ user, setLoginBoxOpen }) => {
   const [searchText, setSearchText] = useState("");
 
   return (
-    <div className="main">
+    <div className="main" id="main">
       <div className="main-left">
         <Search setSearchText={setSearchText} />
         <Category />

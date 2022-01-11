@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { WhiteButton, NumberButton } from "../reusable/ButtonCollection";
@@ -8,6 +8,7 @@ import Login from "../login/Login";
 
 const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
+  const [itemsClicked, setItemsClicked] = useState(false);
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
@@ -18,6 +19,11 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
     setLogoutBoxOpen(true);
     document.body.style.overflow = "hidden";
   };
+
+  useEffect(() => {
+    document.getElementById("main").scrollIntoView();
+    setItemsClicked(false);
+  }, [itemsClicked]);
 
   return (
     <>
@@ -52,7 +58,7 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
             {user && (
               <div className="islogin">
                 <div className="menu">
-                  <div className="s-text">
+                  <div className="s-text" onClick={() => setItemsClicked(true)}>
                     <Link to="/">商品</Link>
                   </div>
                   <div className="menu-decoration s-text">|</div>
