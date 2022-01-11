@@ -22,55 +22,57 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
   const [noStockItem, setNoStockItem] = useState([]);
   const [submittedBoxOpen, setSubmittedBoxOpen] = useState(false);
 
-  const currentCartInfo = Object.entries(cartItems).map((key) => {
-    const id = key[0].split("_")[0];
-    const type = key[0].split("_")[1];
-    return { ["id"]: id, ["type"]: type, ["num"]: key[1] };
-  });
-
-  //初次進到購物車頁面後，判斷庫存是否足夠
+  //初次進到購物車頁面後，若購物車有商品，判斷庫存是否足夠
   useEffect(async () => {
     const dbRef = collection(db, "items");
     const itemData = await getDocs(dbRef);
     const all = itemData.docs;
 
-    const currentStockStatus = [];
-    currentCartInfo.forEach((itemC) => {
-      const oneItem = all.find((itemA) => itemC.id === itemA.id);
-      const prevStock = oneItem.data().stock[itemC.type][0];
+    if (cartItems) {
+      const currentCartInfo = Object.entries(cartItems).map((key) => {
+        const id = key[0].split("_")[0];
+        const type = key[0].split("_")[1];
+        return { ["id"]: id, ["type"]: type, ["num"]: key[1] };
+      });
 
-      switch (true) {
-        case Number(prevStock - itemC.num) >= 0:
-          currentStockStatus.push("stockEnough");
-          itemC.num = itemC.num;
-          break;
-        case Number(prevStock - itemC.num) < 0 && prevStock === 0:
-          itemC.num = 0;
-          break;
-        case Number(prevStock - itemC.num) < 0 && prevStock !== 0:
-          currentStockStatus.push("noEnoughStock");
-          itemC.num = prevStock;
-          break;
-        default:
-          return;
-      }
-    });
-    setStockStatus(currentStockStatus);
-    setNoStockItem(currentCartInfo.filter((item) => item.num === 0));
+      const currentStockStatus = [];
+      currentCartInfo.forEach((itemC) => {
+        const oneItem = all.find((itemA) => itemC.id === itemA.id);
+        const prevStock = oneItem.data().stock[itemC.type][0];
 
-    const editedCartInfo = currentCartInfo
-      .filter((item) => item.num !== 0)
-      .reduce(
-        (acc, item) => ({
-          ...acc,
-          [`${item.id}_${item.type}`]: Number(`${item.num}`),
-        }),
-        {}
-      );
-    localStorage.setItem("machudaysCart", JSON.stringify(editedCartInfo));
-    setCartItems(editedCartInfo);
+        switch (true) {
+          case Number(prevStock - itemC.num) >= 0:
+            currentStockStatus.push("stockEnough");
+            itemC.num = itemC.num;
+            break;
+          case Number(prevStock - itemC.num) < 0 && prevStock === 0:
+            itemC.num = 0;
+            break;
+          case Number(prevStock - itemC.num) < 0 && prevStock !== 0:
+            currentStockStatus.push("noEnoughStock");
+            itemC.num = prevStock;
+            break;
+          default:
+            return;
+        }
+      });
+      setStockStatus(currentStockStatus);
+      setNoStockItem(currentCartInfo.filter((item) => item.num === 0));
 
-    dispatch(loadItems());
+      const editedCartInfo = currentCartInfo
+        .filter((item) => item.num !== 0)
+        .reduce(
+          (acc, item) => ({
+            ...acc,
+            [`${item.id}_${item.type}`]: Number(`${item.num}`),
+          }),
+          {}
+        );
+      localStorage.setItem("machudaysCart", JSON.stringify(editedCartInfo));
+      setCartItems(editedCartInfo);
+
+      dispatch(loadItems());
+    }
   }, [cartLoading]);
 
   return (
@@ -82,7 +84,7 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
         <div className="cart-page-title">
           <TitleButton text="購物車" />
         </div>
-        {Object.keys(cartItems).length !== 0 && (
+        {cartItems && Object.keys(cartItems).length !== 0 && (
           <>
             <div>
               <CartDetailAll
@@ -110,7 +112,7 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
             </div>
           </>
         )}
-        {Object.keys(cartItems).length === 0 && (
+        {!cartItems || Object.keys(cartItems).length === 0 ? (
           <>
             <div>
               <EmptyMessage message="目前購物車是空的" />
@@ -140,7 +142,7 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
               <History />
             </div>
           </>
-        )}
+        ) : null}
         <ScrollTop />
       </div>
     </>

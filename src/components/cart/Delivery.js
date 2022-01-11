@@ -29,9 +29,11 @@ const Delivery = ({
     remark: "",
   });
 
-  //初次render讀入session storage中的資料
+  //初次render讀入session storage中的資料 (若session storage中有資料)
   useEffect(() => {
-    setDeliveryForm(JSON.parse(sessionStorage.getItem("machudaysDelivery")));
+    if (sessionStorage.getItem("machudaysDelivery")) {
+      setDeliveryForm(JSON.parse(sessionStorage.getItem("machudaysDelivery")));
+    }
   }, []);
 
   const handleDeliveryForm = (e) => {
@@ -106,13 +108,9 @@ const Delivery = ({
       deliveryRemark: deliveryForm.remark,
     });
     setCartItems({});
-    // setDeliveryForm({
-    //   name: "",
-    //   tel: "",
-    //   add: "",
-    //   remark: "",
-    // });
+    setDeliveryForm({});
     localStorage.removeItem("machudaysCart");
+    sessionStorage.removeItem("machudaysDelivery");
     adjustStock();
     dispatch(loadItems());
   };
