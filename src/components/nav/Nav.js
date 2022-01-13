@@ -6,9 +6,15 @@ import Confirm from "../reusable/Confirm";
 import logoBird from "../../img/logo-bird.png";
 import Login from "../login/Login";
 
-const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
+const Nav = ({
+  user,
+  loginBoxOpen,
+  setLoginBoxOpen,
+  cartItems,
+  setItemMenuClicked,
+  setNavLogoClicked,
+}) => {
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
-  const [itemsClicked, setItemsClicked] = useState(false);
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
@@ -19,11 +25,6 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
     setLogoutBoxOpen(true);
     document.body.style.overflow = "hidden";
   };
-
-  useEffect(() => {
-    document.getElementById("main").scrollIntoView();
-    setItemsClicked(false);
-  }, [itemsClicked]);
 
   return (
     <>
@@ -41,11 +42,17 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
           <div className="logo-title-box">
             <div>
               <Link to="/">
-                <img src={logoBird} alt="logo" />
+                <img
+                  src={logoBird}
+                  alt="logo"
+                  onClick={() => setNavLogoClicked(true)}
+                />
               </Link>
             </div>
             <Link to="/">
-              <div className="m-text">Machu Days商品捐贈平台</div>
+              <div className="m-text" onClick={() => setNavLogoClicked(true)}>
+                Machu Days商品捐贈平台
+              </div>
             </Link>
           </div>
           <div>
@@ -58,7 +65,10 @@ const Nav = ({ user, loginBoxOpen, setLoginBoxOpen, cartItems }) => {
             {user && (
               <div className="islogin">
                 <div className="menu">
-                  <div className="s-text" onClick={() => setItemsClicked(true)}>
+                  <div
+                    className="s-text"
+                    onClick={() => setItemMenuClicked(true)}
+                  >
                     <Link to="/">商品</Link>
                   </div>
                   <div className="menu-decoration s-text">|</div>

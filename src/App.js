@@ -20,6 +20,8 @@ function App() {
   const [loginBoxOpen, setLoginBoxOpen] = useState(false);
   const [cartItems, setCartItems] = useState({});
   const [cartLoading, setCartLoading] = useState(true);
+  const [itemMenuClicked, setItemMenuClicked] = useState(false);
+  const [navLogoClicked, setNavLogoClicked] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -49,6 +51,20 @@ function App() {
     }
   }, [user]);
 
+  //點選Nav的Logo，Home從頂端顯示；點選Nav的商品，Home從指定位置顯示
+  useEffect(() => {
+    document.getElementById("main").scrollIntoView();
+    setItemMenuClicked(false);
+  }, [itemMenuClicked]);
+
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      left: 0,
+    });
+    setNavLogoClicked(false);
+  }, [navLogoClicked]);
+
   //重新整理後，頁面從最頂端顯示
   const [isReload, setIsReload] = useState(false);
 
@@ -74,11 +90,22 @@ function App() {
         loginBoxOpen={loginBoxOpen}
         setLoginBoxOpen={setLoginBoxOpen}
         cartItems={cartItems}
+        setItemMenuClicked={setItemMenuClicked}
+        setNavLogoClicked={setNavLogoClicked}
       />
       <Routes>
         <Route
           path="/"
-          element={<Home user={user} setLoginBoxOpen={setLoginBoxOpen} />}
+          element={
+            <Home
+              user={user}
+              setLoginBoxOpen={setLoginBoxOpen}
+              itemMenuClicked={itemMenuClicked}
+              setItemMenuClicked={setItemMenuClicked}
+              navLogoClicked={navLogoClicked}
+              setNavLogoClicked={setNavLogoClicked}
+            />
+          }
         />
         <Route
           path="/:category"
