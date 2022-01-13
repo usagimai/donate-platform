@@ -9,12 +9,17 @@ import Note from "../components/cart/Note";
 import Delivery from "../components/cart/Delivery";
 import { OrderSubmitted } from "../components/cart/OrderSubmitted";
 import EmptyMessage from "../components/reusable/EmptyMessage";
-import { Recommend } from "../components/reusable/Recommend";
-import { History } from "../components/reusable/History";
+import { Carousel } from "../components/reusable/Carousel";
 import { app, db } from "../firebase-config";
 import { loadItems } from "../actions/itemsAction";
 
-const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
+const CartPage = ({
+  cartItems,
+  setCartItems,
+  user,
+  cartLoading,
+  setLoginBoxOpen,
+}) => {
   const dispatch = useDispatch();
   const all = useSelector((state) => state.items.all);
 
@@ -136,10 +141,20 @@ const CartPage = ({ cartItems, setCartItems, user, cartLoading }) => {
               </div>
             )}
             <div>
-              <Recommend />
+              <Carousel
+                user={user}
+                setLoginBoxOpen={setLoginBoxOpen}
+                text="推薦商品"
+                array="recommend"
+              />
             </div>
             <div>
-              <History />
+              <Carousel
+                user={user}
+                setLoginBoxOpen={setLoginBoxOpen}
+                text="最近瀏覽"
+                array="history"
+              />
             </div>
           </>
         ) : null}

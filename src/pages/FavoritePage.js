@@ -7,11 +7,10 @@ import { DecorationTitle } from "../components/reusable/DecorationTitle";
 import ScrollTop from "../components/reusable/ScrollTop";
 import FavoriteOne from "../components/favorite/FavoriteOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
-import { Recommend } from "../components/reusable/Recommend";
-import { History } from "../components/reusable/History";
+import { Carousel } from "../components/reusable/Carousel";
 import { app, db } from "../firebase-config";
 
-const FavoritePage = ({ user }) => {
+const FavoritePage = ({ user, setLoginBoxOpen }) => {
   const all = useSelector((state) => state.items.all);
 
   const [favorites, setFavorites] = useState([]);
@@ -23,7 +22,7 @@ const FavoritePage = ({ user }) => {
     const favoritesArr = favoritesData.docs;
     setFavorites(favoritesArr);
     setFavoritesIdArr(favoritesArr[0].data().itemId);
-  }, []);
+  }, [favorites]);
 
   return (
     <div className="favorite-page">
@@ -69,10 +68,20 @@ const FavoritePage = ({ user }) => {
             <EmptyMessage message="無收藏商品" />
           </div>
           <div>
-            <Recommend />
+            <Carousel
+              user={user}
+              setLoginBoxOpen={setLoginBoxOpen}
+              text="推薦商品"
+              array="recommend"
+            />
           </div>
           <div>
-            <History />
+            <Carousel
+              user={user}
+              setLoginBoxOpen={setLoginBoxOpen}
+              text="最近瀏覽"
+              array="history"
+            />
           </div>
         </>
       )}

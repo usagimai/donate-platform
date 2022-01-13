@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -10,6 +11,33 @@ const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
   const itemPath = pathname.split("/")[2];
 
   const all = useSelector((state) => state.items.all);
+
+  const [historyIdArrOriginal, setHistoryIdArrOriginal] = useState("");
+  const [historyIdArr, setHistoryIdArr] = useState([]);
+
+  useEffect(() => {
+    setHistoryIdArrOriginal(
+      JSON.parse(localStorage.getItem("machudaysHistory"))
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!historyIdArrOriginal) {
+      setHistoryIdArr([itemPath]);
+    } else {
+      const originalArr = [itemPath, ...historyIdArrOriginal];
+      const uniqueItems = new Set();
+      const repeatItems = new Set();
+      originalArr.slice(0, 20).forEach((item) => {
+        uniqueItems.has(item) ? repeatItems.add(item) : uniqueItems.add(item);
+      });
+      setHistoryIdArr([...uniqueItems]);
+    }
+  }, [historyIdArrOriginal]);
+
+  useEffect(() => {
+    localStorage.setItem("machudaysHistory", JSON.stringify(historyIdArr));
+  }, [historyIdArr]);
 
   return (
     <>

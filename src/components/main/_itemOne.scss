@@ -20,4 +20,13 @@
   &:hover {
     transform: translateY(-1%);
   }
+  animation: item-into-view 0.5s 1 linear forwards;
+  @keyframes item-into-view {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }

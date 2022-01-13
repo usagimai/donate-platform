@@ -6,11 +6,10 @@ import { TitleButton } from "../components/reusable/ButtonCollection";
 import ScrollTop from "../components/reusable/ScrollTop";
 import OrderDetailOne from "../components/order/OrderDetailOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
-import { Recommend } from "../components/reusable/Recommend";
-import { History } from "../components/reusable/History";
+import { Carousel } from "../components/reusable/Carousel";
 import { app, db, auth } from "../firebase-config";
 
-const OrderPage = () => {
+const OrderPage = ({ user, setLoginBoxOpen }) => {
   // const [user, setUser] = useState("");
   const [orders, setOrders] = useState([]);
   const [orderDetailNo, setOrderDetailNo] = useState("");
@@ -71,10 +70,20 @@ const OrderPage = () => {
             <EmptyMessage message="查無訂單" />
           </div>
           <div>
-            <Recommend />
+            <Carousel
+              user={user}
+              setLoginBoxOpen={setLoginBoxOpen}
+              text="推薦商品"
+              array="recommend"
+            />
           </div>
           <div>
-            <History />
+            <Carousel
+              user={user}
+              setLoginBoxOpen={setLoginBoxOpen}
+              text="最近瀏覽"
+              array="history"
+            />
           </div>
         </>
       )}
