@@ -21,7 +21,7 @@ export const ListLocation = ({ searchText }) => {
         return setListLocation(["服裝類型", "配件&包包"]);
       case "machu":
         return setListLocation(["台灣品牌", "Machu"]);
-      case "machu-discover":
+      case "machu-discovery-series":
         return setListLocation(["台灣品牌", "Machu Discovery Series"]);
       case "emago":
         return setListLocation(["日本品牌", "Emago"]);

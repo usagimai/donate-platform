@@ -15,7 +15,7 @@ const categoryReducer = (state = "all", action) => {
     case "MACHU":
       return "machu";
     case "MACHU-DISCOVER":
-      return "machu-discover";
+      return "machu-discovery-series";
     case "EMAGO":
       return "emago";
     case "ALMA-DESIGN":

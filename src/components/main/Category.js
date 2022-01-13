@@ -60,7 +60,7 @@ const Category = () => {
           </div>
           <div>
             <Link
-              to="/machu-discover"
+              to="/machu-discovery-series"
               onClick={() => handleCategory("MACHU-DISCOVER")}
             >
               Machu Discovery Series
