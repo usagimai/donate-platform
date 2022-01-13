@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 
@@ -24,6 +24,7 @@ function App() {
   const [navLogoClicked, setNavLogoClicked] = useState(false);
 
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   //使用Firebase的功能監聽使用者是否登入(若為登入，會從Firebase接收到該使用者的資訊，包含email、UID等)
   useEffect(() => {
@@ -53,8 +54,10 @@ function App() {
 
   //點選Nav的Logo，Home從頂端顯示；點選Nav的商品，Home從指定位置顯示
   useEffect(() => {
-    document.getElementById("main").scrollIntoView();
-    setItemMenuClicked(false);
+    if (pathname === "/") {
+      document.getElementById("main").scrollIntoView();
+      setItemMenuClicked(false);
+    }
   }, [itemMenuClicked]);
 
   useEffect(() => {
@@ -96,16 +99,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <Home
-              user={user}
-              setLoginBoxOpen={setLoginBoxOpen}
-              itemMenuClicked={itemMenuClicked}
-              setItemMenuClicked={setItemMenuClicked}
-              navLogoClicked={navLogoClicked}
-              setNavLogoClicked={setNavLogoClicked}
-            />
-          }
+          element={<Home user={user} setLoginBoxOpen={setLoginBoxOpen} />}
         />
         <Route
           path="/:category"
