@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -20,12 +21,20 @@ const CartPage = ({
   cartLoading,
   setLoginBoxOpen,
 }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const all = useSelector((state) => state.items.all);
 
   const [stockStatus, setStockStatus] = useState([]);
   const [noStockItem, setNoStockItem] = useState([]);
   const [submittedBoxOpen, setSubmittedBoxOpen] = useState(false);
+
+  //未登入狀態進入此頁面後，轉導回首頁
+  useEffect(() => {
+    if (!user) {
+      navigate("/", { replace: true });
+    }
+  }, []);
 
   //初次進到購物車頁面後，若購物車有商品，判斷庫存是否足夠
   useEffect(async () => {
@@ -79,6 +88,9 @@ const CartPage = ({
       dispatch(loadItems());
     }
   }, [cartLoading]);
+
+  //未登入狀態進入此頁面後，不顯示內容
+  if (!user) return null;
 
   return (
     <>

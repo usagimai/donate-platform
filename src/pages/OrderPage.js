@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 // import { onAuthStateChanged } from "firebase/auth";
 
@@ -10,9 +11,18 @@ import { Carousel } from "../components/reusable/Carousel";
 import { app, db, auth } from "../firebase-config";
 
 const OrderPage = ({ user, setLoginBoxOpen }) => {
+  const navigate = useNavigate();
+
   // const [user, setUser] = useState("");
   const [orders, setOrders] = useState([]);
   const [orderDetailNo, setOrderDetailNo] = useState("");
+
+  //未登入狀態進入此頁面後，轉導回首頁
+  useEffect(() => {
+    if (!user) {
+      navigate("/", { replace: true });
+    }
+  }, []);
 
   //由於where會有錯誤，暫comment掉，等有不同帳號訂單時確認是否有問題
   // useEffect(() => {
@@ -39,6 +49,9 @@ const OrderPage = ({ user, setLoginBoxOpen }) => {
       setOrderDetailNo("");
     }
   }, [orderDetailNo]);
+
+  //未登入狀態進入此頁面後，不顯示內容
+  if (!user) return null;
 
   return (
     <div className="order-page">

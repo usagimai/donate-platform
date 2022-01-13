@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -11,10 +12,18 @@ import { Carousel } from "../components/reusable/Carousel";
 import { app, db } from "../firebase-config";
 
 const FavoritePage = ({ user, setLoginBoxOpen }) => {
+  const navigate = useNavigate();
   const all = useSelector((state) => state.items.all);
 
   const [favorites, setFavorites] = useState([]);
   const [favoritesIdArr, setFavoritesIdArr] = useState([]);
+
+  //未登入狀態進入此頁面後，轉導回首頁
+  useEffect(() => {
+    if (!user) {
+      navigate("/", { replace: true });
+    }
+  }, []);
 
   useEffect(async () => {
     const dbRef = collection(db, "favorites");
@@ -23,6 +32,9 @@ const FavoritePage = ({ user, setLoginBoxOpen }) => {
     setFavorites(favoritesArr);
     setFavoritesIdArr(favoritesArr[0].data().itemId);
   }, [favorites]);
+
+  //未登入狀態進入此頁面後，不顯示內容
+  if (!user) return null;
 
   return (
     <div className="favorite-page">
