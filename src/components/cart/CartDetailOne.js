@@ -1,5 +1,6 @@
 import { Children, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { IconSelector } from "../reusable/IconSelector";
 import Confirm from "../reusable/Confirm";
@@ -12,12 +13,14 @@ const CartDetailOne = ({
   type,
   num,
   stockNum,
-  cartItems,
-  setCartItems,
   oneStockStatus,
+  setCartItemChange,
 }) => {
+  const dispatch = useDispatch();
   const [orderNum, setOrderNum] = useState(num);
+  const [newCartItems, setNewCartItems] = useState("");
   const [deleteBoxOpen, setDeleteBoxOpen] = useState(false);
+  const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
 
   useEffect(() => {
     setOrderNum(num);
@@ -29,14 +32,18 @@ const CartDetailOne = ({
   }
 
   useEffect(() => {
-    setCartItems((prevValue) => {
+    setNewCartItems((prevValue) => {
       return { ...prevValue, [`${id}_${type}`]: orderNum };
     });
   }, [orderNum]);
 
   useEffect(() => {
-    localStorage.setItem("machudaysCart", JSON.stringify(cartItems));
-  }, [cartItems]);
+    localStorage.setItem(
+      "machudaysCart",
+      JSON.stringify({ ...cartItems, ...newCartItems })
+    );
+    // dispatch(loadCartItems());
+  }, [newCartItems]);
 
   const handleDeleteBoxOpen = () => {
     setDeleteBoxOpen(true);
@@ -50,10 +57,9 @@ const CartDetailOne = ({
           setDeleteBoxOpen={setDeleteBoxOpen}
           message="是否確認刪除商品?"
           confirmFor="deleteItem"
-          cartItems={cartItems}
-          setCartItems={setCartItems}
           id={id}
           type={type}
+          setCartItemChange={setCartItemChange}
         />
       )}
       <div className="cart-detail-one s-text">

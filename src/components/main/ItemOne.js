@@ -8,9 +8,11 @@ import {
   handleAddFavorite,
   handleRemoveFavorite,
 } from "../../utils/favoritesUtils";
+import { app, auth } from "../../firebase-config";
 
-const ItemOne = ({ image, name, id, user, setLoginBoxOpen }) => {
+const ItemOne = ({ image, name, id, setLoginBoxOpen }) => {
   const dispatch = useDispatch();
+  const user = auth.currentUser;
   const favorites = useSelector((state) => state.favorites.favorites);
   const [isFavorite, setIsFavorite] = useState(false);
 

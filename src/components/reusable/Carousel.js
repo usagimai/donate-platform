@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 import ItemOne from "../main/ItemOne";
 import { IconSelector } from "./IconSelector";
 
-export const Carousel = ({ user, setLoginBoxOpen, text, array }) => {
+export const Carousel = ({ setLoginBoxOpen, text, array }) => {
   //輪播用商品array(推薦)
   const all = useSelector((state) => state.items.all);
   const [randomAll, setRandomAll] = useState("");
   useEffect(() => {
     setRandomAll(all.sort(() => Math.random() - 0.5).slice(0, 20));
-  }, []);
+  }, [all]);
   //輪播用商品array(最近瀏覽)
   const [historyIdArrOriginal, setHistoryIdArrOriginal] = useState("");
   const [historyArr, setHistoryArr] = useState([]);
@@ -23,20 +23,24 @@ export const Carousel = ({ user, setLoginBoxOpen, text, array }) => {
 
   const historyItemsArr = [];
   useEffect(() => {
-    switch (true) {
-      case historyIdArrOriginal.length > 0:
-        historyIdArrOriginal.map((id) => {
-          const historyItems = all.find((item) => item.id === id);
-          historyItemsArr.push(historyItems);
-        });
-        setHistoryArr(historyItemsArr);
-        break;
-      case !historyIdArrOriginal:
-        setHistoryArr([]);
-        break;
-      default:
-        console.log("historyIdArrOriginal convertion error");
-        break;
+    if (all.length === 0) {
+      return;
+    } else {
+      switch (true) {
+        case historyIdArrOriginal.length > 0:
+          historyIdArrOriginal.map((id) => {
+            const historyItems = all.find((item) => item.id === id);
+            historyItemsArr.push(historyItems);
+          });
+          setHistoryArr(historyItemsArr);
+          break;
+        case !historyIdArrOriginal:
+          setHistoryArr([]);
+          break;
+        default:
+          console.log("historyIdArrOriginal convertion error");
+          break;
+      }
     }
   }, [historyIdArrOriginal, all]);
 
@@ -74,17 +78,21 @@ export const Carousel = ({ user, setLoginBoxOpen, text, array }) => {
 
   //依據array這個prop的值決定顯示哪個商品array
   useEffect(() => {
-    switch (array) {
-      case "recommend":
-        setArrOriginal(randomAll);
-        setArrBatch(randomAll.slice(arrIdx[0], arrIdx[1]));
-        break;
-      case "history":
-        setArrOriginal(historyArr);
-        setArrBatch(historyArr.slice(arrIdx[0], arrIdx[1]));
-        break;
-      default:
-        break;
+    if (all.length === 0) {
+      return;
+    } else {
+      switch (array) {
+        case "recommend":
+          setArrOriginal(randomAll);
+          setArrBatch(randomAll.slice(arrIdx[0], arrIdx[1]));
+          break;
+        case "history":
+          setArrOriginal(historyArr);
+          setArrBatch(historyArr.slice(arrIdx[0], arrIdx[1]));
+          break;
+        default:
+          break;
+      }
     }
   }, [arrIdx, randomAll, historyArr]);
 
@@ -122,7 +130,6 @@ export const Carousel = ({ user, setLoginBoxOpen, text, array }) => {
               name={doc.data().name}
               id={doc.id}
               key={doc.id}
-              user={user}
               setLoginBoxOpen={setLoginBoxOpen}
             />
           ))}

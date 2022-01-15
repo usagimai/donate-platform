@@ -1,47 +1,37 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
-// import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { useSelector, useDispatch } from "react-redux";
 
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import ScrollTop from "../components/reusable/ScrollTop";
 import OrderDetailOne from "../components/order/OrderDetailOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Carousel } from "../components/reusable/Carousel";
-import { app, db, auth } from "../firebase-config";
+import { app, auth } from "../firebase-config";
+import { loadOrders } from "../actions/ordersAction";
 
-const OrderPage = ({ user, setLoginBoxOpen }) => {
+const OrderPage = ({ setLoginBoxOpen }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // const [user, setUser] = useState("");
-  const [orders, setOrders] = useState([]);
+  const user = auth.currentUser;
+  const orders = useSelector((state) => state.orders.orders);
   const [orderDetailNo, setOrderDetailNo] = useState("");
 
-  //未登入狀態進入此頁面後，轉導回首頁
+  //驗證登入狀態，若未登入則轉導回首頁
   useEffect(() => {
-    if (!user) {
-      navigate("/", { replace: true });
-    }
+    onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        navigate("/", { replace: true });
+      }
+    });
   }, []);
 
-  //由於where會有錯誤，暫comment掉，等有不同帳號訂單時確認是否有問題
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (currentUser) => {
-  //     setUser(currentUser);
-  //   });
-  // }, []);
-
-  useEffect(async () => {
-    const dbRef = collection(db, "orders");
-    const orderQuery = query(
-      dbRef,
-      // where("email", "==", user.email),
-      orderBy("docID", "desc")
-    );
-    const orderData = await getDocs(orderQuery);
-    const ordersArr = orderData.docs;
-    setOrders(ordersArr);
-  }, []);
+  //讀取訂單
+  useEffect(() => {
+    dispatch(loadOrders());
+  }, [user]);
 
   useEffect(() => {
     if (orderDetailNo) {
@@ -84,7 +74,6 @@ const OrderPage = ({ user, setLoginBoxOpen }) => {
           </div>
           <div>
             <Carousel
-              user={user}
               setLoginBoxOpen={setLoginBoxOpen}
               text="推薦商品"
               array="recommend"
@@ -92,7 +81,6 @@ const OrderPage = ({ user, setLoginBoxOpen }) => {
           </div>
           <div>
             <Carousel
-              user={user}
               setLoginBoxOpen={setLoginBoxOpen}
               text="最近瀏覽"
               array="history"

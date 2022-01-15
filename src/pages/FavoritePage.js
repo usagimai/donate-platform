@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { collection, getDocs } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { useSelector, useDispatch } from "react-redux";
 
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import { DecorationTitle } from "../components/reusable/DecorationTitle";
@@ -9,28 +9,36 @@ import ScrollTop from "../components/reusable/ScrollTop";
 import FavoriteOne from "../components/favorite/FavoriteOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Carousel } from "../components/reusable/Carousel";
-import { app, db } from "../firebase-config";
+import { app, auth } from "../firebase-config";
+import { loadFavorites } from "../actions/favoritesAction";
 
-const FavoritePage = ({ user, setLoginBoxOpen }) => {
+const FavoritePage = ({ setLoginBoxOpen }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const all = useSelector((state) => state.items.all);
+  const favorites = useSelector((state) => state.favorites.favorites);
+  const user = auth.currentUser;
 
-  const [favorites, setFavorites] = useState([]);
   const [favoritesIdArr, setFavoritesIdArr] = useState([]);
 
-  //未登入狀態進入此頁面後，轉導回首頁
+  //驗證登入狀態，若未登入則轉導回首頁
   useEffect(() => {
-    if (!user) {
-      navigate("/", { replace: true });
-    }
+    onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        navigate("/", { replace: true });
+      }
+    });
   }, []);
 
-  useEffect(async () => {
-    const dbRef = collection(db, "favorites");
-    const favoritesData = await getDocs(dbRef);
-    const favoritesArr = favoritesData.docs;
-    setFavorites(favoritesArr);
-    setFavoritesIdArr(favoritesArr[0].data().itemId);
+  //讀取收藏商品
+  useEffect(() => {
+    dispatch(loadFavorites());
+  }, [user]);
+
+  useEffect(() => {
+    if (favorites.length > 0) {
+      setFavoritesIdArr(favorites[0].data().itemId);
+    }
   }, [favorites]);
 
   //未登入狀態進入此頁面後，不顯示內容
@@ -67,7 +75,6 @@ const FavoritePage = ({ user, setLoginBoxOpen }) => {
                   name={oneFavoriteItem.data().name}
                   key={itemF}
                   favorites={favorites}
-                  user={user}
                 />
               );
             })}
@@ -81,7 +88,6 @@ const FavoritePage = ({ user, setLoginBoxOpen }) => {
           </div>
           <div>
             <Carousel
-              user={user}
               setLoginBoxOpen={setLoginBoxOpen}
               text="推薦商品"
               array="recommend"
@@ -89,7 +95,6 @@ const FavoritePage = ({ user, setLoginBoxOpen }) => {
           </div>
           <div>
             <Carousel
-              user={user}
               setLoginBoxOpen={setLoginBoxOpen}
               text="最近瀏覽"
               array="history"

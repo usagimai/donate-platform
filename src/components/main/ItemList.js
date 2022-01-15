@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import ItemOne from "./ItemOne";
 
-const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
+const ItemList = ({ searchText, setSearchText, setLoginBoxOpen }) => {
   const { pathname } = useLocation();
   const categoryPath = pathname.split("/")[1];
   const searchPath = decodeURI(pathname.split("/")[2]);
@@ -83,7 +83,6 @@ const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
                 name={doc.data().name}
                 id={doc.id}
                 key={doc.id}
-                user={user}
                 setLoginBoxOpen={setLoginBoxOpen}
               />
             ))}
@@ -94,7 +93,6 @@ const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
                 name={doc.data().name}
                 id={doc.id}
                 key={doc.id}
-                user={user}
                 setLoginBoxOpen={setLoginBoxOpen}
               />
             ))}
@@ -111,7 +109,6 @@ const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
               name={doc.data().name}
               id={doc.id}
               key={doc.id}
-              user={user}
               setLoginBoxOpen={setLoginBoxOpen}
             />
           ))}

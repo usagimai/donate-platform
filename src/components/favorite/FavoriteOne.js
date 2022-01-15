@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { IconSelector } from "../reusable/IconSelector";
 import Confirm from "../reusable/Confirm";
 
-const FavoriteOne = ({ no, id, img, name, favorites, user }) => {
+const FavoriteOne = ({ no, id, img, name, favorites }) => {
   const dispatch = useDispatch();
   const [deleteFavBoxOpen, setDeleteFavBoxOpen] = useState(false);
 
@@ -19,11 +19,10 @@ const FavoriteOne = ({ no, id, img, name, favorites, user }) => {
       {deleteFavBoxOpen && (
         <Confirm
           setDeleteFavBoxOpen={setDeleteFavBoxOpen}
-          message="是否確認收藏商品?"
+          message="是否確認刪除收藏商品?"
           confirmFor="deleteFavorites"
           dispatch={dispatch}
           favorites={favorites}
-          user={user}
           idFav={id}
         />
       )}

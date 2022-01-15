@@ -18,10 +18,10 @@ import { loadOrders } from "./actions/ordersAction";
 function App() {
   const [user, setUser] = useState("");
   const [loginBoxOpen, setLoginBoxOpen] = useState(false);
-  const [cartItems, setCartItems] = useState({});
   const [cartLoading, setCartLoading] = useState(true);
   const [itemMenuClicked, setItemMenuClicked] = useState(false);
   const [navLogoClicked, setNavLogoClicked] = useState(false);
+  const [cartItemChange, setCartItemChange] = useState(false);
 
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -33,17 +33,17 @@ function App() {
     });
   }, []);
 
-  //讀取所有商品
+  //讀取所有商品 & 購物車內商品
   useEffect(() => {
     dispatch(loadItems());
-  }, [dispatch]);
-
-  //讀取購物車商品(local storage)
-  //由於進到CartPage時該頁的useEffect會比App的useEffect先執行，為了確保執行順序，設定CartPage的useEffect等這邊的cartLoading變動時再執行
-  useEffect(() => {
-    setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
-    setCartLoading(false);
   }, []);
+
+  //讀取購物車商品 ////待確認setCartLoading(false);是否還需要
+  //由於進到CartPage時該頁的useEffect會比App的useEffect先執行，為了確保執行順序，設定CartPage的useEffect等這邊的cartLoading變動時再執行
+  // useEffect(() => {
+  //   setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
+  //   setCartLoading(false);
+  // }, []);
 
   //讀取訂單資料
   useEffect(() => {
@@ -89,34 +89,29 @@ function App() {
   return (
     <>
       <Nav
-        user={user}
         loginBoxOpen={loginBoxOpen}
         setLoginBoxOpen={setLoginBoxOpen}
-        cartItems={cartItems}
         setItemMenuClicked={setItemMenuClicked}
         setNavLogoClicked={setNavLogoClicked}
+        cartItemChange={cartItemChange}
+        setCartItemChange={setCartItemChange}
       />
       <Routes>
-        <Route
-          path="/"
-          element={<Home user={user} setLoginBoxOpen={setLoginBoxOpen} />}
-        />
+        <Route path="/" element={<Home setLoginBoxOpen={setLoginBoxOpen} />} />
         <Route
           path="/:category"
-          element={<Home user={user} setLoginBoxOpen={setLoginBoxOpen} />}
+          element={<Home setLoginBoxOpen={setLoginBoxOpen} />}
         />
         <Route
           path="/search/:text"
-          element={<Home user={user} setLoginBoxOpen={setLoginBoxOpen} />}
+          element={<Home setLoginBoxOpen={setLoginBoxOpen} />}
         />
         <Route
           path="/items/:id"
           element={
             <ItemPage
-              user={user}
               setLoginBoxOpen={setLoginBoxOpen}
-              cartItems={cartItems}
-              setCartItems={setCartItems}
+              setCartItemChange={setCartItemChange}
             />
           }
         />
@@ -124,23 +119,20 @@ function App() {
           path="/cart"
           element={
             <CartPage
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-              user={user}
               cartLoading={cartLoading}
               setLoginBoxOpen={setLoginBoxOpen}
+              cartItemChange={cartItemChange}
+              setCartItemChange={setCartItemChange}
             />
           }
         />
         <Route
           path="/order"
-          element={<OrderPage user={user} setLoginBoxOpen={setLoginBoxOpen} />}
+          element={<OrderPage setLoginBoxOpen={setLoginBoxOpen} />}
         />
         <Route
           path="/favorite"
-          element={
-            <FavoritePage user={user} setLoginBoxOpen={setLoginBoxOpen} />
-          }
+          element={<FavoritePage setLoginBoxOpen={setLoginBoxOpen} />}
         />
       </Routes>
       <Footer />

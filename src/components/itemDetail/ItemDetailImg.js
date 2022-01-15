@@ -6,8 +6,10 @@ import {
   handleAddFavorite,
   handleRemoveFavorite,
 } from "../../utils/favoritesUtils";
+import { app, auth } from "../../firebase-config";
 
-const ItemDetailImg = ({ user, id, setLoginBoxOpen }) => {
+const ItemDetailImg = ({ id, setLoginBoxOpen }) => {
+  const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
   const selectedItem = all.find((doc) => {
     return doc.id === id;
