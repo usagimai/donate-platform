@@ -1,30 +1,29 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 
+//reusable components
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import ScrollTop from "../components/reusable/ScrollTop";
+import EmptyMessage from "../components/reusable/EmptyMessage";
+import { Carousel } from "../components/reusable/Carousel";
+//components
 import CartDetailAll from "../components/cart/CartDetailAll";
 import Note from "../components/cart/Note";
 import Delivery from "../components/cart/Delivery";
 import { OrderSubmitted } from "../components/cart/OrderSubmitted";
-import EmptyMessage from "../components/reusable/EmptyMessage";
-import { Carousel } from "../components/reusable/Carousel";
-import { app, db, auth } from "../firebase-config";
+//others
 import { loadItems } from "../actions/itemsAction";
+import { app, db, auth } from "../firebase-config";
 
-const CartPage = ({
-  cartLoading,
-  setLoginBoxOpen,
-  cartItemChange,
-  setCartItemChange,
-}) => {
+const CartPage = ({ setLoginBoxOpen, cartItemChange, setCartItemChange }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const all = useSelector((state) => state.items.all);
+
   const user = auth.currentUser;
+  const all = useSelector((state) => state.items.all);
   const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
 
   const [stockStatus, setStockStatus] = useState([]);
@@ -80,6 +79,7 @@ const CartPage = ({
         setStockStatus(currentStockStatus);
         setNoStockItem(currentCartInfo.filter((item) => item.num === 0));
 
+        //將驗證庫存後、調整後的需求數量再存進local storage
         const editedCartInfo = currentCartInfo
           .filter((item) => item.num !== 0)
           .reduce(

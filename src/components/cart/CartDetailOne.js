@@ -1,6 +1,5 @@
 import { Children, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import { IconSelector } from "../reusable/IconSelector";
 import Confirm from "../reusable/Confirm";
@@ -16,12 +15,12 @@ const CartDetailOne = ({
   oneStockStatus,
   setCartItemChange,
 }) => {
-  const dispatch = useDispatch();
+  const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
   const [orderNum, setOrderNum] = useState(num);
   const [newCartItems, setNewCartItems] = useState("");
   const [deleteBoxOpen, setDeleteBoxOpen] = useState(false);
-  const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
 
+  //數量相關
   useEffect(() => {
     setOrderNum(num);
   }, [num]);
@@ -31,6 +30,7 @@ const CartDetailOne = ({
     nums.push(i);
   }
 
+  //若調整了數量，將更新後資訊存進local storage中
   useEffect(() => {
     setNewCartItems((prevValue) => {
       return { ...prevValue, [`${id}_${type}`]: orderNum };
@@ -42,7 +42,6 @@ const CartDetailOne = ({
       "machudaysCart",
       JSON.stringify({ ...cartItems, ...newCartItems })
     );
-    // dispatch(loadCartItems());
   }, [newCartItems]);
 
   const handleDeleteBoxOpen = () => {

@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { IconSelector } from "../reusable/IconSelector";
 
 const Search = ({ setSearchText }) => {
-  const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
+  const [searchInput, setSearchInput] = useState("");
 
   const handleSearch = (e) => {
     e.preventDefault();

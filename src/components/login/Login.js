@@ -3,9 +3,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { IconSelector } from "../reusable/IconSelector";
 import { TitleButton, BrownButton } from "../reusable/ButtonCollection";
+import Backdrop from "../reusable/Backdrop";
 import { loginData } from "../../data";
 import { app, auth } from "../../firebase-config";
-import Backdrop from "../reusable/Backdrop";
 
 const Login = ({ setLoginBoxOpen }) => {
   const [email, setEmail] = useState("");

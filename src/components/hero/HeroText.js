@@ -1,6 +1,6 @@
 import { IconSelector } from "../reusable/IconSelector";
-import { heroData } from "../../data";
 import logo from "../../img/logo.png";
+import { heroData } from "../../data";
 
 export const HeroReason = () => {
   return (

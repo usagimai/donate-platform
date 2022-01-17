@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 
 import { IconSelector } from "../reusable/IconSelector";
@@ -25,6 +24,7 @@ const Confirm = ({
   const navigate = useNavigate();
   const user = auth.currentUser;
   const [cartItems, setCartItems] = useState("");
+
   useEffect(() => {
     setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
   }, []);

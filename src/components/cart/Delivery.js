@@ -9,8 +9,8 @@ import {
 } from "firebase/firestore";
 
 import { TitleButton, BrownButton } from "../reusable/ButtonCollection";
-import { app, db, auth } from "../../firebase-config";
 import { loadItems } from "../../actions/itemsAction";
+import { app, db, auth } from "../../firebase-config";
 
 const Delivery = ({
   setStockStatus,
@@ -19,9 +19,9 @@ const Delivery = ({
   setCartItemChange,
 }) => {
   const dispatch = useDispatch();
+  const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
   const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
-  const user = auth.currentUser;
   const [deliveryForm, setDeliveryForm] = useState({
     name: "",
     tel: "",

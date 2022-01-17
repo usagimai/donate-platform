@@ -5,22 +5,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { IconSelector } from "../reusable/IconSelector";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { BrownButton } from "../reusable/ButtonCollection";
-import { orderSubmittedData } from "../../data";
 import Backdrop from "../reusable/Backdrop";
-import { app, db } from "../../firebase-config";
 import { loadOrders } from "../../actions/ordersAction";
+import { orderSubmittedData } from "../../data";
 
 export const OrderSubmitted = ({ setSubmittedBoxOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [orderNo, setOrderNo] = useState("");
 
   const orders = useSelector((state) => state.orders.orders);
+  const [orderNo, setOrderNo] = useState("");
 
+  //讀取訂單資料
   useEffect(() => {
     dispatch(loadOrders());
   }, []);
 
+  //取得訂單號碼array中最新一筆號碼
   useEffect(() => {
     const orderNoArr = orders.map((doc) => doc.id);
     setOrderNo(orderNoArr[0]);

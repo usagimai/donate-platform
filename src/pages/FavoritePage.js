@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
 
+//reusable components
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import { DecorationTitle } from "../components/reusable/DecorationTitle";
 import ScrollTop from "../components/reusable/ScrollTop";
-import FavoriteOne from "../components/favorite/FavoriteOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Carousel } from "../components/reusable/Carousel";
-import { app, auth } from "../firebase-config";
+//components
+import FavoriteOne from "../components/favorite/FavoriteOne";
+//others
 import { loadFavorites } from "../actions/favoritesAction";
+import { app, auth } from "../firebase-config";
 
 const FavoritePage = ({ setLoginBoxOpen }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
   const favorites = useSelector((state) => state.favorites.favorites);
-  const user = auth.currentUser;
 
   const [favoritesIdArr, setFavoritesIdArr] = useState([]);
 

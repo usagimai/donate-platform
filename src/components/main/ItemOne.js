@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { IconSelector } from "../reusable/IconSelector";
-import { loadFavorites } from "../../actions/favoritesAction";
 import {
   handleAddFavorite,
   handleRemoveFavorite,
 } from "../../utils/favoritesUtils";
+import { loadFavorites } from "../../actions/favoritesAction";
 import { app, auth } from "../../firebase-config";
 
 const ItemOne = ({ image, name, id, setLoginBoxOpen }) => {

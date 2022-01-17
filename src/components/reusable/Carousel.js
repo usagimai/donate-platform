@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import ItemOne from "../main/ItemOne";
 import { IconSelector } from "./IconSelector";
+import ItemOne from "../main/ItemOne";
 
 export const Carousel = ({ setLoginBoxOpen, text, array }) => {
   //輪播用商品array(推薦)

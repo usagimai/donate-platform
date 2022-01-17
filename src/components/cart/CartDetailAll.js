@@ -14,6 +14,8 @@ const CartDetailAll = ({
 }) => {
   const all = useSelector((state) => state.items.all);
   const [cartItems, setCartItems] = useState({});
+
+  //讀取購物車資料
   useEffect(() => {
     setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
     setCartItemChange(false);

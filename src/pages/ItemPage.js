@@ -15,12 +15,14 @@ const ItemPage = ({ setLoginBoxOpen, setCartItemChange }) => {
   const [historyIdArrOriginal, setHistoryIdArrOriginal] = useState("");
   const [historyIdArr, setHistoryIdArr] = useState([]);
 
+  //讀取最近瀏覽商品
   useEffect(() => {
     setHistoryIdArrOriginal(
       JSON.parse(localStorage.getItem("machudaysHistory"))
     );
   }, []);
 
+  //使用itemPath加入最近瀏覽的商品array，並使商品不重複
   useEffect(() => {
     if (!historyIdArrOriginal) {
       setHistoryIdArr([itemPath]);
@@ -35,6 +37,7 @@ const ItemPage = ({ setLoginBoxOpen, setCartItemChange }) => {
     }
   }, [historyIdArrOriginal]);
 
+  //儲存調整後的最近瀏覽商品array
   useEffect(() => {
     localStorage.setItem("machudaysHistory", JSON.stringify(historyIdArr));
   }, [historyIdArr]);

@@ -9,6 +9,8 @@ import {
 import { app, auth } from "../../firebase-config";
 
 const ItemDetailImg = ({ id, setLoginBoxOpen }) => {
+  const dispatch = useDispatch();
+
   const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
   const selectedItem = all.find((doc) => {
@@ -16,7 +18,6 @@ const ItemDetailImg = ({ id, setLoginBoxOpen }) => {
   });
   const mainImg = selectedItem.data().mainImg;
 
-  const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.favorites);
   const [isFavorite, setIsFavorite] = useState(false);
 

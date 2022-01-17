@@ -1,12 +1,11 @@
 import { Children, useRef, useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { BrownButton } from "../reusable/ButtonCollection";
 import { app, auth } from "../../firebase-config";
 
 const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
-  const dispatch = useDispatch();
   const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
   const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
@@ -57,7 +56,6 @@ const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
       //若cartItems是空的，直接將商品加進cartItems
       if (!cartItems) {
         localStorage.setItem("machudaysCart", JSON.stringify(formItems));
-        // dispatch(loadCartItems());
         setCartItemChange(true);
         setCartMessage("已加入購物車");
       } else {
@@ -71,10 +69,6 @@ const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
           }
         }
         localStorage.setItem("machudaysCart", JSON.stringify(cartItems));
-        // //直接setCartItems(cartItems)不會造成畫面render(傳進同個object)，需調整成不同object
-        // const { ...editedCartItems } = cartItems;
-        // setCartItems(editedCartItems);
-        // dispatch(loadCartItems());
         setCartItemChange(true);
         setCartMessage("已加入購物車");
       }

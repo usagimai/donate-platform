@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
 
+//reusable components
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import ScrollTop from "../components/reusable/ScrollTop";
-import OrderDetailOne from "../components/order/OrderDetailOne";
 import EmptyMessage from "../components/reusable/EmptyMessage";
 import { Carousel } from "../components/reusable/Carousel";
-import { app, auth } from "../firebase-config";
+//components
+import OrderDetailOne from "../components/order/OrderDetailOne";
+//others
 import { loadOrders } from "../actions/ordersAction";
+import { app, auth } from "../firebase-config";
 
 const OrderPage = ({ setLoginBoxOpen }) => {
   const navigate = useNavigate();
@@ -33,6 +36,7 @@ const OrderPage = ({ setLoginBoxOpen }) => {
     dispatch(loadOrders());
   }, [user]);
 
+  //進入訂單詳情頁面後記錄該筆訂單號碼，回到訂單列表後，畫面從該筆訂單開始顯示
   useEffect(() => {
     if (orderDetailNo) {
       document.getElementById(`${orderDetailNo}`).scrollIntoView();
