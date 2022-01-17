@@ -1,17 +1,25 @@
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import CartDetailOne from "./CartDetailOne";
 
 const CartDetailAll = ({
-  cartItems,
-  setCartItems,
   stockStatus,
   noStockItem,
   orderNum,
   setOrderNum,
+  cartItemChange,
+  setCartItemChange,
 }) => {
   const all = useSelector((state) => state.items.all);
+  const [cartItems, setCartItems] = useState({});
+
+  //讀取購物車資料
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
+    setCartItemChange(false);
+  }, [cartItemChange]);
 
   //將local storage的購物車資料整理成array形式 [{商品id:__, 尺寸/顏色:__, 數量:__}]
   //將cartItems的key拆分出id及尺寸/顏色
@@ -54,12 +62,11 @@ const CartDetailAll = ({
               type={itemC.type}
               num={itemC.num}
               key={idx}
-              cartItems={cartItems}
-              setCartItems={setCartItems}
               stockNum={stock}
               orderNum={orderNum}
               setOrderNum={setOrderNum}
               oneStockStatus={oneStockStatus}
+              setCartItemChange={setCartItemChange}
             />
           );
         })}

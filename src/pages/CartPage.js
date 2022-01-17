@@ -1,93 +1,100 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 
+//reusable components
 import { TitleButton } from "../components/reusable/ButtonCollection";
 import ScrollTop from "../components/reusable/ScrollTop";
+import EmptyMessage from "../components/reusable/EmptyMessage";
+import { Carousel } from "../components/reusable/Carousel";
+//components
 import CartDetailAll from "../components/cart/CartDetailAll";
 import Note from "../components/cart/Note";
 import Delivery from "../components/cart/Delivery";
 import { OrderSubmitted } from "../components/cart/OrderSubmitted";
-import EmptyMessage from "../components/reusable/EmptyMessage";
-import { Carousel } from "../components/reusable/Carousel";
-import { app, db } from "../firebase-config";
+//others
 import { loadItems } from "../actions/itemsAction";
+import { app, db, auth } from "../firebase-config";
 
-const CartPage = ({
-  cartItems,
-  setCartItems,
-  user,
-  cartLoading,
-  setLoginBoxOpen,
-}) => {
+const CartPage = ({ setLoginBoxOpen, cartItemChange, setCartItemChange }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
+  const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
 
   const [stockStatus, setStockStatus] = useState([]);
   const [noStockItem, setNoStockItem] = useState([]);
   const [submittedBoxOpen, setSubmittedBoxOpen] = useState(false);
 
-  //未登入狀態進入此頁面後，轉導回首頁
+  //驗證登入狀態，若未登入則轉導回首頁
   useEffect(() => {
-    if (!user) {
-      navigate("/", { replace: true });
-    }
+    onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        navigate("/", { replace: true });
+      }
+    });
   }, []);
 
   //初次進到購物車頁面後，若購物車有商品，判斷庫存是否足夠
   useEffect(async () => {
-    const dbRef = collection(db, "items");
-    const itemData = await getDocs(dbRef);
-    const all = itemData.docs;
+    if (!user) {
+      return;
+    } else {
+      const dbRef = collection(db, "items");
+      const itemData = await getDocs(dbRef);
+      const all = itemData.docs;
 
-    if (cartItems) {
-      const currentCartInfo = Object.entries(cartItems).map((key) => {
-        const id = key[0].split("_")[0];
-        const type = key[0].split("_")[1];
-        return { ["id"]: id, ["type"]: type, ["num"]: key[1] };
-      });
+      if (cartItems) {
+        const currentCartInfo = Object.entries(cartItems).map((key) => {
+          const id = key[0].split("_")[0];
+          const type = key[0].split("_")[1];
+          return { ["id"]: id, ["type"]: type, ["num"]: key[1] };
+        });
 
-      const currentStockStatus = [];
-      currentCartInfo.forEach((itemC) => {
-        const oneItem = all.find((itemA) => itemC.id === itemA.id);
-        const prevStock = oneItem.data().stock[itemC.type][0];
+        const currentStockStatus = [];
+        currentCartInfo.forEach((itemC) => {
+          const oneItem = all.find((itemA) => itemC.id === itemA.id);
+          const prevStock = oneItem.data().stock[itemC.type][0];
 
-        switch (true) {
-          case Number(prevStock - itemC.num) >= 0:
-            currentStockStatus.push("stockEnough");
-            itemC.num = itemC.num;
-            break;
-          case Number(prevStock - itemC.num) < 0 && prevStock === 0:
-            itemC.num = 0;
-            break;
-          case Number(prevStock - itemC.num) < 0 && prevStock !== 0:
-            currentStockStatus.push("noEnoughStock");
-            itemC.num = prevStock;
-            break;
-          default:
-            return;
-        }
-      });
-      setStockStatus(currentStockStatus);
-      setNoStockItem(currentCartInfo.filter((item) => item.num === 0));
+          switch (true) {
+            case Number(prevStock - itemC.num) >= 0:
+              currentStockStatus.push("stockEnough");
+              itemC.num = itemC.num;
+              break;
+            case Number(prevStock - itemC.num) < 0 && prevStock === 0:
+              itemC.num = 0;
+              break;
+            case Number(prevStock - itemC.num) < 0 && prevStock !== 0:
+              currentStockStatus.push("noEnoughStock");
+              itemC.num = prevStock;
+              break;
+            default:
+              return;
+          }
+        });
+        setStockStatus(currentStockStatus);
+        setNoStockItem(currentCartInfo.filter((item) => item.num === 0));
 
-      const editedCartInfo = currentCartInfo
-        .filter((item) => item.num !== 0)
-        .reduce(
-          (acc, item) => ({
-            ...acc,
-            [`${item.id}_${item.type}`]: Number(`${item.num}`),
-          }),
-          {}
-        );
-      localStorage.setItem("machudaysCart", JSON.stringify(editedCartInfo));
-      setCartItems(editedCartInfo);
-
-      dispatch(loadItems());
+        //將驗證庫存後、調整後的需求數量再存進local storage
+        const editedCartInfo = currentCartInfo
+          .filter((item) => item.num !== 0)
+          .reduce(
+            (acc, item) => ({
+              ...acc,
+              [`${item.id}_${item.type}`]: Number(`${item.num}`),
+            }),
+            {}
+          );
+        localStorage.setItem("machudaysCart", JSON.stringify(editedCartInfo));
+        setCartItemChange(true);
+        dispatch(loadItems());
+      }
     }
-  }, [cartLoading]);
+  }, []);
 
   //未登入狀態進入此頁面後，不顯示內容
   if (!user) return null;
@@ -105,10 +112,10 @@ const CartPage = ({
           <>
             <div>
               <CartDetailAll
-                cartItems={cartItems}
-                setCartItems={setCartItems}
                 stockStatus={stockStatus}
                 noStockItem={noStockItem}
+                cartItemChange={cartItemChange}
+                setCartItemChange={setCartItemChange}
               />
             </div>
             <div className="cart-page-lower">
@@ -117,13 +124,11 @@ const CartPage = ({
               </div>
               <div>
                 <Delivery
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
-                  user={user}
                   setStockStatus={setStockStatus}
                   noStockItem={noStockItem}
                   setNoStockItem={setNoStockItem}
                   setSubmittedBoxOpen={setSubmittedBoxOpen}
+                  setCartItemChange={setCartItemChange}
                 />
               </div>
             </div>
@@ -154,7 +159,6 @@ const CartPage = ({
             )}
             <div>
               <Carousel
-                user={user}
                 setLoginBoxOpen={setLoginBoxOpen}
                 text="推薦商品"
                 array="recommend"
@@ -162,7 +166,6 @@ const CartPage = ({
             </div>
             <div>
               <Carousel
-                user={user}
                 setLoginBoxOpen={setLoginBoxOpen}
                 text="最近瀏覽"
                 array="history"

@@ -1,4 +1,3 @@
-import { TitleButton } from "../reusable/ButtonCollection";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 
 const EmptyMessage = ({ message }) => {

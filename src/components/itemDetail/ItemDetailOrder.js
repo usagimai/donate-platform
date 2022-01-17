@@ -3,15 +3,12 @@ import { useSelector } from "react-redux";
 
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { BrownButton } from "../reusable/ButtonCollection";
+import { app, auth } from "../../firebase-config";
 
-const ItemDetailOrder = ({
-  id,
-  user,
-  setLoginBoxOpen,
-  cartItems,
-  setCartItems,
-}) => {
+const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
+  const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
+  const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
   const selectedItem = all.find((doc) => {
     return doc.id === id;
   });
@@ -58,8 +55,8 @@ const ItemDetailOrder = ({
     if (Object.keys(formItems).length) {
       //若cartItems是空的，直接將商品加進cartItems
       if (!cartItems) {
-        setCartItems(formItems);
         localStorage.setItem("machudaysCart", JSON.stringify(formItems));
+        setCartItemChange(true);
         setCartMessage("已加入購物車");
       } else {
         //若formItems裡有和cartItems相同type的商品，只將所需數量加到該項數量
@@ -72,9 +69,7 @@ const ItemDetailOrder = ({
           }
         }
         localStorage.setItem("machudaysCart", JSON.stringify(cartItems));
-        //直接setCartItems(cartItems)不會造成畫面render(傳進同個object)，需調整成不同object
-        const { ...editedCartItems } = cartItems;
-        setCartItems(editedCartItems);
+        setCartItemChange(true);
         setCartMessage("已加入購物車");
       }
     } else {

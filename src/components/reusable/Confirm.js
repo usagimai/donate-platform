@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
@@ -11,18 +12,22 @@ const Confirm = ({
   setLogoutBoxOpen,
   setDeleteBoxOpen,
   setDeleteFavBoxOpen,
-  setCartItems,
-  cartItems,
   message,
   confirmFor,
   id,
   type,
+  setCartItemChange,
   dispatch,
   favorites,
-  user,
   idFav,
 }) => {
   const navigate = useNavigate();
+  const user = auth.currentUser;
+  const [cartItems, setCartItems] = useState("");
+
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
+  }, []);
 
   //通用
   const handleConfirmFor = () => {
@@ -38,7 +43,7 @@ const Confirm = ({
         const keyToDelete = `${id}_${type}`;
         const { [keyToDelete]: value, ...editedCartItems } = cartItems;
         localStorage.setItem("machudaysCart", JSON.stringify(editedCartItems));
-        setCartItems(editedCartItems);
+        setCartItemChange(true);
         handleConfirmBoxClose();
         break;
       case "deleteFavorites":

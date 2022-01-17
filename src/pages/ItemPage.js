@@ -6,7 +6,7 @@ import { ItemLocation } from "../components/reusable/Location";
 import ScrollTop from "../components/reusable/ScrollTop";
 import ItemDetail from "../components/itemDetail/ItemDetail";
 
-const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
+const ItemPage = ({ setLoginBoxOpen, setCartItemChange }) => {
   const { pathname } = useLocation();
   const itemPath = pathname.split("/")[2];
 
@@ -15,12 +15,14 @@ const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
   const [historyIdArrOriginal, setHistoryIdArrOriginal] = useState("");
   const [historyIdArr, setHistoryIdArr] = useState([]);
 
+  //讀取最近瀏覽商品
   useEffect(() => {
     setHistoryIdArrOriginal(
       JSON.parse(localStorage.getItem("machudaysHistory"))
     );
   }, []);
 
+  //使用itemPath加入最近瀏覽的商品array，並使商品不重複
   useEffect(() => {
     if (!historyIdArrOriginal) {
       setHistoryIdArr([itemPath]);
@@ -35,6 +37,7 @@ const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
     }
   }, [historyIdArrOriginal]);
 
+  //儲存調整後的最近瀏覽商品array
   useEffect(() => {
     localStorage.setItem("machudaysHistory", JSON.stringify(historyIdArr));
   }, [historyIdArr]);
@@ -48,10 +51,8 @@ const ItemPage = ({ user, setLoginBoxOpen, cartItems, setCartItems }) => {
           </div>
           <ItemDetail
             id={itemPath}
-            user={user}
             setLoginBoxOpen={setLoginBoxOpen}
-            cartItems={cartItems}
-            setCartItems={setCartItems}
+            setCartItemChange={setCartItemChange}
           />
           <ScrollTop />
         </div>

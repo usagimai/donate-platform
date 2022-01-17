@@ -9,19 +9,19 @@ import {
 } from "firebase/firestore";
 
 import { TitleButton, BrownButton } from "../reusable/ButtonCollection";
-import { app, db } from "../../firebase-config";
 import { loadItems } from "../../actions/itemsAction";
+import { app, db, auth } from "../../firebase-config";
 
 const Delivery = ({
-  cartItems,
-  setCartItems,
-  user,
   setStockStatus,
   setNoStockItem,
   setSubmittedBoxOpen,
+  setCartItemChange,
 }) => {
   const dispatch = useDispatch();
+  const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
+  const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
   const [deliveryForm, setDeliveryForm] = useState({
     name: "",
     tel: "",
@@ -95,8 +95,8 @@ const Delivery = ({
   });
 
   //2.訂單資料存至firestore＆清空購物車
-  const orderSubmit = () => {
-    setDoc(doc(db, "orders", `${year}${month}${day}_${time}`), {
+  const orderSubmit = async () => {
+    await setDoc(doc(db, "orders", `${year}${month}${day}_${time}`), {
       docID: `${year}${month}${day}${time}`,
       email: user.email,
       date: `${year}/${month}/${day}`,
@@ -107,11 +107,11 @@ const Delivery = ({
       deliveryAdd: deliveryForm.add,
       deliveryRemark: deliveryForm.remark,
     });
-    setCartItems({});
-    setDeliveryForm({});
-    localStorage.removeItem("machudaysCart");
+    setDeliveryForm({ name: "", tel: "", add: "", remark: "" });
+    localStorage.setItem("machudaysCart", JSON.stringify({}));
     sessionStorage.removeItem("machudaysDelivery");
     adjustStock();
+    setCartItemChange(true);
     dispatch(loadItems());
   };
 
@@ -162,7 +162,7 @@ const Delivery = ({
         {}
       );
     localStorage.setItem("machudaysCart", JSON.stringify(editedCartInfo));
-    setCartItems(editedCartInfo);
+    setCartItemChange(true);
 
     switch (true) {
       case currentCartInfo.filter((item) => item.num === 0).length > 0 ||

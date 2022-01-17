@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import ItemOne from "./ItemOne";
 
-const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
+const ItemList = ({ searchText, setSearchText, setLoginBoxOpen }) => {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const categoryPath = pathname.split("/")[1];
   const searchPath = decodeURI(pathname.split("/")[2]);
-
-  const dispatch = useDispatch();
 
   const all = useSelector((state) => state.items.all);
   const category = useSelector((state) => state.category);
@@ -20,6 +19,7 @@ const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
 
   //顯示分類
   useEffect(() => {
+    //每個商品有兩種分類 (服裝類型、品牌)
     const category1 = all.map((doc) => doc.data().category1);
     const category2 = all.map((doc) => doc.data().category2);
 
@@ -83,7 +83,6 @@ const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
                 name={doc.data().name}
                 id={doc.id}
                 key={doc.id}
-                user={user}
                 setLoginBoxOpen={setLoginBoxOpen}
               />
             ))}
@@ -94,7 +93,6 @@ const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
                 name={doc.data().name}
                 id={doc.id}
                 key={doc.id}
-                user={user}
                 setLoginBoxOpen={setLoginBoxOpen}
               />
             ))}
@@ -111,7 +109,6 @@ const ItemList = ({ searchText, setSearchText, user, setLoginBoxOpen }) => {
               name={doc.data().name}
               id={doc.id}
               key={doc.id}
-              user={user}
               setLoginBoxOpen={setLoginBoxOpen}
             />
           ))}

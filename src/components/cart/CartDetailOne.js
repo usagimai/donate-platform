@@ -12,13 +12,15 @@ const CartDetailOne = ({
   type,
   num,
   stockNum,
-  cartItems,
-  setCartItems,
   oneStockStatus,
+  setCartItemChange,
 }) => {
+  const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
   const [orderNum, setOrderNum] = useState(num);
+  const [newCartItems, setNewCartItems] = useState("");
   const [deleteBoxOpen, setDeleteBoxOpen] = useState(false);
 
+  //數量相關
   useEffect(() => {
     setOrderNum(num);
   }, [num]);
@@ -28,15 +30,19 @@ const CartDetailOne = ({
     nums.push(i);
   }
 
+  //若調整了數量，將更新後資訊存進local storage中
   useEffect(() => {
-    setCartItems((prevValue) => {
+    setNewCartItems((prevValue) => {
       return { ...prevValue, [`${id}_${type}`]: orderNum };
     });
   }, [orderNum]);
 
   useEffect(() => {
-    localStorage.setItem("machudaysCart", JSON.stringify(cartItems));
-  }, [cartItems]);
+    localStorage.setItem(
+      "machudaysCart",
+      JSON.stringify({ ...cartItems, ...newCartItems })
+    );
+  }, [newCartItems]);
 
   const handleDeleteBoxOpen = () => {
     setDeleteBoxOpen(true);
@@ -50,10 +56,9 @@ const CartDetailOne = ({
           setDeleteBoxOpen={setDeleteBoxOpen}
           message="是否確認刪除商品?"
           confirmFor="deleteItem"
-          cartItems={cartItems}
-          setCartItems={setCartItems}
           id={id}
           type={type}
+          setCartItemChange={setCartItemChange}
         />
       )}
       <div className="cart-detail-one s-text">

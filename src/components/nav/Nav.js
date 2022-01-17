@@ -1,20 +1,32 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+//reusable components
 import { WhiteButton, NumberButton } from "../reusable/ButtonCollection";
 import Confirm from "../reusable/Confirm";
-import logoBird from "../../img/logo-bird.png";
+//components
 import Login from "../login/Login";
+//others
+import logoBird from "../../img/logo-bird.png";
+import { app, auth } from "../../firebase-config";
 
 const Nav = ({
-  user,
   loginBoxOpen,
   setLoginBoxOpen,
-  cartItems,
   setItemMenuClicked,
   setNavLogoClicked,
+  cartItemChange,
+  setCartItemChange,
 }) => {
+  const user = auth.currentUser;
+  const [cartItems, setCartItems] = useState("");
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
+
+  //讀取購物車資料
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
+    setCartItemChange(false);
+  }, [cartItemChange]);
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
