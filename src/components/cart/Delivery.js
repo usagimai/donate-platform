@@ -95,8 +95,8 @@ const Delivery = ({
   });
 
   //2.訂單資料存至firestore＆清空購物車
-  const orderSubmit = () => {
-    setDoc(doc(db, "orders", `${year}${month}${day}_${time}`), {
+  const orderSubmit = async () => {
+    await setDoc(doc(db, "orders", `${year}${month}${day}_${time}`), {
       docID: `${year}${month}${day}${time}`,
       email: user.email,
       date: `${year}/${month}/${day}`,
