@@ -7,9 +7,10 @@ import ItemOne from "../main/ItemOne";
 export const Carousel = ({ setLoginBoxOpen, text, array }) => {
   //輪播用商品array(推薦)
   const all = useSelector((state) => state.items.all);
+  const allForRandom = [...all];
   const [randomAll, setRandomAll] = useState("");
   useEffect(() => {
-    setRandomAll(all.sort(() => Math.random() - 0.5).slice(0, 20));
+    setRandomAll(allForRandom.sort(() => Math.random() - 0.5).slice(0, 20));
   }, [all]);
   //輪播用商品array(最近瀏覽)
   const [historyIdArrOriginal, setHistoryIdArrOriginal] = useState("");
