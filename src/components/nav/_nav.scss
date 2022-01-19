@@ -1,5 +1,9 @@
 .nav {
+  width: 100%;
+  position: fixed;
+  top: 0;
   background: $primary-dark;
+  z-index: 10;
   .nav-content {
     max-width: 1224px;
     height: 8vh;
@@ -7,6 +11,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+}
+.nav-hide {
+  animation: nav-hide 0.3s 1 ease-in forwards;
+  @keyframes nav-hide {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
+.nav-show {
+  animation: nav-show 0.5s 1 ease-in forwards;
+  @keyframes nav-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
@@ -34,7 +60,6 @@
     .s-text {
       color: white;
       font-weight: 500;
-      line-height: 100%;
       a {
         color: white;
       }
@@ -44,6 +69,56 @@
     }
     span {
       padding-right: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 1250px) {
+  .nav-content {
+    width: calc(100% - 4vw);
+  }
+  .logo-title-box {
+    img {
+      height: 25px;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .islogin {
+    .menu {
+      .menu-decoration {
+        padding: 0 2rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .nav {
+    padding: 1.5rem 0.5rem;
+    .nav-content {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+  .logo-title-box {
+    img {
+      height: 20px;
+    }
+  }
+  .islogin {
+    gap: 4rem;
+  }
+}
+
+@media (max-width: 410px) {
+  .islogin {
+    gap: 2rem;
+    .menu {
+      .menu-decoration {
+        padding: 0 1rem;
+      }
     }
   }
 }

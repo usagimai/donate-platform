@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 
 import "./app.scss";
+//reusable components
+import NotFound from "./components/reusable/NotFound";
 //components
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
@@ -27,6 +29,10 @@ function App() {
   const [navLogoClicked, setNavLogoClicked] = useState(false);
   const [cartItemChange, setCartItemChange] = useState(false);
   const [isReload, setIsReload] = useState(false);
+  const [isDown, setIsDown] = useState(false);
+  const prevScrollPos = useRef(0);
+
+  console.log(window.innerWidth);
 
   //使用Firebase的功能監聽使用者是否登入(若為登入，會從Firebase接收到該使用者的資訊，包含email、UID等)
   useEffect(() => {
@@ -63,6 +69,21 @@ function App() {
     }
   }, [itemMenuClicked]);
 
+  //頁面往下捲時隱藏Nav，頁面往上捲時出現Nav
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.pageYOffset > prevScrollPos.current) {
+        setIsDown(true);
+      } else {
+        setIsDown(false);
+      }
+      prevScrollPos.current = window.pageYOffset;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   //重新整理後，頁面從最頂端顯示
   useEffect(() => {
     const scrollTop = () => {
@@ -88,6 +109,7 @@ function App() {
         setNavLogoClicked={setNavLogoClicked}
         cartItemChange={cartItemChange}
         setCartItemChange={setCartItemChange}
+        isDown={isDown}
       />
       <Routes>
         <Route path="/" element={<Home setLoginBoxOpen={setLoginBoxOpen} />} />
@@ -126,6 +148,9 @@ function App() {
           path="/favorite"
           element={<FavoritePage setLoginBoxOpen={setLoginBoxOpen} />}
         />
+
+        {/* <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" replace />} /> */}
       </Routes>
       <Footer />
     </>

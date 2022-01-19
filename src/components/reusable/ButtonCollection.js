@@ -15,5 +15,5 @@ export const TitleButton = ({ text }) => {
 };
 
 export const NumberButton = ({ text }) => {
-  return <div className="number-button">{text}</div>;
+  return <div className="number-button center">{text}</div>;
 };

@@ -18,3 +18,29 @@
     justify-content: space-evenly;
   }
 }
+
+@media (max-width: 1348px) {
+  .order-delivered-content {
+    width: calc(16rem + 10vw);
+  }
+}
+
+@media (max-width: 900px) {
+  .white-container.order-submitted-white-container {
+    padding: 5rem 6rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .white-container.order-submitted-white-container {
+    padding: 4rem 4rem;
+  }
+  .order-delivered-content {
+    .order-delivered-text {
+      padding-top: 3rem;
+    }
+    .order-delivered-button {
+      padding-top: 3rem;
+    }
+  }
+}

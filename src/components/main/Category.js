@@ -13,7 +13,7 @@ const Category = () => {
 
   return (
     <div className="category">
-      <div>
+      <div className="category-1">
         <div className="category-title">
           <DecorationTitle title="服裝類型" fontSize="s-text" />
         </div>
@@ -48,7 +48,7 @@ const Category = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="category-2">
         <div className="category-title">
           <DecorationTitle title="台灣品牌" fontSize="s-text" />
         </div>
@@ -68,7 +68,7 @@ const Category = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="category-3">
         <div className="category-title">
           <DecorationTitle title="日本品牌" fontSize="s-text" />
         </div>

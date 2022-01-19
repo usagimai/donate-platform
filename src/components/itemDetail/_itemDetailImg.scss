@@ -13,3 +13,11 @@
     cursor: default;
   }
 }
+
+@media (max-width: 1250px) {
+  .item-detail-img {
+    img {
+      width: 100%;
+    }
+  }
+}

@@ -1,11 +1,10 @@
 .login-content {
-  width: 30vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   form {
-    width: 23vw;
     display: flex;
     flex-direction: column;
     padding: 3rem 0;
@@ -23,6 +22,7 @@
       gap: 1rem;
       border-bottom: solid 0.6rem $light-bg;
       input {
+        width: auto;
         border: none;
         padding: 0.5rem 0;
         font-size: 1.8rem;
@@ -40,6 +40,7 @@
       gap: 1rem;
       border-bottom: solid 0.6rem $light-bg;
       input {
+        width: auto;
         border: none;
         padding: 0.5rem 0;
         font-size: 1.8rem;
@@ -62,6 +63,38 @@
 }
 
 .login-remark {
-  width: 23vw;
+  width: 34rem;
   color: $special-color;
+}
+
+@media (max-width: 1348px) {
+  .login-content {
+    form {
+      .id {
+        input {
+          font-size: calc(1.1rem + 0.5vw);
+        }
+      }
+      .pw {
+        input {
+          font-size: calc(1.1rem + 0.5vw);
+        }
+      }
+    }
+    .login-remark {
+      width: calc(18rem + 10vw);
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .white-container.login-white-container {
+    padding: 5rem 6rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .white-container.login-white-container {
+    padding: 3rem 3rem;
+  }
 }

@@ -35,7 +35,7 @@ const Login = ({ setLoginBoxOpen }) => {
 
   return (
     <Backdrop>
-      <div className="white-container">
+      <div className="white-container login-white-container">
         <div className="close-bg" onClick={handleLoginBoxClose}>
           <IconSelector name="close" />
         </div>
@@ -48,7 +48,6 @@ const Login = ({ setLoginBoxOpen }) => {
                 <input
                   type="text"
                   id="username"
-                  size="23"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -62,7 +61,6 @@ const Login = ({ setLoginBoxOpen }) => {
                 <input
                   type={visible ? "text" : "password"}
                   id="password"
-                  size="23"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required

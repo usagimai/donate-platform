@@ -87,7 +87,7 @@ const CartDetailOne = ({
             )}
           </select>
           {oneStockStatus && (
-            <div className="s-text">
+            <div className="s-text no-enough-stock">
               {oneStockStatus === "noEnoughStock" && "庫存少於需求"}
             </div>
           )}

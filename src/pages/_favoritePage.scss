@@ -1,6 +1,7 @@
 .favorite-page {
   max-width: 1224px;
   margin: auto;
+  margin-top: 5.5rem;
   padding: 5rem 0 9rem 0;
   display: flex;
   flex-direction: column;
@@ -19,5 +20,17 @@
     .favorite-title-item {
       width: 50vw;
     }
+  }
+}
+
+@media (max-width: 1250px) {
+  .favorite-page {
+    width: calc(100% - 4vw);
+  }
+}
+
+@media (max-width: 750px) {
+  .favorite-page {
+    margin-top: 7rem;
   }
 }

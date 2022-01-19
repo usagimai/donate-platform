@@ -17,3 +17,25 @@
   padding-top: 1rem;
   color: crimson;
 }
+
+@media (max-width: 660px) {
+  .cart-detail-all {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: "box1 box2 box2 box2";
+    div:nth-child(1) {
+      grid-area: box1;
+    }
+    div:nth-child(2) {
+      grid-area: box2;
+    }
+    div:nth-child(3) {
+      display: none;
+    }
+    div:nth-child(4) {
+      display: none;
+    }
+    div:nth-child(5) {
+      display: none;
+    }
+  }
+}

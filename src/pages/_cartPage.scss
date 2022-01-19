@@ -1,6 +1,7 @@
 .cart-page {
   max-width: 1224px;
   margin: auto;
+  margin-top: 5.5rem;
   padding: 5rem 0 9rem 0;
   display: flex;
   flex-direction: column;
@@ -17,5 +18,21 @@
   }
   .stock-message {
     padding-bottom: 3rem;
+  }
+}
+
+@media (max-width: 1250px) {
+  .cart-page {
+    width: calc(100% - 4vw);
+    .cart-page-lower {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .cart-page {
+    margin-top: 7rem;
   }
 }

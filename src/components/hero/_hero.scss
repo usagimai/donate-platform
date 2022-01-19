@@ -3,6 +3,7 @@
   max-width: 1224px;
   margin: auto;
   display: flex;
+  margin-top: 5.5rem;
   padding-top: 6rem;
   position: relative;
 }
@@ -128,4 +129,152 @@
   left: 11rem;
   background: $primary-light;
   z-index: -1;
+}
+
+@media (max-width: 1250px) {
+  .hero {
+    width: calc(100% - 4vw);
+    height: 55rem;
+  }
+  .bg-box-light {
+    width: 150rem;
+    height: 41rem;
+  }
+  .bg-box-dark {
+    width: 73rem;
+    left: 7rem;
+  }
+}
+
+@media (max-width: 1120px) {
+  .hero {
+    height: 52rem;
+    padding-top: 4rem;
+  }
+  .hero-left {
+    img {
+      width: 720px;
+    }
+  }
+  .hero-right {
+    .hero-text-upper {
+      .hero-reason {
+        img {
+          width: 110px;
+        }
+      }
+    }
+  }
+  .bg-box-light {
+    height: 39.5rem;
+    top: 8.5rem;
+  }
+  .bg-box-dark {
+    width: 67rem;
+    height: 35rem;
+  }
+}
+
+@media (max-width: 1010px) {
+  .hero {
+    height: 100%;
+    flex-direction: column;
+    gap: 7rem;
+  }
+  .hero-left {
+    width: 94%;
+    align-self: center;
+    position: relative;
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .bg-box-light {
+    width: 90%;
+    height: 95%;
+    top: 10%;
+    left: -3%;
+  }
+  .bg-box-dark {
+    width: 95%;
+    height: 90%;
+    top: 20%;
+    left: auto;
+    right: -3%;
+  }
+  .hero-right {
+    width: 94%;
+    position: relative;
+    flex-direction: row;
+    align-self: center;
+    .hero-text-upper {
+      width: 60%;
+      height: 28rem;
+      justify-content: center;
+      flex: 5;
+      .hero-reason {
+        justify-content: center;
+        line-height: 200%;
+        padding: 0 9rem;
+      }
+    }
+    .hero-text-lower {
+      flex-direction: column;
+      flex: 2;
+      border-left: solid 0.1rem;
+      .center {
+        height: 1rem;
+      }
+      > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .hero {
+    margin-top: 8rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-right {
+    height: 100%;
+    flex-direction: column;
+    gap: 3rem;
+    .hero-text-upper {
+      width: auto;
+      flex: auto;
+      .hero-reason {
+        img {
+          width: 100px;
+        }
+      }
+    }
+    .hero-text-lower {
+      flex-direction: row;
+      flex: auto;
+      border-left: none;
+    }
+  }
+}
+
+@media (max-width: 412px) {
+  .hero {
+    gap: 6rem;
+    .hero-right {
+      .hero-text-upper {
+        width: auto;
+        height: 30.2rem;
+        flex: auto;
+        .hero-reason {
+          padding: 0 4rem;
+        }
+      }
+    }
+  }
 }

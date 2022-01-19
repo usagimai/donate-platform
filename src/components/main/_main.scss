@@ -19,3 +19,31 @@
   flex-direction: column;
   gap: 2rem;
 }
+
+@media (max-width: 1250px) {
+  .main {
+    width: calc(100% - 4vw);
+    scroll-margin-top: 1rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .main-left {
+    width: 21rem;
+  }
+}
+
+@media (max-width: 915px) {
+  .main {
+    flex-direction: column;
+  }
+  .main-left {
+    width: auto;
+  }
+}
+
+@media (max-width: 750px) {
+  .main {
+    scroll-margin-top: 2.5rem;
+  }
+}

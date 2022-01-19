@@ -7,3 +7,41 @@
   border: solid 0.1rem $light-bg;
   padding: 3.5rem 5rem;
 }
+
+@media (max-width: 600px) {
+  .order-list-box {
+    padding: 3.5rem 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "box1 box2"
+      "box5 box6"
+      "box3 box4"
+      "box7 box8";
+    > div:nth-child(1) {
+      grid-area: box1;
+    }
+    > div:nth-child(2) {
+      grid-area: box2;
+    }
+    > div:nth-child(3) {
+      grid-area: box3;
+    }
+    > div:nth-child(4) {
+      grid-area: box4;
+    }
+    > div:nth-child(5) {
+      grid-area: box5;
+      padding-bottom: 2rem;
+    }
+    > div:nth-child(6) {
+      grid-area: box6;
+      padding-bottom: 2rem;
+    }
+    > div:nth-child(7) {
+      grid-area: box7;
+    }
+    > div:nth-child(8) {
+      grid-area: box8;
+    }
+  }
+}

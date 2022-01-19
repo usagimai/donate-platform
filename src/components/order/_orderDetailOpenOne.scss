@@ -21,3 +21,47 @@
   padding-bottom: 2.5rem;
   margin-bottom: 2.5rem;
 }
+
+@media (max-width: 900px) {
+  .order-detail-open-one {
+    .order-img-title {
+      img {
+        width: 8rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .order-detail-open-one {
+    .order-img-title {
+      img {
+        width: 6rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 530px) {
+  .order-detail-open-one {
+    width: 85vw;
+  }
+}
+
+@media (max-width: 490px) {
+  .order-detail-open-one {
+    .order-img-title {
+      img {
+        width: 5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .order-detail-open-one {
+    .order-img-title {
+      flex-direction: column;
+    }
+  }
+}

@@ -1,10 +1,23 @@
 .item-page {
   max-width: 1224px;
   margin: auto;
+  margin-top: 5.5rem;
   padding-bottom: 5rem;
   display: flex;
   flex-direction: column;
   .item-page-location {
     padding: 3rem 0;
+  }
+}
+
+@media (max-width: 1250px) {
+  .item-page {
+    width: calc(100% - 4vw);
+  }
+}
+
+@media (max-width: 750px) {
+  .item-page {
+    margin-top: 7rem;
   }
 }

@@ -12,3 +12,37 @@
     }
   }
 }
+
+@media (max-width: 1250px) {
+  .item-detail {
+    .item-detail-upper {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .item-detail {
+    padding: 5rem 0 4rem 0;
+    .item-detail-upper {
+      display: flex;
+      flex-direction: column;
+      > div {
+        width: 80%;
+        align-self: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .item-detail {
+    padding: 3rem 0 4rem 0;
+    .item-detail-upper {
+      > div {
+        width: 90%;
+      }
+    }
+  }
+}

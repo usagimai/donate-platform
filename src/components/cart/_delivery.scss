@@ -15,12 +15,14 @@
       grid-row-gap: 2.5rem;
       > div {
         justify-self: center;
+        align-self: center;
       }
     }
     label {
       padding: 0 2rem;
     }
     input {
+      width: 100%;
       padding: 0.5rem 1rem;
       font-size: 1.6rem;
       color: $font-color;
@@ -39,6 +41,57 @@
       border: solid 0.1rem $primary-dark;
       border-radius: 1rem;
       color: $primary-dark;
+    }
+  }
+}
+
+@media (max-width: 1348px) {
+  .delivery {
+    form {
+      input {
+        font-size: calc(0.9rem + 0.5vw);
+      }
+    }
+  }
+}
+
+@media (max-width: 1250px) {
+  .delivery {
+    form {
+      align-self: flex-start;
+    }
+  }
+}
+
+@media (max-width: 725px) {
+  .delivery {
+    form {
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .delivery {
+    .delivery-button {
+      position: relative;
+      .center {
+        position: absolute;
+        width: 32rem;
+        padding-right: 0;
+        top: 130%;
+        right: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 390px) {
+  .delivery {
+    .delivery-button {
+      .center {
+        width: 24rem;
+      }
     }
   }
 }

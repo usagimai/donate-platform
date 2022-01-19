@@ -80,7 +80,7 @@ const Confirm = ({
 
   return (
     <Backdrop>
-      <div className="white-container">
+      <div className="white-container confirm-white-container">
         <div className="close-bg" onClick={handleConfirmBoxClose}>
           <IconSelector name="close" />
         </div>

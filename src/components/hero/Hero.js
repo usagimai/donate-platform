@@ -59,6 +59,8 @@ const Hero = () => {
           {heroImg === "img3" && <img src={hero3} alt="輪播圖" />}
         </div>
         <div className="hero-blank"></div>
+        <div className="bg-box-light"></div>
+        <div className="bg-box-dark"></div>
       </div>
       <div className="hero-right">
         <div className="hero-text-upper">
@@ -66,7 +68,7 @@ const Hero = () => {
         </div>
         <div className="hero-text-lower">
           <div>
-            <div className="s-text" onClick={() => setHeroText(true)}>
+            <div className="s-text center" onClick={() => setHeroText(true)}>
               平台緣由
             </div>
             <div className="center">
@@ -74,7 +76,7 @@ const Hero = () => {
             </div>
           </div>
           <div>
-            <div className="s-text" onClick={() => setHeroText(false)}>
+            <div className="s-text center" onClick={() => setHeroText(false)}>
               訂單流程
             </div>
             <div className="center">
@@ -83,8 +85,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="bg-box-light"></div>
-      <div className="bg-box-dark"></div>
     </div>
   );
 };

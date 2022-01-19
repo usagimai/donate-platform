@@ -22,6 +22,7 @@
     grid-row-gap: 2rem;
     span {
       color: crimson;
+      height: 100%;
     }
     .add-to-cart {
       color: $special-color;
@@ -29,5 +30,13 @@
   }
   .order-button {
     justify-self: center;
+  }
+}
+
+@media (max-width: 840px) {
+  .item-detail-order {
+    form {
+      width: 100%;
+    }
   }
 }

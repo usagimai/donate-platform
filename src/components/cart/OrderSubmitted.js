@@ -46,7 +46,7 @@ export const OrderSubmitted = ({ setSubmittedBoxOpen }) => {
 
   return (
     <Backdrop>
-      <div className="white-container">
+      <div className="white-container order-submitted-white-container">
         <div
           className="close-bg"
           onClick={() => handleSubmittedBoxClose("close")}

@@ -17,6 +17,7 @@ const Nav = ({
   setNavLogoClicked,
   cartItemChange,
   setCartItemChange,
+  isDown,
 }) => {
   const user = auth.currentUser;
   const [cartItems, setCartItems] = useState("");
@@ -49,7 +50,7 @@ const Nav = ({
         />
       )}
 
-      <div className="nav">
+      <div className={`nav ${isDown ? "nav-hide" : "nav-show"}`}>
         <div className="nav-content">
           <div className="logo-title-box">
             <div>
