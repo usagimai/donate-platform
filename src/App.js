@@ -85,6 +85,12 @@ function App() {
   }, []);
 
   //重新整理後，頁面從最頂端顯示
+  //適用Safari & Firefox
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  //適用Chrome & Edge
   useEffect(() => {
     const scrollTop = () => {
       setIsReload(true);
