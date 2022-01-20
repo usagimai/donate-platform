@@ -42,7 +42,14 @@
       grid-template-columns: auto auto 1fr;
       padding-top: 2rem;
       > div {
+        height: fit-content;
         padding: 1.5rem 2rem;
+      }
+      > div:nth-child(3),
+      > div:nth-child(6),
+      > div:nth-child(9),
+      > div:nth-child(12) {
+        align-self: center;
       }
     }
   }

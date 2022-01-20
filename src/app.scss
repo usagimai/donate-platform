@@ -118,6 +118,12 @@ input:-internal-autofill-selected {
   box-shadow: 0 0 0 50px white inset;
 }
 
+select {
+  background: white;
+  border: 0.1rem solid $font-color;
+  -moz-border: 0.1rem solid $font-color;
+}
+
 @media (max-width: 1348px) {
   .l-text {
     font-size: calc(1.3rem + 0.5vw);

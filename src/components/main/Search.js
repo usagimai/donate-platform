@@ -20,7 +20,6 @@ const Search = ({ setSearchText }) => {
         <input
           type="search"
           placeholder="搜尋商品"
-          size="21"
           onChange={(e) => setSearchInput(e.target.value)}
           value={searchInput}
         />

@@ -4,9 +4,12 @@ form {
   align-items: center;
   gap: 1rem;
   .search-input {
+    width: 100%;
     input {
+      width: 100%;
       padding: 0.5rem 1rem;
       color: $font-color;
+      border: solid 0.1rem $primary-dark;
     }
   }
   button {
