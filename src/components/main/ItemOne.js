@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,6 +15,9 @@ const ItemOne = ({ image, name, id, setLoginBoxOpen }) => {
   const user = auth.currentUser;
   const favorites = useSelector((state) => state.favorites.favorites);
   const [isFavorite, setIsFavorite] = useState(false);
+
+  const imageRef = useRef();
+  const [imgSrc, setImgSrc] = useState();
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
@@ -40,12 +43,36 @@ const ItemOne = ({ image, name, id, setLoginBoxOpen }) => {
     }
   }, [favorites]);
 
+  //圖片Lazy Loading
+  const options = {
+    rootMargin: "0% 0% 10% 0%",
+  };
+
+  const callback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setImgSrc(image);
+        observer.unobserve(imageRef.current);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(callback, options);
+
+    observer.observe(imageRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <div className="item-list-container">
       <Link to={`/items/${id}`}>
         <div>
           <div>
-            <img src={image} alt="商品圖" />
+            <img src={imgSrc} alt="商品圖" ref={imageRef} />
           </div>
           <div className="item-list-title s-text">{name}</div>
         </div>
