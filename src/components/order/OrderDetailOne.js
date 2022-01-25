@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { IconSelector } from "../reusable/IconSelector";
 import OrderDetailOpen from "./OrderDetailOpen";
+import useScrollBlock from "../../utils/useScrollBlock";
 
 const OrderDetailOne = ({
   orderNo,
@@ -15,11 +16,12 @@ const OrderDetailOne = ({
   deliveryRemark,
   setOrderDetailNo,
 }) => {
+  const [blockScroll, allowScroll] = useScrollBlock();
   const [detailOpen, setDetailOpen] = useState(false);
 
   const handleDetailOpen = () => {
     setDetailOpen(true);
-    document.body.style.overflow = "hidden";
+    blockScroll();
     setOrderDetailNo(orderNo);
   };
 
@@ -36,6 +38,7 @@ const OrderDetailOne = ({
           deliveryAdd={deliveryAdd}
           deliveryRemark={deliveryRemark}
           setDetailOpen={setDetailOpen}
+          allowScroll={allowScroll}
         />
       )}
 

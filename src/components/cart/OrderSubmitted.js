@@ -9,7 +9,7 @@ import Backdrop from "../reusable/Backdrop";
 import { loadOrders } from "../../actions/ordersAction";
 import { orderSubmittedData } from "../../data";
 
-export const OrderSubmitted = ({ setSubmittedBoxOpen }) => {
+export const OrderSubmitted = ({ setSubmittedBoxOpen, allowScroll }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ export const OrderSubmitted = ({ setSubmittedBoxOpen }) => {
       default:
         break;
     }
-    document.body.style.overflow = "auto";
+    allowScroll();
   };
 
   return (

@@ -4,14 +4,16 @@ import { useDispatch } from "react-redux";
 
 import { IconSelector } from "../reusable/IconSelector";
 import Confirm from "../reusable/Confirm";
+import useScrollBlock from "../../utils/useScrollBlock";
 
 const FavoriteOne = ({ no, id, img, name, favorites }) => {
   const dispatch = useDispatch();
+  const [blockScroll, allowScroll] = useScrollBlock();
   const [deleteFavBoxOpen, setDeleteFavBoxOpen] = useState(false);
 
   const handleDeleteBoxOpen = () => {
     setDeleteFavBoxOpen(true);
-    document.body.style.overflow = "hidden";
+    blockScroll();
   };
 
   return (
@@ -24,6 +26,7 @@ const FavoriteOne = ({ no, id, img, name, favorites }) => {
           dispatch={dispatch}
           favorites={favorites}
           idFav={id}
+          allowScroll={allowScroll}
         />
       )}
       <div className="favorite-one s-text">

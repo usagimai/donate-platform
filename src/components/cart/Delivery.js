@@ -17,6 +17,7 @@ const Delivery = ({
   setNoStockItem,
   setSubmittedBoxOpen,
   setCartItemChange,
+  blockScroll,
 }) => {
   const dispatch = useDispatch();
   const user = auth.currentUser;
@@ -179,7 +180,7 @@ const Delivery = ({
         orderSubmit();
         scrollTop();
         setSubmittedBoxOpen(true);
-        document.body.style.overflow = "hidden";
+        blockScroll();
         break;
     }
   };

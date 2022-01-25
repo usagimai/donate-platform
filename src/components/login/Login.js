@@ -7,7 +7,7 @@ import Backdrop from "../reusable/Backdrop";
 import { loginData } from "../../data";
 import { app, auth } from "../../firebase-config";
 
-const Login = ({ setLoginBoxOpen }) => {
+const Login = ({ setLoginBoxOpen, allowScroll }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,7 +30,7 @@ const Login = ({ setLoginBoxOpen }) => {
 
   const handleLoginBoxClose = () => {
     setLoginBoxOpen(false);
-    document.body.style.overflow = "auto";
+    allowScroll();
   };
 
   return (

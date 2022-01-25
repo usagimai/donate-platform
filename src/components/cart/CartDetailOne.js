@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { IconSelector } from "../reusable/IconSelector";
 import Confirm from "../reusable/Confirm";
+import useScrollBlock from "../../utils/useScrollBlock";
 
 const CartDetailOne = ({
   no,
@@ -15,6 +16,8 @@ const CartDetailOne = ({
   oneStockStatus,
   setCartItemChange,
 }) => {
+  const [blockScroll, allowScroll] = useScrollBlock();
+
   const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
   const [orderNum, setOrderNum] = useState(num);
   const [newCartItems, setNewCartItems] = useState("");
@@ -46,7 +49,7 @@ const CartDetailOne = ({
 
   const handleDeleteBoxOpen = () => {
     setDeleteBoxOpen(true);
-    document.body.style.overflow = "hidden";
+    blockScroll();
   };
 
   return (
@@ -59,6 +62,7 @@ const CartDetailOne = ({
           id={id}
           type={type}
           setCartItemChange={setCartItemChange}
+          allowScroll={allowScroll}
         />
       )}
       <div className="cart-detail-one s-text">

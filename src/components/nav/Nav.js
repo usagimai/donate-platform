@@ -7,6 +7,7 @@ import Confirm from "../reusable/Confirm";
 //components
 import Login from "../login/Login";
 //others
+import useScrollBlock from "../../utils/useScrollBlock";
 import logoBird from "../../img/logo-bird.png";
 import { app, auth } from "../../firebase-config";
 
@@ -19,6 +20,8 @@ const Nav = ({
   setCartItemChange,
   isDown,
 }) => {
+  const [blockScroll, allowScroll] = useScrollBlock();
+
   const user = auth.currentUser;
   const [cartItems, setCartItems] = useState("");
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
@@ -31,22 +34,25 @@ const Nav = ({
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
-    document.body.style.overflow = "hidden";
+    blockScroll();
   };
 
   const handleLogoutBoxOpen = () => {
     setLogoutBoxOpen(true);
-    document.body.style.overflow = "hidden";
+    blockScroll();
   };
 
   return (
     <>
-      {loginBoxOpen && <Login setLoginBoxOpen={setLoginBoxOpen} />}
+      {loginBoxOpen && (
+        <Login setLoginBoxOpen={setLoginBoxOpen} allowScroll={allowScroll} />
+      )}
       {logoutBoxOpen && (
         <Confirm
           setLogoutBoxOpen={setLogoutBoxOpen}
           message="是否確認登出?"
           confirmFor="logout"
+          allowScroll={allowScroll}
         />
       )}
 

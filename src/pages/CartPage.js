@@ -15,12 +15,14 @@ import Note from "../components/cart/Note";
 import Delivery from "../components/cart/Delivery";
 import { OrderSubmitted } from "../components/cart/OrderSubmitted";
 //others
+import useScrollBlock from "../utils/useScrollBlock";
 import { loadItems } from "../actions/itemsAction";
 import { app, db, auth } from "../firebase-config";
 
 const CartPage = ({ setLoginBoxOpen, cartItemChange, setCartItemChange }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [blockScroll, allowScroll] = useScrollBlock();
 
   const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
@@ -102,7 +104,10 @@ const CartPage = ({ setLoginBoxOpen, cartItemChange, setCartItemChange }) => {
   return (
     <>
       {submittedBoxOpen && (
-        <OrderSubmitted setSubmittedBoxOpen={setSubmittedBoxOpen} />
+        <OrderSubmitted
+          setSubmittedBoxOpen={setSubmittedBoxOpen}
+          allowScroll={allowScroll}
+        />
       )}
       <div className="cart-page">
         <div className="cart-page-title">
@@ -129,6 +134,7 @@ const CartPage = ({ setLoginBoxOpen, cartItemChange, setCartItemChange }) => {
                   setNoStockItem={setNoStockItem}
                   setSubmittedBoxOpen={setSubmittedBoxOpen}
                   setCartItemChange={setCartItemChange}
+                  blockScroll={blockScroll}
                 />
               </div>
             </div>

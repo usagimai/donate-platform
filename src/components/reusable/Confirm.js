@@ -14,6 +14,7 @@ const Confirm = ({
   setDeleteFavBoxOpen,
   message,
   confirmFor,
+  allowScroll,
   id,
   type,
   setCartItemChange,
@@ -69,7 +70,7 @@ const Confirm = ({
       default:
         console.log("confirmBoxClose error");
     }
-    document.body.style.overflow = "auto";
+    allowScroll();
   };
 
   //確認登出相關

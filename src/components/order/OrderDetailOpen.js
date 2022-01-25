@@ -18,12 +18,13 @@ const OrderDetailOpen = ({
   deliveryAdd,
   deliveryRemark,
   setDetailOpen,
+  allowScroll,
 }) => {
   const all = useSelector((state) => state.items.all);
 
   const handleDetailClose = () => {
     setDetailOpen(false);
-    document.body.style.overflow = "auto";
+    allowScroll();
   };
 
   return (
@@ -82,15 +83,12 @@ const OrderDetailOpen = ({
               <div className="order-delivery-info s-text">
                 <div className="center">收件人姓名</div>
                 <div className="vertical-line"></div>
-                {/* 第二個字用＊表示 */}
                 <div>{deliveryName}</div>
                 <div className="center">聯絡電話</div>
                 <div className="vertical-line"></div>
-                {/* 中間三個字用＊表示 */}
                 <div>{deliveryTel}</div>
                 <div className="center">收件地址</div>
                 <div className="vertical-line"></div>
-                {/* 數字用＊表示 */}
                 <div>{deliveryAdd}</div>
                 <div className="center">備註</div>
                 <div className="vertical-line"></div>
