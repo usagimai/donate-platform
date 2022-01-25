@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 import { onAuthStateChanged } from "firebase/auth";
 
 //reusable components
@@ -49,6 +50,9 @@ const OrderPage = ({ setLoginBoxOpen }) => {
 
   return (
     <div className="order-page">
+      <Helmet>
+        <title>Machu Days商品捐贈平台 - 訂單</title>
+      </Helmet>
       <div className="order-page-title">
         <TitleButton text="訂單" />
       </div>

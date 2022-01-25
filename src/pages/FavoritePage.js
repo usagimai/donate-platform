@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 import { onAuthStateChanged } from "firebase/auth";
 
 //reusable components
@@ -50,6 +51,9 @@ const FavoritePage = ({ setLoginBoxOpen }) => {
 
   return (
     <div className="favorite-page">
+      <Helmet>
+        <title>Machu Days商品捐贈平台 - 收藏</title>
+      </Helmet>
       <div className="favorite-page-title">
         <TitleButton text="收藏" />
       </div>

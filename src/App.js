@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 import { onAuthStateChanged } from "firebase/auth";
 
 import "./app.scss";
@@ -31,8 +32,6 @@ function App() {
   const [isReload, setIsReload] = useState(false);
   const [isDown, setIsDown] = useState(false);
   const prevScrollPos = useRef(0);
-
-  console.log(window.innerWidth);
 
   //使用Firebase的功能監聽使用者是否登入(若為登入，會從Firebase接收到該使用者的資訊，包含email、UID等)
   useEffect(() => {
@@ -108,6 +107,9 @@ function App() {
 
   return (
     <>
+      <Helmet>
+        <title>Machu Days商品捐贈平台</title>
+      </Helmet>
       <Nav
         loginBoxOpen={loginBoxOpen}
         setLoginBoxOpen={setLoginBoxOpen}

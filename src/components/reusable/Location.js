@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 export const ListLocation = ({ searchText }) => {
   const category = useSelector((state) => state.category);
@@ -40,6 +41,9 @@ export const ListLocation = ({ searchText }) => {
     <>
       {!searchText && (
         <div className="location s-text">
+          <Helmet>
+            <title>Machu Days商品捐贈平台 - {`${listLocation[1]}`}</title>
+          </Helmet>
           <div>{listLocation[0]}</div>
           <div>{category != "all" && <span>&gt;</span>}</div>
           <div>{listLocation[1]}</div>
@@ -47,6 +51,11 @@ export const ListLocation = ({ searchText }) => {
       )}
       {searchText && (
         <div className="location s-text">
+          <Helmet>
+            <title>
+              Machu Days商品捐贈平台 - 「{`${searchText}`}」搜尋結果
+            </title>
+          </Helmet>
           <div className="search-text">「{searchText}」</div>
           <div>搜尋結果</div>
         </div>

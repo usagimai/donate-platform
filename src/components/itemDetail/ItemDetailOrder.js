@@ -1,5 +1,6 @@
 import { Children, useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { BrownButton } from "../reusable/ButtonCollection";
@@ -87,6 +88,9 @@ const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
 
   return (
     <div className="item-detail-order">
+      <Helmet>
+        <title>Machu Days商品捐贈平台 - {`${name}`}</title>
+      </Helmet>
       <div className="l-text">{name}</div>
       <div className="item-number s-text">商品編號：{id}</div>
       <form>

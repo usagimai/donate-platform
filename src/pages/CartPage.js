@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -110,6 +111,9 @@ const CartPage = ({ setLoginBoxOpen, cartItemChange, setCartItemChange }) => {
         />
       )}
       <div className="cart-page">
+        <Helmet>
+          <title>Machu Days商品捐贈平台 - 購物車</title>
+        </Helmet>
         <div className="cart-page-title">
           <TitleButton text="購物車" />
         </div>
