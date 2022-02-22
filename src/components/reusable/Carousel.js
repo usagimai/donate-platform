@@ -13,13 +13,15 @@ export const Carousel = ({ setLoginBoxOpen, text, array }) => {
     setRandomAll(allForRandom.sort(() => Math.random() - 0.5).slice(0, 20));
   }, [all]);
   //輪播用商品array(最近瀏覽)
-  const [historyIdArrOriginal, setHistoryIdArrOriginal] = useState("");
+  const [historyIdArrOriginal, setHistoryIdArrOriginal] = useState([]);
   const [historyArr, setHistoryArr] = useState([]);
 
   useEffect(() => {
-    setHistoryIdArrOriginal(
-      JSON.parse(localStorage.getItem("machudaysHistory"))
-    );
+    if (JSON.parse(localStorage.getItem("machudaysHistory"))) {
+      setHistoryIdArrOriginal(
+        JSON.parse(localStorage.getItem("machudaysHistory"))
+      );
+    }
   }, []);
 
   const historyItemsArr = [];
@@ -35,7 +37,7 @@ export const Carousel = ({ setLoginBoxOpen, text, array }) => {
           });
           setHistoryArr(historyItemsArr);
           break;
-        case !historyIdArrOriginal:
+        case historyIdArrOriginal.length === 0:
           setHistoryArr([]);
           break;
         default:
