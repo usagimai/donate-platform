@@ -200,7 +200,6 @@ const Delivery = ({
               type="text"
               id="delivery-name"
               size="49"
-              required
               name="name"
               value={deliveryForm.name}
               onChange={handleDeliveryForm}
@@ -214,7 +213,6 @@ const Delivery = ({
               type="text"
               id="delivery-tel"
               size="49"
-              required
               name="tel"
               value={deliveryForm.tel}
               onChange={handleDeliveryForm}
@@ -228,7 +226,6 @@ const Delivery = ({
               type="text"
               id="delivery-add"
               size="49"
-              required
               name="add"
               value={deliveryForm.add}
               onChange={handleDeliveryForm}

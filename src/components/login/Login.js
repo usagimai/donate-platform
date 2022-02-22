@@ -50,7 +50,6 @@ const Login = ({ setLoginBoxOpen, allowScroll }) => {
                   id="username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
                 />
                 <div className="hidden">
                   <IconSelector name="unvisible" />
@@ -63,7 +62,6 @@ const Login = ({ setLoginBoxOpen, allowScroll }) => {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                 />
                 <div onClick={() => setVisible((prev) => !prev)}>
                   <IconSelector name={visible ? "visible" : "unvisible"} />

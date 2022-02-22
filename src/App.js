@@ -5,8 +5,6 @@ import { Helmet } from "react-helmet";
 import { onAuthStateChanged } from "firebase/auth";
 
 import "./app.scss";
-//reusable components
-import NotFound from "./components/reusable/NotFound";
 //components
 import Nav from "./components/nav/Nav";
 import Home from "./pages/Home";
@@ -156,9 +154,6 @@ function App() {
           path="/favorite"
           element={<FavoritePage setLoginBoxOpen={setLoginBoxOpen} />}
         />
-
-        {/* <Route path="/404" element={<NotFound />} />
-        <Route path="*" element={<Navigate to="/404" replace />} /> */}
       </Routes>
       <Footer />
     </>
