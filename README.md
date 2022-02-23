@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+## 【作品說明】
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### ● 名稱：
 
-## Available Scripts
+Machu Days 商品捐贈平台 (Donate Platform)
 
-In the project directory, you can run:
+### ● 簡介：
 
-### `npm start`
+無金流功能的購物網站 (透過類似購物網站的操作流程進行商品捐贈)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### ● 使用技術/工具：
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+React.js、SASS、Redux、RWD、Firebase 驗證系統、資料庫與託管功能
 
-### `npm test`
+### ● 特色：
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. 未登入時可瀏覽商品，登入後可使用購物車、訂單及收藏功能
+2. 登入功能：在任何頁面都可進行登入，且登入完成後會回到剛剛瀏覽的頁面 (若瀏覽商品到一半，即可繼續瀏覽該商品)
+3. 登出功能：登出後將轉導回首頁，若直接透過網址進入未登入者不可進入的頁面，將 return null 且立即被轉導回首頁
+4. 商品列表：lazy loading 方式呈現
+5. 購物車功能：
 
-### `npm run build`
+   -在商品頁面可一次將同款不同尺寸/顏色的商品加入購物車，購物車資料存於 local storage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   -在購物車頁面可刪除品項或調整所需數量，收件人表單資訊儲存於 session storage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   -進入購物車頁面及送出訂單的兩個時間點會確認庫存是否足夠，若有庫存不足之情形會提醒使用者
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+6. 訂單功能：可檢視所有訂單資訊
+7. 收藏功能：在商品列表及個別商品頁面都可將商品加入/移除收藏
+8. 「推薦商品」及「最近瀏覽」商品列表：在「購物車」、「訂單」、「收藏」無資料的狀況下，該頁面會顯示「推薦商品」及「最近瀏覽」的商品列表供挑選參考
+9. 瀏覽器上下頁：為了提供良好 UX，使用者可使用上下頁瀏覽需要的頁面；瀏覽器上下頁也有顯示每個頁面的標題，以方便使用者確認想去的頁面 (使用 Helmet 套件)
+10. Footer：點選 Email 將自動複製 Email 到剪貼簿 (由於不是所有使用者都有安裝電子郵件軟體或為網頁版電子郵件服務擴充功能，比起使用 mailto，複製 Email 後再讓使用者決定如何寄信更有彈性)
 
-### `npm run eject`
+### ● 連結：
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[[成品]](https://donate-platform.web.app/)
+[[設計稿]](https://www.figma.com/proto/k2jxRyN8YHUWhu6Y5MWVRB/Donate-Platform?node-id=5%3A2)
