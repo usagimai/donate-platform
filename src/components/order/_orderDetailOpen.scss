@@ -73,6 +73,7 @@
     align-self: center;
     display: flex;
     padding: 0;
+    margin: auto;
   }
 }
 
@@ -91,6 +92,9 @@
       .order-detail-content {
         width: 85vw;
       }
+    }
+    .white-container {
+      width: 95%;
     }
   }
 }
