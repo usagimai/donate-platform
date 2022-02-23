@@ -5,7 +5,7 @@ import Search from "./Search";
 import Category from "./Category";
 import ItemList from "./ItemList";
 
-const Main = ({ setLoginBoxOpen }) => {
+const Main = () => {
   const [searchText, setSearchText] = useState("");
 
   return (
@@ -17,11 +17,7 @@ const Main = ({ setLoginBoxOpen }) => {
       <div className="main-right">
         <ListLocation searchText={searchText} setSearchText={setSearchText} />
 
-        <ItemList
-          searchText={searchText}
-          setSearchText={setSearchText}
-          setLoginBoxOpen={setLoginBoxOpen}
-        />
+        <ItemList searchText={searchText} setSearchText={setSearchText} />
       </div>
     </div>
   );

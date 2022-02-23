@@ -1,11 +1,11 @@
 import Hero from "../components/hero/Hero";
 import Main from "../components/main/Main";
 
-const Home = ({ setLoginBoxOpen }) => {
+const Home = () => {
   return (
     <>
       <Hero />
-      <Main setLoginBoxOpen={setLoginBoxOpen} />
+      <Main />
     </>
   );
 };

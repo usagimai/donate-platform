@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { IconSelector } from "./IconSelector";
 import ItemOne from "../main/ItemOne";
 
-export const Carousel = ({ setLoginBoxOpen, text, array }) => {
+export const Carousel = ({ text, array }) => {
   //輪播用商品array(推薦)
   const all = useSelector((state) => state.items.all);
   const allForRandom = [...all];
@@ -133,7 +133,6 @@ export const Carousel = ({ setLoginBoxOpen, text, array }) => {
               name={doc.data().name}
               id={doc.id}
               key={doc.id}
-              setLoginBoxOpen={setLoginBoxOpen}
             />
           ))}
 

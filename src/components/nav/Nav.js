@@ -12,8 +12,6 @@ import logoBird from "../../img/logo-bird.png";
 import { app, auth } from "../../firebase-config";
 
 const Nav = ({
-  loginBoxOpen,
-  setLoginBoxOpen,
   setItemMenuClicked,
   setNavLogoClicked,
   cartItemChange,
@@ -24,6 +22,7 @@ const Nav = ({
 
   const user = auth.currentUser;
   const [cartItems, setCartItems] = useState("");
+  const [loginBoxOpen, setLoginBoxOpen] = useState(false);
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
 
   //讀取購物車資料

@@ -20,7 +20,7 @@ import useScrollBlock from "../utils/useScrollBlock";
 import { loadItems } from "../actions/itemsAction";
 import { app, db, auth } from "../firebase-config";
 
-const CartPage = ({ setLoginBoxOpen, cartItemChange, setCartItemChange }) => {
+const CartPage = ({ cartItemChange, setCartItemChange }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [blockScroll, allowScroll] = useScrollBlock();
@@ -168,18 +168,10 @@ const CartPage = ({ setLoginBoxOpen, cartItemChange, setCartItemChange }) => {
               </div>
             )}
             <div>
-              <Carousel
-                setLoginBoxOpen={setLoginBoxOpen}
-                text="推薦商品"
-                array="recommend"
-              />
+              <Carousel text="推薦商品" array="recommend" />
             </div>
             <div>
-              <Carousel
-                setLoginBoxOpen={setLoginBoxOpen}
-                text="最近瀏覽"
-                array="history"
-              />
+              <Carousel text="最近瀏覽" array="history" />
             </div>
           </>
         ) : null}

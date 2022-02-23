@@ -15,7 +15,7 @@ import OrderDetailOne from "../components/order/OrderDetailOne";
 import { loadOrders } from "../actions/ordersAction";
 import { app, auth } from "../firebase-config";
 
-const OrderPage = ({ setLoginBoxOpen }) => {
+const OrderPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -81,18 +81,10 @@ const OrderPage = ({ setLoginBoxOpen }) => {
             <EmptyMessage message="查無訂單" />
           </div>
           <div>
-            <Carousel
-              setLoginBoxOpen={setLoginBoxOpen}
-              text="推薦商品"
-              array="recommend"
-            />
+            <Carousel text="推薦商品" array="recommend" />
           </div>
           <div>
-            <Carousel
-              setLoginBoxOpen={setLoginBoxOpen}
-              text="最近瀏覽"
-              array="history"
-            />
+            <Carousel text="最近瀏覽" array="history" />
           </div>
         </>
       )}

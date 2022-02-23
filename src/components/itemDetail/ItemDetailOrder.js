@@ -4,9 +4,11 @@ import { Helmet } from "react-helmet";
 
 import { DecorationTitle } from "../reusable/DecorationTitle";
 import { BrownButton } from "../reusable/ButtonCollection";
+import Login from "../login/Login";
+import useScrollBlock from "../../utils/useScrollBlock";
 import { app, auth } from "../../firebase-config";
 
-const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
+const ItemDetailOrder = ({ id, setCartItemChange }) => {
   const user = auth.currentUser;
   const all = useSelector((state) => state.items.all);
   const cartItems = JSON.parse(localStorage.getItem("machudaysCart"));
@@ -17,6 +19,8 @@ const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
 
   //將每列尺寸/顏色、庫存數量、所需數量之資料整理成object形式放進array中
   const [itemDetailInfo, setItemDetailInfo] = useState([]);
+  const [loginBoxOpen, setLoginBoxOpen] = useState(false);
+  const [blockScroll, allowScroll] = useScrollBlock();
 
   useEffect(() => {
     const initialInfo = Array(Object.keys(selectedItem.data().stock).length)
@@ -39,7 +43,7 @@ const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
-    document.body.style.overflow = "hidden";
+    blockScroll();
   };
 
   const handleAddToCart = () => {
@@ -87,70 +91,75 @@ const ItemDetailOrder = ({ id, setLoginBoxOpen, setCartItemChange }) => {
   }, [cartMessage]);
 
   return (
-    <div className="item-detail-order">
-      <Helmet>
-        <title>Machu Days商品捐贈平台 - {`${name}`}</title>
-      </Helmet>
-      <div className="l-text">{name}</div>
-      <div className="item-number s-text">商品編號：{id}</div>
-      <form>
-        <div className="order-container s-text">
-          <div>
-            <DecorationTitle title="尺寸/顏色" fontSize="s-text" />
-          </div>
-          <div>
-            <DecorationTitle title="庫存數量" fontSize="s-text" />
-          </div>
-          <div>
-            <DecorationTitle title="所需數量" fontSize="s-text" />
+    <>
+      {loginBoxOpen && (
+        <Login setLoginBoxOpen={setLoginBoxOpen} allowScroll={allowScroll} />
+      )}
+      <div className="item-detail-order">
+        <Helmet>
+          <title>Machu Days商品捐贈平台 - {`${name}`}</title>
+        </Helmet>
+        <div className="l-text">{name}</div>
+        <div className="item-number s-text">商品編號：{id}</div>
+        <form>
+          <div className="order-container s-text">
+            <div>
+              <DecorationTitle title="尺寸/顏色" fontSize="s-text" />
+            </div>
+            <div>
+              <DecorationTitle title="庫存數量" fontSize="s-text" />
+            </div>
+            <div>
+              <DecorationTitle title="所需數量" fontSize="s-text" />
+            </div>
+
+            {Children.toArray(
+              itemDetailInfo.map((item, idx) => {
+                const nums = [];
+                for (let i = 0; i <= item.stockNum; i++) {
+                  nums.push(i);
+                }
+                return (
+                  <>
+                    <div>{item.type}</div>
+                    <div>{item.stockNum}</div>
+                    <div>
+                      <select
+                        name="order-number"
+                        ref={(el) => (orderNum.current[idx] = el)}
+                      >
+                        {Children.toArray(
+                          nums.map((num) => <option value={num}>{num}</option>)
+                        )}
+                      </select>
+                    </div>
+                  </>
+                );
+              })
+            )}
           </div>
 
-          {Children.toArray(
-            itemDetailInfo.map((item, idx) => {
-              const nums = [];
-              for (let i = 0; i <= item.stockNum; i++) {
-                nums.push(i);
-              }
-              return (
-                <>
-                  <div>{item.type}</div>
-                  <div>{item.stockNum}</div>
-                  <div>
-                    <select
-                      name="order-number"
-                      ref={(el) => (orderNum.current[idx] = el)}
-                    >
-                      {Children.toArray(
-                        nums.map((num) => <option value={num}>{num}</option>)
-                      )}
-                    </select>
-                  </div>
-                </>
-              );
-            })
-          )}
-        </div>
-
-        <div className="order-container">
-          <div></div>
-          <div>
-            <span
-              className={`s-text center ${
-                cartMessage === "已加入購物車" && "add-to-cart"
-              }`}
+          <div className="order-container">
+            <div></div>
+            <div>
+              <span
+                className={`s-text center ${
+                  cartMessage === "已加入購物車" && "add-to-cart"
+                }`}
+              >
+                {cartMessage}
+              </span>
+            </div>
+            <div
+              className="order-button pointer"
+              onClick={user ? handleAddToCart : handleLoginBoxOpen}
             >
-              {cartMessage}
-            </span>
+              <BrownButton text="加入購物車" />
+            </div>
           </div>
-          <div
-            className="order-button pointer"
-            onClick={user ? handleAddToCart : handleLoginBoxOpen}
-          >
-            <BrownButton text="加入購物車" />
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 };
 

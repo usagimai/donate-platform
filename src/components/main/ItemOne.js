@@ -3,25 +3,29 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { IconSelector } from "../reusable/IconSelector";
+import Login from "../login/Login";
 import {
   handleAddFavorite,
   handleRemoveFavorite,
 } from "../../utils/favoritesUtils";
+import useScrollBlock from "../../utils/useScrollBlock";
 import { loadFavorites } from "../../actions/favoritesAction";
 import { app, auth } from "../../firebase-config";
 
-const ItemOne = ({ image, name, id, setLoginBoxOpen }) => {
+const ItemOne = ({ image, name, id }) => {
   const dispatch = useDispatch();
   const user = auth.currentUser;
   const favorites = useSelector((state) => state.favorites.favorites);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [loginBoxOpen, setLoginBoxOpen] = useState(false);
+  const [blockScroll, allowScroll] = useScrollBlock();
 
   const imageRef = useRef();
   const [imgSrc, setImgSrc] = useState();
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
-    document.body.style.overflow = "hidden";
+    blockScroll();
   };
 
   //讀取收藏資料
@@ -68,37 +72,42 @@ const ItemOne = ({ image, name, id, setLoginBoxOpen }) => {
   }, []);
 
   return (
-    <div className="item-list-container">
-      <Link to={`/items/${id}`}>
-        <div>
+    <>
+      {loginBoxOpen && (
+        <Login setLoginBoxOpen={setLoginBoxOpen} allowScroll={allowScroll} />
+      )}
+      <div className="item-list-container">
+        <Link to={`/items/${id}`}>
           <div>
-            <img src={imgSrc} alt="商品圖" ref={imageRef} />
+            <div>
+              <img src={imgSrc} alt="商品圖" ref={imageRef} />
+            </div>
+            <div className="item-list-title s-text">{name}</div>
           </div>
-          <div className="item-list-title s-text">{name}</div>
-        </div>
-      </Link>
-      {!user && (
-        <div className="item-list-favorite" onClick={handleLoginBoxOpen}>
-          <IconSelector name="favorite-undone" />
-        </div>
-      )}
-      {user && !isFavorite && (
-        <div
-          className="item-list-favorite"
-          onClick={() => handleAddFavorite(dispatch, favorites, user, id)}
-        >
-          <IconSelector name="favorite-undone" />
-        </div>
-      )}
-      {user && isFavorite && (
-        <div
-          className="item-list-favorite"
-          onClick={() => handleRemoveFavorite(dispatch, favorites, user, id)}
-        >
-          <IconSelector name="favorite-done" />
-        </div>
-      )}
-    </div>
+        </Link>
+        {!user && (
+          <div className="item-list-favorite" onClick={handleLoginBoxOpen}>
+            <IconSelector name="favorite-undone" />
+          </div>
+        )}
+        {user && !isFavorite && (
+          <div
+            className="item-list-favorite"
+            onClick={() => handleAddFavorite(dispatch, favorites, user, id)}
+          >
+            <IconSelector name="favorite-undone" />
+          </div>
+        )}
+        {user && isFavorite && (
+          <div
+            className="item-list-favorite"
+            onClick={() => handleRemoveFavorite(dispatch, favorites, user, id)}
+          >
+            <IconSelector name="favorite-done" />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

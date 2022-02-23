@@ -16,7 +16,7 @@ import FavoriteOne from "../components/favorite/FavoriteOne";
 import { loadFavorites } from "../actions/favoritesAction";
 import { app, auth } from "../firebase-config";
 
-const FavoritePage = ({ setLoginBoxOpen }) => {
+const FavoritePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -95,18 +95,10 @@ const FavoritePage = ({ setLoginBoxOpen }) => {
             <EmptyMessage message="無收藏商品" />
           </div>
           <div>
-            <Carousel
-              setLoginBoxOpen={setLoginBoxOpen}
-              text="推薦商品"
-              array="recommend"
-            />
+            <Carousel text="推薦商品" array="recommend" />
           </div>
           <div>
-            <Carousel
-              setLoginBoxOpen={setLoginBoxOpen}
-              text="最近瀏覽"
-              array="history"
-            />
+            <Carousel text="最近瀏覽" array="history" />
           </div>
         </>
       )}

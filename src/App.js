@@ -23,7 +23,6 @@ function App() {
   const { pathname } = useLocation();
 
   const [user, setUser] = useState("");
-  const [loginBoxOpen, setLoginBoxOpen] = useState(false);
   const [itemMenuClicked, setItemMenuClicked] = useState(false);
   const [navLogoClicked, setNavLogoClicked] = useState(false);
   const [cartItemChange, setCartItemChange] = useState(false);
@@ -109,8 +108,6 @@ function App() {
         <title>Machu Days商品捐贈平台</title>
       </Helmet>
       <Nav
-        loginBoxOpen={loginBoxOpen}
-        setLoginBoxOpen={setLoginBoxOpen}
         setItemMenuClicked={setItemMenuClicked}
         setNavLogoClicked={setNavLogoClicked}
         cartItemChange={cartItemChange}
@@ -118,42 +115,24 @@ function App() {
         isDown={isDown}
       />
       <Routes>
-        <Route path="/" element={<Home setLoginBoxOpen={setLoginBoxOpen} />} />
-        <Route
-          path="/:category"
-          element={<Home setLoginBoxOpen={setLoginBoxOpen} />}
-        />
-        <Route
-          path="/search/:text"
-          element={<Home setLoginBoxOpen={setLoginBoxOpen} />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/:category" element={<Home />} />
+        <Route path="/search/:text" element={<Home />} />
         <Route
           path="/items/:id"
-          element={
-            <ItemPage
-              setLoginBoxOpen={setLoginBoxOpen}
-              setCartItemChange={setCartItemChange}
-            />
-          }
+          element={<ItemPage setCartItemChange={setCartItemChange} />}
         />
         <Route
           path="/cart"
           element={
             <CartPage
-              setLoginBoxOpen={setLoginBoxOpen}
               cartItemChange={cartItemChange}
               setCartItemChange={setCartItemChange}
             />
           }
         />
-        <Route
-          path="/order"
-          element={<OrderPage setLoginBoxOpen={setLoginBoxOpen} />}
-        />
-        <Route
-          path="/favorite"
-          element={<FavoritePage setLoginBoxOpen={setLoginBoxOpen} />}
-        />
+        <Route path="/order" element={<OrderPage />} />
+        <Route path="/favorite" element={<FavoritePage />} />
       </Routes>
       <Footer />
     </>

@@ -6,7 +6,7 @@ import { ItemLocation } from "../components/reusable/Location";
 import ScrollTop from "../components/reusable/ScrollTop";
 import ItemDetail from "../components/itemDetail/ItemDetail";
 
-const ItemPage = ({ setLoginBoxOpen, setCartItemChange }) => {
+const ItemPage = ({ setCartItemChange }) => {
   const { pathname } = useLocation();
   const itemPath = pathname.split("/")[2];
 
@@ -49,11 +49,7 @@ const ItemPage = ({ setLoginBoxOpen, setCartItemChange }) => {
           <div className="item-page-location">
             <ItemLocation id={itemPath} />
           </div>
-          <ItemDetail
-            id={itemPath}
-            setLoginBoxOpen={setLoginBoxOpen}
-            setCartItemChange={setCartItemChange}
-          />
+          <ItemDetail id={itemPath} setCartItemChange={setCartItemChange} />
           <ScrollTop />
         </div>
       )}
