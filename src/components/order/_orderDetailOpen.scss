@@ -69,11 +69,14 @@
   }
 
   .white-container {
-    height: 85%;
+    height: 86%;
+    width: 86vw;
+    position: fixed;
+    top: 7%;
+    left: 7vw;
     align-self: center;
     display: flex;
     padding: 0;
-    margin: auto;
   }
 }
 
@@ -94,7 +97,8 @@
       }
     }
     .white-container {
-      width: 95%;
+      width: 95vw;
+      left: 2.5vw;
     }
   }
 }

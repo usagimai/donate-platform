@@ -115,7 +115,7 @@ a {
 }
 
 input {
-  box-shadow: none;
+  -webkit-appearance: none;
 }
 
 input:-internal-autofill-selected {
