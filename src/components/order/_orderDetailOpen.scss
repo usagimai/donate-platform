@@ -6,7 +6,6 @@
     padding: 7rem 8rem;
     align-self: center;
     .order-detail-content {
-      width: 75vw;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -92,9 +91,6 @@
   .order-detail-container {
     .order-detail-content-all {
       padding: 3rem 2rem;
-      .order-detail-content {
-        width: 85vw;
-      }
     }
     .white-container {
       width: 95vw;
