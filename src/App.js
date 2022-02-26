@@ -27,6 +27,7 @@ function App() {
   const [navLogoClicked, setNavLogoClicked] = useState(false);
   const [cartItemChange, setCartItemChange] = useState(false);
   const [isReload, setIsReload] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState();
   const [isDown, setIsDown] = useState(false);
   const prevScrollPos = useRef(0);
 
@@ -65,8 +66,24 @@ function App() {
     }
   }, [itemMenuClicked]);
 
-  //頁面往下捲時隱藏Nav，頁面往上捲時出現Nav
+  //頁面往下捲時隱藏Nav，頁面往上捲時出現Nav (平板及手機不採用此功能)
   useEffect(() => {
+    //判斷是否為行動裝置
+    const mobileDevice = [
+      "Android",
+      "webOS",
+      "iPhone",
+      "iPad",
+      "iPod",
+      "BlackBerry",
+      "Windows Phone",
+    ];
+    setIsMobileDevice(mobileDevice.some((e) => navigator.userAgent.match(e)));
+  }, []);
+
+  useEffect(() => {
+    if (isMobileDevice === undefined || isMobileDevice === "true") return;
+
     const handleScroll = () => {
       if (window.pageYOffset > prevScrollPos.current) {
         setIsDown(true);
@@ -78,7 +95,7 @@ function App() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMobileDevice]);
 
   //重新整理後，頁面從最頂端顯示
   //適用Safari & Firefox
