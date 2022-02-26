@@ -4,13 +4,21 @@ import { loadFavorites } from "../actions/favoritesAction";
 import { app, db } from "../firebase-config";
 
 export const handleAddFavorite = async (dispatch, favorites, user, id) => {
-  const prevFavorites = favorites[0].data().itemId;
+  if (!favorites[0]) {
+    await setDoc(doc(db, "favorites", user.uid), {
+      email: user.email,
+      itemId: [id],
+    });
+    dispatch(loadFavorites());
+  } else {
+    const prevFavorites = favorites[0].data().itemId;
 
-  await setDoc(doc(db, "favorites", user.uid), {
-    email: user.email,
-    itemId: [...prevFavorites, id],
-  });
-  dispatch(loadFavorites());
+    await setDoc(doc(db, "favorites", user.uid), {
+      email: user.email,
+      itemId: [...prevFavorites, id],
+    });
+    dispatch(loadFavorites());
+  }
 };
 
 export const handleRemoveFavorite = async (dispatch, favorites, user, id) => {
