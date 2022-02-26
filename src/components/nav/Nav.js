@@ -24,12 +24,7 @@ const Nav = ({
   const [cartItems, setCartItems] = useState("");
   const [loginBoxOpen, setLoginBoxOpen] = useState(false);
   const [logoutBoxOpen, setLogoutBoxOpen] = useState(false);
-
-  //讀取購物車資料
-  useEffect(() => {
-    setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
-    setCartItemChange(false);
-  }, [cartItemChange]);
+  const [isTestAccount, setIsTestAccount] = useState(false);
 
   const handleLoginBoxOpen = () => {
     setLoginBoxOpen(true);
@@ -40,6 +35,25 @@ const Nav = ({
     setLogoutBoxOpen(true);
     blockScroll();
   };
+
+  //讀取購物車資料
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem("machudaysCart")));
+    setCartItemChange(false);
+  }, [cartItemChange]);
+
+  //若是測試用帳號，顯示「測試用帳號」div
+  useEffect(() => {
+    if (!user) {
+      setIsTestAccount(false);
+    } else {
+      if (user.email === "test@test.com") {
+        setIsTestAccount(true);
+      } else {
+        setIsTestAccount(false);
+      }
+    }
+  }, [user]);
 
   return (
     <>
@@ -119,6 +133,13 @@ const Nav = ({
           </div>
         </div>
       </div>
+
+      {isTestAccount && (
+        <div className="test-account">
+          <div>測試用</div>
+          <div>帳號</div>
+        </div>
+      )}
     </>
   );
 };

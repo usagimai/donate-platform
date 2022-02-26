@@ -73,6 +73,23 @@
   }
 }
 
+.test-account {
+  position: fixed;
+  left: 2rem;
+  bottom: 2rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: $special-color;
+  color: white;
+  opacity: 0.8;
+  cursor: default;
+  z-index: 10;
+}
+
 @media (max-width: 1250px) {
   .nav-content {
     width: calc(100% - 4vw);
