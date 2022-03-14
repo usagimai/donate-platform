@@ -69,7 +69,11 @@ function App() {
   //頁面往下捲時隱藏Nav，頁面往上捲時出現Nav
   useEffect(() => {
     //Safari 14版以前頁面捲到頂端會反彈，使用此效果會導致UX不佳，故不適用
-    if (platform.name === "Safari" && Number(platform.version) < 15) return;
+    if (
+      platform.name === "Safari" &&
+      Number(platform.version.split(".")[0]) < 15
+    )
+      return;
 
     const handleScroll = () => {
       if (window.pageYOffset > prevScrollPos.current) {
