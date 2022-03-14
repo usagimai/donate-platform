@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
-import { isMobile } from "react-device-detect";
 import { onAuthStateChanged } from "firebase/auth";
+import platform from "platform";
 
 import "./app.scss";
 //components
@@ -66,9 +66,10 @@ function App() {
     }
   }, [itemMenuClicked]);
 
-  //頁面往下捲時隱藏Nav，頁面往上捲時出現Nav (行動裝置不採用此功能)
+  //頁面往下捲時隱藏Nav，頁面往上捲時出現Nav
   useEffect(() => {
-    if (isMobile === true) return;
+    //Safari 14版以前頁面捲到頂端會反彈，使用此效果會導致UX不佳，故不適用
+    if (platform.name === "Safari" && Number(platform.version) < 15) return;
 
     const handleScroll = () => {
       if (window.pageYOffset > prevScrollPos.current) {
@@ -81,7 +82,7 @@ function App() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile]);
+  }, []);
 
   //重新整理後，頁面從最頂端顯示
   //適用Safari & Firefox
