@@ -17,11 +17,38 @@ const ItemList = ({ searchText, setSearchText }) => {
   const [itemList, setItemList] = useState("");
   const [searchList, setSearchList] = useState("");
 
+  //所有尺寸/顏色都為0的品項不顯示於頁面
+  const [allWithoutNoStock, setAllWithoutNoStock] = useState([]);
+  useEffect(() => {
+    setAllWithoutNoStock(
+      all.filter((doc) => {
+        const stockData = [];
+        const stockNumData = [];
+        for (let key in doc.data().stock) {
+          stockData.push(doc.data().stock[key]);
+        }
+        for (let i = 0; i < stockData.length; i++) {
+          stockNumData.push(stockData[i][0]);
+        }
+
+        if (
+          stockNumData.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+          }) === 0
+        ) {
+          return;
+        } else {
+          return doc;
+        }
+      })
+    );
+  }, [all]);
+
   //顯示分類
   useEffect(() => {
     //每個商品有兩種分類 (服裝類型、品牌)
-    const category1 = all.map((doc) => doc.data().category1);
-    const category2 = all.map((doc) => doc.data().category2);
+    const category1 = allWithoutNoStock.map((doc) => doc.data().category1);
+    const category2 = allWithoutNoStock.map((doc) => doc.data().category2);
 
     //讓目前path與顯示分類一致
     const upperCasePath = categoryPath.toUpperCase();
@@ -36,29 +63,29 @@ const ItemList = ({ searchText, setSearchText }) => {
         return setItemList(null);
       case category1.includes(category):
         return setItemList(
-          all.filter((doc) => {
+          allWithoutNoStock.filter((doc) => {
             return doc.data().category1 === category;
           })
         );
       case category2.includes(category):
         return setItemList(
-          all.filter((doc) => {
+          allWithoutNoStock.filter((doc) => {
             return doc.data().category2 === category;
           })
         );
       default:
         return setItemList([]);
     }
-  }, [category, categoryPath, all]);
+  }, [category, categoryPath, allWithoutNoStock]);
 
   //顯示搜尋結果
   useEffect(() => {
     setSearchList(
-      all.filter((doc) => {
+      allWithoutNoStock.filter((doc) => {
         return doc.data().name.match(new RegExp(searchText, "gi"));
       })
     );
-  }, [searchText, all]);
+  }, [searchText, allWithoutNoStock]);
   //讓目前path與搜尋結果一致
   useEffect(() => {
     if (searchPath === "undefined") {
@@ -77,7 +104,7 @@ const ItemList = ({ searchText, setSearchText }) => {
           }
         >
           {!itemList &&
-            all.map((doc) => (
+            allWithoutNoStock.map((doc) => (
               <ItemOne
                 image={doc.data().mainImg}
                 name={doc.data().name}
