@@ -154,7 +154,8 @@ export const Carousel = ({ text, array }) => {
           <IconSelector name="circle-arrow-left" />
         </div>
 
-        {arrBatch &&
+        {allWithoutNoStock &&
+          arrBatch &&
           arrBatch.length > 0 &&
           arrBatch.map((doc) => (
             <ItemOne
