@@ -7,37 +7,11 @@ import ItemOne from "../main/ItemOne";
 export const Carousel = ({ text, array }) => {
   //輪播用商品array(推薦)
   const all = useSelector((state) => state.items.all);
-  //所有尺寸/顏色都為0的品項不顯示於頁面
-  const [allWithoutNoStock, setAllWithoutNoStock] = useState([]);
-  useEffect(() => {
-    setAllWithoutNoStock(
-      all.filter((doc) => {
-        const stockData = [];
-        const stockNumData = [];
-        for (let key in doc.data().stock) {
-          stockData.push(doc.data().stock[key]);
-        }
-        for (let i = 0; i < stockData.length; i++) {
-          stockNumData.push(stockData[i][0]);
-        }
-
-        if (
-          stockNumData.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue;
-          }) === 0
-        ) {
-          return;
-        } else {
-          return doc;
-        }
-      })
-    );
-  }, [all]);
-  const allForRandom = [...allWithoutNoStock];
+  const allForRandom = [...all];
   const [randomAll, setRandomAll] = useState("");
   useEffect(() => {
     setRandomAll(allForRandom.sort(() => Math.random() - 0.5).slice(0, 20));
-  }, [allWithoutNoStock]);
+  }, [all]);
 
   //輪播用商品array(最近瀏覽)
   const [historyIdArrOriginal, setHistoryIdArrOriginal] = useState([]);
@@ -53,15 +27,13 @@ export const Carousel = ({ text, array }) => {
 
   const historyItemsArr = [];
   useEffect(() => {
-    if (allWithoutNoStock.length === 0) {
+    if (all.length === 0) {
       return;
     } else {
       switch (true) {
         case historyIdArrOriginal.length > 0:
           historyIdArrOriginal.map((id) => {
-            const historyItems = allWithoutNoStock.find(
-              (item) => item.id === id
-            );
+            const historyItems = all.find((item) => item.id === id);
             historyItemsArr.push(historyItems);
           });
           setHistoryArr(historyItemsArr);
@@ -74,7 +46,7 @@ export const Carousel = ({ text, array }) => {
           break;
       }
     }
-  }, [historyIdArrOriginal, allWithoutNoStock]);
+  }, [historyIdArrOriginal, all]);
 
   //輪播功能相關
   const [gridColumnNum, setGridColumnNum] = useState("");
@@ -110,7 +82,7 @@ export const Carousel = ({ text, array }) => {
 
   //依據array這個prop的值決定顯示哪個商品array
   useEffect(() => {
-    if (allWithoutNoStock.length === 0) {
+    if (all.length === 0) {
       return;
     } else {
       switch (array) {
@@ -154,8 +126,7 @@ export const Carousel = ({ text, array }) => {
           <IconSelector name="circle-arrow-left" />
         </div>
 
-        {allWithoutNoStock &&
-          arrBatch &&
+        {arrBatch &&
           arrBatch.length > 0 &&
           arrBatch.map((doc) => (
             <ItemOne
